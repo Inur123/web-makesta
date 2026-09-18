@@ -6,7 +6,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('organisasi');
+            $table->string('organisasi')->index();
             $table->string('nama');
             $table->string('lokasi');
             $table->string('tanggal_teks');

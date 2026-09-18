@@ -10,7 +10,7 @@ return new class extends Migration {
             $table->string('nama');
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
-            $table->string('alamat')->nullable();
+            $table->text('alamat')->nullable();
             $table->string('no_hp')->nullable();
             $table->string('sekolah')->nullable();
             $table->timestamps();
