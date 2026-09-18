@@ -233,8 +233,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                     </TabsList>
 
                     <TabsContent value="peserta" className="mt-4 space-y-4">
-                        <div className="flex justify-between items-center">
-                            <p className="text-sm text-muted-foreground">{pesertaPaginated?.total || 0} peserta terdaftar</p>
+                        <div className="flex justify-end items-center">
                             <div className="flex items-center gap-2">
                                 <Button size="sm" variant="outline" className="cursor-pointer border-green-600/30 text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/30" asChild>
                                     <a href={`/${org}/kegiatan/${kegiatan.id}/export`} >
@@ -254,11 +253,11 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                 <TableHeader>
                                     <TableRow className="bg-muted/40 hover:bg-muted/40">
                                         <TableHead className="w-12 text-center font-semibold">No</TableHead>
-                                        <TableHead className="font-semibold">Nama Peserta</TableHead>
-                                        <TableHead className="font-semibold">Tempat, Tanggal Lahir</TableHead>
-                                        <TableHead className="font-semibold">Alamat</TableHead>
-                                        <TableHead className="font-semibold">No HP</TableHead>
-                                        <TableHead className="font-semibold">Asal Sekolah</TableHead>
+                                        <TableHead className="font-semibold whitespace-nowrap">Nama Peserta</TableHead>
+                                        <TableHead className="font-semibold whitespace-nowrap">Tempat, Tanggal Lahir</TableHead>
+                                        <TableHead className="font-semibold whitespace-nowrap">Alamat</TableHead>
+                                        <TableHead className="font-semibold whitespace-nowrap">No HP</TableHead>
+                                        <TableHead className="font-semibold whitespace-nowrap">Asal Sekolah</TableHead>
                                         <TableHead className="text-center w-24 font-semibold">Aksi</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -275,11 +274,13 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                             return (
                                                 <TableRow key={p.id} className="hover:bg-muted/20 cursor-pointer" onClick={() => router.visit(`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}`)}>
                                                     <TableCell className="text-center text-muted-foreground">{itemNumber}</TableCell>
-                                                    <TableCell className="font-semibold">{p.nama}</TableCell>
-                                                    <TableCell>{p.tempat_lahir && p.tanggal_lahir ? `${p.tempat_lahir}, ${new Date(p.tanggal_lahir).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}` : p.tempat_lahir || '-'}</TableCell>
-                                                    <TableCell>{p.alamat || '-'}</TableCell>
-                                                    <TableCell>{p.no_hp || '-'}</TableCell>
-                                                    <TableCell>{p.sekolah || '-'}</TableCell>
+                                                    <TableCell className="font-semibold whitespace-nowrap">{p.nama}</TableCell>
+                                                    <TableCell className="max-w-[180px] truncate" title={p.tempat_lahir && p.tanggal_lahir ? `${p.tempat_lahir}, ${new Date(p.tanggal_lahir).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}` : p.tempat_lahir || '-'}>
+                                                        {p.tempat_lahir && p.tanggal_lahir ? `${p.tempat_lahir}, ${new Date(p.tanggal_lahir).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}` : p.tempat_lahir || '-'}
+                                                    </TableCell>
+                                                    <TableCell className="max-w-[160px] truncate" title={p.alamat || '-'}>{p.alamat || '-'}</TableCell>
+                                                    <TableCell className="whitespace-nowrap">{p.no_hp || '-'}</TableCell>
+                                                    <TableCell className="max-w-[160px] truncate" title={p.sekolah || '-'}>{p.sekolah || '-'}</TableCell>
                                                     <TableCell className="text-center p-1" onClick={(e) => e.stopPropagation()}>
                                                         <DropdownMenu>
                                                             <DropdownMenuTrigger asChild>
