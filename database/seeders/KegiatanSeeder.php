@@ -16,6 +16,21 @@ class KegiatanSeeder extends Seeder
         $kegiatans = Kegiatan::factory()->count(5)->create();
 
         foreach ($kegiatans as $kegiatan) {
+            // Buat 2 Penanggung Jawab dan 2 Instruktur
+            for ($i = 0; $i < 2; $i++) {
+                \App\Models\KegiatanPetugas::create([
+                    'kegiatan_id' => $kegiatan->id,
+                    'peran' => 'pj',
+                    'nama' => fake('id_ID')->name()
+                ]);
+                
+                \App\Models\KegiatanPetugas::create([
+                    'kegiatan_id' => $kegiatan->id,
+                    'peran' => 'instruktur',
+                    'nama' => fake('id_ID')->name()
+                ]);
+            }
+            
             // Buat 5 materi untuk setiap kegiatan dengan urutan 1-5
             $materis = collect();
             $namaMateris = ['Ke-NU-an', 'Ke-IPNU-IPPNU-an', 'Aswaja', 'Ke-Indonesia-an', 'Amaliyah NU'];
