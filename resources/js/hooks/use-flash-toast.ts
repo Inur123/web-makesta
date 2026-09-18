@@ -7,7 +7,7 @@ export function useFlashToast(): void {
         const handleProps = (props: any) => {
             if (props.flash?.success) {
                 toast.success(props.flash.success);
-                props.flash.success = null; // Clear so it doesn't fire again on hot reload
+                props.flash.success = null;
             }
             if (props.flash?.error) {
                 toast.error(props.flash.error);
@@ -15,18 +15,24 @@ export function useFlashToast(): void {
             }
         };
 
-        // Handle initial load
         if (router.page?.props) {
             handleProps(router.page.props);
         }
 
-        // Listen for navigation events
-        const unsubscribe = router.on('navigate', (event) => {
+        const unsubscribe = router.on('success', (event) => {
             handleProps(event.detail.page.props);
+        });
+        
+        // Also listen on finish just in case success is bypassed
+        const unsubscribeFinish = router.on('finish', () => {
+             if (router.page?.props) {
+                 handleProps(router.page.props);
+             }
         });
 
         return () => {
             unsubscribe();
+            unsubscribeFinish();
         };
     }, []);
 }
