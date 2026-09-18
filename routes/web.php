@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('kegiatan/{kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
         Route::get('kegiatan/{kegiatan}/export', [KegiatanController::class, 'export'])->name('kegiatan.export');
         Route::post('kegiatan/{kegiatan}/sertifikat', [KegiatanController::class, 'generateSertifikat'])->name('kegiatan.sertifikat');
+        Route::post('kegiatan/{kegiatan}/sertifikat/simpan', [KegiatanController::class, 'simpanPengaturanSertifikat'])->name('kegiatan.sertifikat.simpan');
         Route::get('kegiatan/{kegiatan}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
         Route::put('kegiatan/{kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update');
         Route::delete('kegiatan/{kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');

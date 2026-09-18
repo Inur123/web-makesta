@@ -473,7 +473,7 @@ exportMethod.form = exportMethodForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 export const generateSertifikat = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -488,7 +488,7 @@ generateSertifikat.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikat.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -516,7 +516,7 @@ generateSertifikat.url = (args: { org: string | number, kegiatan: string | { id:
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikat.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -526,7 +526,7 @@ generateSertifikat.post = (args: { org: string | number, kegiatan: string | { id
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 const generateSertifikatForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -536,7 +536,7 @@ const generateSertifikatForm = (args: { org: string | number, kegiatan: string |
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikatForm.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -545,6 +545,81 @@ generateSertifikatForm.post = (args: { org: string | number, kegiatan: string | 
 })
 
 generateSertifikat.form = generateSertifikatForm
+
+/**
+* @see \App\Http\Controllers\KegiatanController::simpanPengaturanSertifikat
+* @see app/Http/Controllers/KegiatanController.php:160
+* @route '/{org}/kegiatan/{kegiatan}/sertifikat/simpan'
+*/
+export const simpanPengaturanSertifikat = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: simpanPengaturanSertifikat.url(args, options),
+    method: 'post',
+})
+
+simpanPengaturanSertifikat.definition = {
+    methods: ["post"],
+    url: '/{org}/kegiatan/{kegiatan}/sertifikat/simpan',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\KegiatanController::simpanPengaturanSertifikat
+* @see app/Http/Controllers/KegiatanController.php:160
+* @route '/{org}/kegiatan/{kegiatan}/sertifikat/simpan'
+*/
+simpanPengaturanSertifikat.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+            org: args[0],
+            kegiatan: args[1],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        org: args.org,
+        kegiatan: typeof args.kegiatan === 'object'
+        ? args.kegiatan.id
+        : args.kegiatan,
+    }
+
+    return simpanPengaturanSertifikat.definition.url
+            .replace('{org}', parsedArgs.org.toString())
+            .replace('{kegiatan}', parsedArgs.kegiatan.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\KegiatanController::simpanPengaturanSertifikat
+* @see app/Http/Controllers/KegiatanController.php:160
+* @route '/{org}/kegiatan/{kegiatan}/sertifikat/simpan'
+*/
+simpanPengaturanSertifikat.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: simpanPengaturanSertifikat.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\KegiatanController::simpanPengaturanSertifikat
+* @see app/Http/Controllers/KegiatanController.php:160
+* @route '/{org}/kegiatan/{kegiatan}/sertifikat/simpan'
+*/
+const simpanPengaturanSertifikatForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: simpanPengaturanSertifikat.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\KegiatanController::simpanPengaturanSertifikat
+* @see app/Http/Controllers/KegiatanController.php:160
+* @route '/{org}/kegiatan/{kegiatan}/sertifikat/simpan'
+*/
+simpanPengaturanSertifikatForm.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: simpanPengaturanSertifikat.url(args, options),
+    method: 'post',
+})
+
+simpanPengaturanSertifikat.form = simpanPengaturanSertifikatForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::edit
@@ -901,6 +976,6 @@ toggleStatusForm.patch = (args: { org: string | number, kegiatan: string | { id:
 
 toggleStatus.form = toggleStatusForm
 
-const KegiatanController = { index, create, store, show, exportMethod, generateSertifikat, edit, update, destroy, toggleStatus, export: exportMethod }
+const KegiatanController = { index, create, store, show, exportMethod, generateSertifikat, simpanPengaturanSertifikat, edit, update, destroy, toggleStatus, export: exportMethod }
 
 export default KegiatanController

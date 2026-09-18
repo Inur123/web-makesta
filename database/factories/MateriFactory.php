@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Kegiatan;
 use App\Models\Materi;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,12 +19,12 @@ class MateriFactory extends Factory
     public function definition(): array
     {
         return [
-            'kegiatan_id' => \App\Models\Kegiatan::factory(),
+            'kegiatan_id' => Kegiatan::factory(),
             'nama' => $this->faker->randomElement([
-                'Ke-NU-an', 
-                'Ke-IPNU-IPPNU-an', 
-                'Aswaja (Ahlussunnah wal Jamaah)', 
-                'Tradisi Amaliyah NU', 
+                'Ke-NU-an',
+                'Ke-IPNU-IPPNU-an',
+                'Aswaja (Ahlussunnah wal Jamaah)',
+                'Tradisi Amaliyah NU',
                 'Ke-Indonesia-an dan Kebangsaan',
                 'Kepemimpinan',
                 'Organisasi dan Administrasi'

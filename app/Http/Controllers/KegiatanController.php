@@ -157,44 +157,95 @@ class KegiatanController extends Controller
         return Excel::download(new KegiatanExport($kegiatan), $filename);
     }
 
+    public function simpanPengaturanSertifikat(Request $request, string $org, Kegiatan $kegiatan): RedirectResponse
+    {
+        $rules = [];
+        if ($org === 'ippnu') {
+            $rules = [
+                'no_surat_awal' => 'required|integer',
+                'no_surat_akhir' => 'nullable|integer',
+                'format_nomor' => 'required|string',
+                'template_depan' => 'nullable|file|mimes:docx',
+                'template_belakang' => 'nullable|file|mimes:docx',
+            ];
+        } else {
+            $rules = [
+                'no_surat_awal' => 'required|integer',
+                'no_surat_akhir' => 'nullable|integer',
+                'format_nomor' => 'required|string',
+                'tempat' => 'required|string',
+                'tgl_m_hari' => 'required|string',
+                'tgl_m_bulan' => 'required|string',
+                'tgl_m_tahun' => 'required|string',
+                'tgl_h_hari' => 'required|string',
+                'tgl_h_bulan' => 'required|string',
+                'tgl_h_tahun' => 'required|string',
+                'nama_ketua' => 'nullable|string',
+                'nia_ketua' => 'nullable|string',
+                'nama_sekretaris' => 'nullable|string',
+                'nia_sekretaris' => 'nullable|string',
+                'header_depan' => 'required|string',
+                'header_belakang' => 'required|string',
+            ];
+        }
+
+        $data = $request->validate($rules);
+        $pengaturan = $kegiatan->pengaturan_sertifikat ?? [];
+
+        if ($org === 'ippnu') {
+            if ($request->hasFile('template_depan')) {
+                if (isset($pengaturan['template_depan']) && \Storage::disk('local')->exists($pengaturan['template_depan'])) {
+                    \Storage::disk('local')->delete($pengaturan['template_depan']);
+                }
+                $data['template_depan'] = $request->file('template_depan')->storeAs('templates/arsip_ippnu/' . $kegiatan->id, 'template_depan_' . time() . '.docx');
+            } else {
+                $data['template_depan'] = $pengaturan['template_depan'] ?? null;
+            }
+
+            if ($request->hasFile('template_belakang')) {
+                if (isset($pengaturan['template_belakang']) && \Storage::disk('local')->exists($pengaturan['template_belakang'])) {
+                    \Storage::disk('local')->delete($pengaturan['template_belakang']);
+                }
+                $data['template_belakang'] = $request->file('template_belakang')->storeAs('templates/arsip_ippnu/' . $kegiatan->id, 'template_belakang_' . time() . '.docx');
+            } else {
+                $data['template_belakang'] = $pengaturan['template_belakang'] ?? null;
+            }
+        }
+
+        $kegiatan->update(['pengaturan_sertifikat' => array_merge($pengaturan, $data)]);
+
+        return back()->with('success', 'Pengaturan sertifikat berhasil disimpan');
+    }
+
     public function generateSertifikat(Request $request, string $org, Kegiatan $kegiatan, SertifikatService $service): BinaryFileResponse|RedirectResponse
     {
-        $data = $request->validate([
-            'no_surat_awal' => 'required|integer',
-            'no_surat_akhir' => 'nullable|integer',
-            'format_nomor' => 'required|string',
-            'tempat' => 'required|string',
-            'tgl_m_hari' => 'required|string',
-            'tgl_m_bulan' => 'required|string',
-            'tgl_m_tahun' => 'required|string',
-            'tgl_h_hari' => 'required|string',
-            'tgl_h_bulan' => 'required|string',
-            'tgl_h_tahun' => 'required|string',
-                        'nama_ketua' => 'nullable|string',
-            'nia_ketua' => 'nullable|string',
-            'nama_sekretaris' => 'nullable|string',
-            'nia_sekretaris' => 'nullable|string',
-            'jabatan_kiri' => 'nullable|string',
-            'nama_kiri' => 'nullable|string',
-            'nia_kiri' => 'nullable|string',
-            'jabatan_tengah' => 'nullable|string',
-            'nama_tengah' => 'nullable|string',
-            'nia_tengah' => 'nullable|string',
-            'jabatan_kanan' => 'nullable|string',
-            'nama_kanan' => 'nullable|string',
-            'nia_kanan' => 'nullable|string',
-            'nama_pelatih' => 'nullable|string',
-            'nia_pelatih' => 'nullable|string',
-            'header_depan' => 'required|string',
-            'header_belakang' => 'required|string',
-        ]);
-
         $isPreview = $request->has('is_preview') && $request->is_preview;
+        $pengaturan = $kegiatan->pengaturan_sertifikat;
+
+        if (!$pengaturan) {
+            return back()->with('error', 'Silakan simpan pengaturan sertifikat terlebih dahulu.');
+        }
 
         try {
-            $filePath = $service->generate($data, $org, $kegiatan, $isPreview);
+            if ($org === 'ippnu') {
+                if (empty($pengaturan['template_depan']) || empty($pengaturan['template_belakang'])) {
+                    return back()->with('error', 'Template Depan dan Belakang belum diupload. Silakan upload dan simpan pengaturan terlebih dahulu.');
+                }
+                
+                $pathDepan = \Storage::disk('local')->path($pengaturan['template_depan']);
+                $pathBelakang = \Storage::disk('local')->path($pengaturan['template_belakang']);
+
+                if (!\Storage::disk('local')->exists($pengaturan['template_depan']) || !\Storage::disk('local')->exists($pengaturan['template_belakang'])) {
+                    return back()->with('error', 'File template hilang dari server. Silakan upload ulang.');
+                }
+
+                return $service->generateBulkIppnu($pengaturan, $kegiatan, $pathDepan, $pathBelakang, $isPreview);
+            }
+
+            $filePath = $service->generate($pengaturan, $org, $kegiatan, $isPreview);
             return response()->download($filePath)->deleteFileAfterSend(true);
         } catch (\Exception $e) {
+            \Log::error('Sertifikat Error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
             return back()->with('error', $e->getMessage());
         }
     }

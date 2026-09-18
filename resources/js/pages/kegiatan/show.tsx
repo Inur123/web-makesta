@@ -420,15 +420,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                     
                     <TabsContent value="sertifikat" className="mt-4">
                         <div className="rounded-xl border bg-card p-6 shadow-sm">
-                            {org === 'ippnu' ? (
-                                <div className="text-center py-10 text-muted-foreground">
-                                    <FileText className="w-12 h-12 mx-auto text-muted-foreground/30 mb-3" />
-                                    <h3 className="text-lg font-medium text-foreground">Modul Sertifikat Belum Tersedia</h3>
-                                    <p className="mt-1">Template dan aturan untuk cetak sertifikat IPPNU saat ini masih kosong / belum ada.</p>
-                                </div>
-                            ) : (
-                                <SertifikatTab org={org} kegiatan={kegiatan} />
-                            )}
+                            <SertifikatTab org={org} kegiatan={kegiatan} />
                         </div>
                     </TabsContent>
                 </Tabs>

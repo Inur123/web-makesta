@@ -55,6 +55,7 @@ export interface Kegiatan {
     peserta?: Peserta[];
     petugas?: Petugas[];
     peserta_count?: number;
+    pengaturan_sertifikat?: any;
 }
 
 export interface PaginatedData<T> {

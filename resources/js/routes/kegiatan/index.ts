@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
+import sertifikat33ead6 from './sertifikat'
 /**
 * @see \App\Http\Controllers\KegiatanController::index
 * @see app/Http/Controllers/KegiatanController.php:19
@@ -473,7 +474,7 @@ exportMethod.form = exportMethodForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::sertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 export const sertifikat = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -488,7 +489,7 @@ sertifikat.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::sertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 sertifikat.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -516,7 +517,7 @@ sertifikat.url = (args: { org: string | number, kegiatan: string | { id: string 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::sertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 sertifikat.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -526,7 +527,7 @@ sertifikat.post = (args: { org: string | number, kegiatan: string | { id: string
 
 /**
 * @see \App\Http\Controllers\KegiatanController::sertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 const sertifikatForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -536,7 +537,7 @@ const sertifikatForm = (args: { org: string | number, kegiatan: string | { id: s
 
 /**
 * @see \App\Http\Controllers\KegiatanController::sertifikat
-* @see app/Http/Controllers/KegiatanController.php:160
+* @see app/Http/Controllers/KegiatanController.php:220
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 sertifikatForm.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -907,7 +908,7 @@ const kegiatan = {
     store: Object.assign(store, store),
     show: Object.assign(show, show),
     export: Object.assign(exportMethod, exportMethod),
-    sertifikat: Object.assign(sertifikat, sertifikat),
+    sertifikat: Object.assign(sertifikat, sertifikat33ead6),
     edit: Object.assign(edit, edit),
     update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),

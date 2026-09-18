@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Kegiatan;
 use App\Models\Peserta;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class PesertaFactory extends Factory
     public function definition(): array
     {
         return [
-            'kegiatan_id' => \App\Models\Kegiatan::factory(),
+            'kegiatan_id' => Kegiatan::factory(),
             'nama' => $this->faker->name(),
             'tempat_lahir' => $this->faker->city(),
             'tanggal_lahir' => $this->faker->dateTimeBetween('-25 years', '-15 years')->format('Y-m-d'),

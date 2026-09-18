@@ -4,118 +4,109 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Download, Eye } from 'lucide-react';
+import { Loader2, Download, Eye, FileText, CheckCircle2, Save } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { Kegiatan } from '@/types';
 
 export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan: Kegiatan }) {
-    const { data, setData, post, processing, errors, setError } = useForm({
-        no_surat_awal: '',
-        no_surat_akhir: '',
-        format_nomor: '/13.10/MKA/7354/XIX/IX/2026',
-        tempat: 'Magetan',
-        tgl_m_hari: '27',
-        tgl_m_bulan: 'Mei',
-        tgl_m_tahun: '2026 M',
-        tgl_h_hari: '10',
-        tgl_h_bulan: 'Dzulhijjah',
-        tgl_h_tahun: '1447 H',
-        nama_ketua: 'IRRANDY ANDHANA NURIZA',
-        nia_ketua: '13.10.03.00002',
-        nama_sekretaris: 'M. ZAINUR ROZIQIN',
-        nia_sekretaris: '13.1.02.01000',
-        
-        // IPPNU specific
-        jabatan_kiri: 'Ketua PC IPPNU Kabupaten Magetan',
-        nama_kiri: 'IKA PUTRI YULIANA, S.E.',
-        nia_kiri: '3520.1907.0002',
-        
-        jabatan_tengah: 'Ketua PK IPPNU SMK Roudlotul Huda',
-        nama_tengah: 'MAYA ANUGRAH NURAINI',
-        nia_tengah: '3520.2407.0001',
+    const pengaturan = kegiatan.pengaturan_sertifikat || {};
 
-        jabatan_kanan: 'Wakil Ketua II Bidang Kaderisasi PC IPPNU Kabupaten Magetan',
-        nama_kanan: 'ALDA MAHARANI',
-        nia_kanan: '3520.2003.0020',
+    const { data, setData, post, processing, errors } = useForm({
+        no_surat_awal: pengaturan.no_surat_awal || '',
+        no_surat_akhir: pengaturan.no_surat_akhir || '',
+        format_nomor: pengaturan.format_nomor || '/13.10/MKA/7354/XIX/IX/2026',
         
-        nama_pelatih: 'NAMA PELATIH',
-        nia_pelatih: 'NIA PELATIH',
-        header_depan: 'PIMPINAN CABANG\nIKATAN PELAJAR NAHDLATUL ULAMA\nKABUPATEN MAGETAN',
-        header_belakang: 'PIMPINAN KOMISARIAT IKATAN PELAJAR NAHDLATUL ULAMA SMK ROUDLOTUL HUDA\nSMK ROUDLOTUL HUDA, DS. KEDUNGPANJI, KEC. LEMBEYAN, 19-20 JULI 2025',
+        // IPNU specific (ignored by backend if IPPNU)
+        tempat: pengaturan.tempat || 'Magetan',
+        tgl_m_hari: pengaturan.tgl_m_hari || '27',
+        tgl_m_bulan: pengaturan.tgl_m_bulan || 'Mei',
+        tgl_m_tahun: pengaturan.tgl_m_tahun || '2026 M',
+        tgl_h_hari: pengaturan.tgl_h_hari || '10',
+        tgl_h_bulan: pengaturan.tgl_h_bulan || 'Dzulhijjah',
+        tgl_h_tahun: pengaturan.tgl_h_tahun || '1447 H',
+        nama_ketua: pengaturan.nama_ketua || 'IRRANDY ANDHANA NURIZA',
+        nia_ketua: pengaturan.nia_ketua || '13.10.03.00002',
+        nama_sekretaris: pengaturan.nama_sekretaris || 'M. ZAINUR ROZIQIN',
+        nia_sekretaris: pengaturan.nia_sekretaris || '13.1.02.01000',
+        header_depan: pengaturan.header_depan || 'PIMPINAN CABANG\nIKATAN PELAJAR NAHDLATUL ULAMA\nKABUPATEN MAGETAN',
+        header_belakang: pengaturan.header_belakang || 'PIMPINAN KOMISARIAT IKATAN PELAJAR NAHDLATUL ULAMA SMK ROUDLOTUL HUDA\nSMK ROUDLOTUL HUDA, DS. KEDUNGPANJI, KEC. LEMBEYAN, 19-20 JULI 2025',
+
+        // IPPNU Specific
+        template_depan: null as File | null,
+        template_belakang: null as File | null,
     });
 
-    const [isPreviewing, setIsPreviewing] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
 
-    const submit = async (e: React.FormEvent, isPreview: boolean = false) => {
+    const simpanPengaturan = (e: React.FormEvent) => {
         e.preventDefault();
-        
-        if (isPreview) {
-            setIsPreviewing(true);
-        } else {
-            setIsGenerating(true);
-        }
-        
-        try {
-            const payload = { ...data };
-            if (isPreview) {
-                (payload as any).is_preview = 1;
+        post(`/${org}/kegiatan/${kegiatan.id}/sertifikat/simpan`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Pengaturan sertifikat berhasil disimpan!');
             }
+        });
+    };
 
-            const response = await axios.post(`/${org}/kegiatan/${kegiatan.id}/sertifikat`, payload, {
+    const generateSertifikat = async () => {
+        setIsGenerating(true);
+        try {
+            const response = await axios.post(`/${org}/kegiatan/${kegiatan.id}/sertifikat`, {}, {
                 responseType: 'blob'
             });
 
-            // Create a blob URL
-            const blob = new Blob([response.data], { type: isPreview ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/zip' });
-            const url = window.URL.createObjectURL(blob);
+            if (response.data.type === 'text/html' || response.data.type === 'application/json') {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    toast.error('Gagal men-generate sertifikat. Pastikan pengaturan sudah disimpan dan template valid.');
+                };
+                reader.readAsText(response.data);
+                return;
+            }
 
+            const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
-            let filename = isPreview ? 'Preview.docx' : 'Sertifikat.zip';
-            link.setAttribute('download', filename);
+            link.setAttribute('download', `Sertifikat.zip`);
             document.body.appendChild(link);
             link.click();
             link.remove();
-            
-            setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+            toast.success('Sertifikat berhasil di-generate!');
         } catch (error: any) {
-            console.error("Download failed:", error);
-            if (error.response && error.response.status === 422) {
-                try {
-                    // Try to read blob error
-                    const textData = await error.response.data.text();
-                    const errorObj = JSON.parse(textData);
-                    if (errorObj.errors) {
-                        const validationErrors = errorObj.errors;
-                        let firstErrorMsg = "Ada isian form yang belum lengkap.";
-                        for (const field in validationErrors) {
-                            setError(field as any, validationErrors[field][0]);
-                            firstErrorMsg = validationErrors[field][0];
-                        }
-                        toast.error(firstErrorMsg);
-                        return;
-                    }
-                } catch(e) {}
-            }
-            toast.error("Gagal men-generate sertifikat. Terjadi kesalahan sistem.");
+            toast.error('Gagal mengunduh sertifikat.');
         } finally {
-            if (isPreview) setIsPreviewing(false);
-            else setIsGenerating(false);
+            setIsGenerating(false);
         }
     };
 
-    const isProcessing = isPreviewing || isGenerating || processing;
+    const hasTemplateDepan = !!pengaturan.template_depan;
+    const hasTemplateBelakang = !!pengaturan.template_belakang;
 
-    return (
-        <form onSubmit={submit} className="space-y-6">
-            <div className="flex flex-col md:flex-row gap-8">
-                {/* Kolom Kiri */}
-                <div className="flex-1 flex flex-col gap-8">
+    if (org === 'ippnu') {
+        return (
+            <div className="space-y-8">
+                {/* Bagian 1: Pengaturan CRUD */}
+                <form onSubmit={simpanPengaturan} className="space-y-6 border border-gray-200 rounded-lg p-6 bg-white shadow-sm">
+                    <div className="mb-4">
+                        <h2 className="text-xl font-bold flex items-center gap-2">
+                            <Save className="w-5 h-5 text-green-600" />
+                            1. Simpan Pengaturan Sertifikat
+                        </h2>
+                        <p className="text-gray-500 text-sm mt-1">Simpan pengaturan nomor dan template Word di bawah ini agar bisa digunakan berkali-kali untuk kegiatan ini.</p>
+                    </div>
+
+                    <div className="bg-blue-50/50 p-4 rounded-lg border border-blue-100 text-sm text-blue-800 space-y-2 mb-6">
+                        <p className="font-semibold text-blue-900">Panduan Template IPPNU</p>
+                        <ul className="list-disc pl-5 space-y-1">
+                            <li>Gunakan <strong>2 file Word terpisah</strong> (Depan dan Belakang).</li>
+                            <li>Paling atas dokumen WAJIB ketik <strong>{"${sertifikat}"}</strong> dan paling bawah WAJIB ketik <strong>{"${/sertifikat}"}</strong>.</li>
+                            <li>Gunakan Page Break (Ctrl+Enter) sebelum {"${/sertifikat}"} agar tiap peserta ganti halaman.</li>
+                        </ul>
+                    </div>
                     
                     <div className="space-y-4">
-                        <h3 className="font-semibold text-lg border-b pb-2">1. Format Nomor Surat</h3>
+                        <h3 className="font-semibold text-lg border-b pb-2">Format Nomor Surat</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="no_surat_awal">Mulai dari No. Urut Berapa?</Label>
@@ -131,78 +122,85 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
                     </div>
 
                     <div className="space-y-4">
-                        <h3 className="font-semibold text-lg border-b pb-2">3. Tanda Tangan</h3>
-                        
-                        {org === 'ipnu' ? (
-                        <div className="grid grid-cols-2 gap-4">
+                        <h3 className="font-semibold text-lg border-b pb-2">Upload Template Sertifikat (.docx)</h3>
+                        <div className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="nama_ketua">Nama Ketua</Label>
-                                <Input id="nama_ketua" required value={data.nama_ketua} onChange={e => setData('nama_ketua', e.target.value)} />
+                                <Label htmlFor="template_depan">Template Depan {hasTemplateDepan && <span className="text-green-600 font-normal ml-2 flex inline-flex items-center"><CheckCircle2 className="w-3 h-3 mr-1"/> Tersimpan</span>}</Label>
+                                <Input id="template_depan" type="file" accept=".docx" onChange={e => setData('template_depan', e.target.files?.[0] || null)} />
+                                {errors.template_depan && <p className="text-sm text-red-500">{errors.template_depan}</p>}
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="nia_ketua">NIA Ketua</Label>
-                                <Input id="nia_ketua" required value={data.nia_ketua} onChange={e => setData('nia_ketua', e.target.value)} />
+                                <Label htmlFor="template_belakang">Template Belakang / Penilaian {hasTemplateBelakang && <span className="text-green-600 font-normal ml-2 flex inline-flex items-center"><CheckCircle2 className="w-3 h-3 mr-1"/> Tersimpan</span>}</Label>
+                                <Input id="template_belakang" type="file" accept=".docx" onChange={e => setData('template_belakang', e.target.files?.[0] || null)} />
+                                {errors.template_belakang && <p className="text-sm text-red-500">{errors.template_belakang}</p>}
                             </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="nama_sekretaris">Nama Sekretaris</Label>
-                                <Input id="nama_sekretaris" required value={data.nama_sekretaris} onChange={e => setData('nama_sekretaris', e.target.value)} />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="nia_sekretaris">NIA Sekretaris</Label>
-                                <Input id="nia_sekretaris" required value={data.nia_sekretaris} onChange={e => setData('nia_sekretaris', e.target.value)} />
-                            </div>
+                            <p className="text-xs text-gray-500">Biarkan kosong jika tidak ingin mengubah template yang sudah tersimpan sebelumnya.</p>
                         </div>
-                        ) : (
-                        <div className="space-y-6">
-                            <div className="space-y-3 p-3 border rounded-md">
-                                <p className="font-medium text-sm text-muted-foreground">Tanda Tangan Kiri</p>
-                                <Input required placeholder="Jabatan" value={data.jabatan_kiri} onChange={e => setData('jabatan_kiri', e.target.value)} />
-                                <div className="grid grid-cols-2 gap-4">
-                                    <Input required placeholder="Nama" value={data.nama_kiri} onChange={e => setData('nama_kiri', e.target.value)} />
-                                    <Input required placeholder="NIA" value={data.nia_kiri} onChange={e => setData('nia_kiri', e.target.value)} />
-                                </div>
-                            </div>
-                            <div className="space-y-3 p-3 border rounded-md">
-                                <p className="font-medium text-sm text-muted-foreground">Tanda Tangan Tengah</p>
-                                <Input required placeholder="Jabatan" value={data.jabatan_tengah} onChange={e => setData('jabatan_tengah', e.target.value)} />
-                                <div className="grid grid-cols-2 gap-4">
-                                    <Input required placeholder="Nama" value={data.nama_tengah} onChange={e => setData('nama_tengah', e.target.value)} />
-                                    <Input required placeholder="NIA" value={data.nia_tengah} onChange={e => setData('nia_tengah', e.target.value)} />
-                                </div>
-                            </div>
-                            <div className="space-y-3 p-3 border rounded-md">
-                                <p className="font-medium text-sm text-muted-foreground">Tanda Tangan Kanan</p>
-                                <Input required placeholder="Jabatan" value={data.jabatan_kanan} onChange={e => setData('jabatan_kanan', e.target.value)} />
-                                <div className="grid grid-cols-2 gap-4">
-                                    <Input required placeholder="Nama" value={data.nama_kanan} onChange={e => setData('nama_kanan', e.target.value)} />
-                                    <Input required placeholder="NIA" value={data.nia_kanan} onChange={e => setData('nia_kanan', e.target.value)} />
-                                </div>
-                            </div>
-                            <div className="space-y-3 p-3 border rounded-md">
-                                <p className="font-medium text-sm text-muted-foreground">Tanda Tangan Halaman Penilaian</p>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <Label>Nama Tim Pelatih</Label>
-                                        <Input required placeholder="Nama" value={data.nama_pelatih} onChange={e => setData('nama_pelatih', e.target.value)} />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label>NIA Tim Pelatih</Label>
-                                        <Input required placeholder="NIA" value={data.nia_pelatih} onChange={e => setData('nia_pelatih', e.target.value)} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        )}
-
                     </div>
 
-                </div>
+                    <div className="flex justify-end pt-4 border-t">
+                        <Button type="submit" disabled={processing} className="w-full sm:w-auto bg-green-600 hover:bg-green-700">
+                            {processing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                            Simpan Pengaturan
+                        </Button>
+                    </div>
+                </form>
 
-                {/* Kolom Kanan */}
-                <div className="flex-1 flex flex-col gap-8">
-                    
+                {/* Bagian 2: Tombol Generate */}
+                <div className="border border-blue-200 rounded-lg p-6 bg-blue-50/30 shadow-sm text-center space-y-4">
+                    <h2 className="text-xl font-bold flex items-center justify-center gap-2 text-blue-900">
+                        <Download className="w-5 h-5" />
+                        2. Cetak Sertifikat
+                    </h2>
+                    <p className="text-gray-600 text-sm max-w-lg mx-auto">
+                        Jika pengaturan di atas sudah disimpan, Anda bisa langsung mencetak sertifikat kapan saja.
+                    </p>
+                    <Button 
+                        type="button" 
+                        size="lg"
+                        onClick={generateSertifikat} 
+                        disabled={isGenerating || !hasTemplateDepan || !hasTemplateBelakang} 
+                        className="w-full sm:w-auto cursor-pointer"
+                    >
+                        {isGenerating ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <FileText className="w-4 h-4 mr-2" />}
+                        Generate Sertifikat (ZIP)
+                    </Button>
+                    {(!hasTemplateDepan || !hasTemplateBelakang) && (
+                        <p className="text-red-500 text-sm">Silakan upload template dan klik Simpan terlebih dahulu.</p>
+                    )}
+                </div>
+            </div>
+        );
+    }
+
+    // IPNU FORM (Omitted for brevity, using simple structure but keeping the dual-mode)
+    return (
+        <div className="space-y-8">
+            <form onSubmit={simpanPengaturan} className="space-y-6 border border-gray-200 rounded-lg p-6 bg-white shadow-sm">
+                <div className="mb-4 border-b pb-4 flex justify-between items-center">
+                    <div>
+                        <h2 className="text-xl font-bold flex items-center gap-2">
+                            <Save className="w-5 h-5 text-green-600" />
+                            1. Simpan Pengaturan IPNU
+                        </h2>
+                        <p className="text-gray-500 text-sm mt-1">Simpan data surat dan penandatangan.</p>
+                    </div>
+                    <Button type="submit" disabled={processing} className="bg-green-600 hover:bg-green-700">
+                        {processing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                        Simpan Data
+                    </Button>
+                </div>
+                {/* IPNU Fields */}
+                <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-4">
-                        <h3 className="font-semibold text-lg border-b pb-2">2. Tempat & Tanggal</h3>
+                        <div className="space-y-2">
+                            <Label htmlFor="no_surat_awal">Mulai dari No. Urut Berapa?</Label>
+                            <Input id="no_surat_awal" type="text" required value={data.no_surat_awal} onChange={e => setData('no_surat_awal', e.target.value.replace(/\D/g, ''))} inputMode="numeric" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="format_nomor">Format Akhiran Nomor Surat</Label>
+                            <Input id="format_nomor" required value={data.format_nomor} onChange={e => setData('format_nomor', e.target.value)} />
+                        </div>
                         <div className="space-y-2">
                             <Label htmlFor="tempat">Tempat Dicetak</Label>
                             <Input id="tempat" required value={data.tempat} onChange={e => setData('tempat', e.target.value)} />
@@ -211,61 +209,64 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
                             <div className="space-y-2">
                                 <Label>Tanggal Masehi</Label>
                                 <div className="grid grid-cols-3 gap-2">
-                                    <Input id="tgl_m_hari" required value={data.tgl_m_hari} onChange={e => setData('tgl_m_hari', e.target.value)} placeholder="Tgl" />
-                                    <Input id="tgl_m_bulan" required value={data.tgl_m_bulan} onChange={e => setData('tgl_m_bulan', e.target.value)} placeholder="Bulan" />
-                                    <Input id="tgl_m_tahun" required value={data.tgl_m_tahun} onChange={e => setData('tgl_m_tahun', e.target.value)} placeholder="Tahun" />
+                                    <Input required value={data.tgl_m_hari} onChange={e => setData('tgl_m_hari', e.target.value)} placeholder="Tgl" />
+                                    <Input required value={data.tgl_m_bulan} onChange={e => setData('tgl_m_bulan', e.target.value)} placeholder="Bulan" />
+                                    <Input required value={data.tgl_m_tahun} onChange={e => setData('tgl_m_tahun', e.target.value)} placeholder="Tahun" />
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <Label>Tanggal Hijriah</Label>
                                 <div className="grid grid-cols-3 gap-2">
-                                    <Input id="tgl_h_hari" required value={data.tgl_h_hari} onChange={e => setData('tgl_h_hari', e.target.value)} placeholder="Tgl" />
-                                    <Input id="tgl_h_bulan" required value={data.tgl_h_bulan} onChange={e => setData('tgl_h_bulan', e.target.value)} placeholder="Bulan" />
-                                    <Input id="tgl_h_tahun" required value={data.tgl_h_tahun} onChange={e => setData('tgl_h_tahun', e.target.value)} placeholder="Tahun" />
+                                    <Input required value={data.tgl_h_hari} onChange={e => setData('tgl_h_hari', e.target.value)} placeholder="Tgl" />
+                                    <Input required value={data.tgl_h_bulan} onChange={e => setData('tgl_h_bulan', e.target.value)} placeholder="Bulan" />
+                                    <Input required value={data.tgl_h_tahun} onChange={e => setData('tgl_h_tahun', e.target.value)} placeholder="Tahun" />
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div className="space-y-4">
-                        <h3 className="font-semibold text-lg border-b pb-2">4. Teks Kop / Header</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <Label htmlFor="header_depan">Teks Kop Depan (Bisa di-enter)</Label>
-                                <Textarea 
-                                    id="header_depan"
-                                    required
-                                    className="min-h-[100px]"
-                                    value={data.header_depan}
-                                    onChange={e => setData('header_depan', e.target.value)}
-                                />
+                                <Label>Nama Ketua</Label>
+                                <Input required value={data.nama_ketua} onChange={e => setData('nama_ketua', e.target.value)} />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="header_belakang">Teks Kop Belakang (Bisa di-enter)</Label>
-                                <Textarea 
-                                    id="header_belakang"
-                                    required
-                                    className="min-h-[100px]"
-                                    value={data.header_belakang}
-                                    onChange={e => setData('header_belakang', e.target.value)}
-                                />
+                                <Label>NIA Ketua</Label>
+                                <Input required value={data.nia_ketua} onChange={e => setData('nia_ketua', e.target.value)} />
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Nama Sekretaris</Label>
+                                <Input required value={data.nama_sekretaris} onChange={e => setData('nama_sekretaris', e.target.value)} />
+                            </div>
+                            <div className="space-y-2">
+                                <Label>NIA Sekretaris</Label>
+                                <Input required value={data.nia_sekretaris} onChange={e => setData('nia_sekretaris', e.target.value)} />
                             </div>
                         </div>
+                        <div className="space-y-2">
+                            <Label>Kop Depan</Label>
+                            <Textarea required className="min-h-[100px]" value={data.header_depan} onChange={e => setData('header_depan', e.target.value)} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Kop Belakang</Label>
+                            <Textarea required className="min-h-[100px]" value={data.header_belakang} onChange={e => setData('header_belakang', e.target.value)} />
+                        </div>
                     </div>
-
                 </div>
-            </div>
-
-            <div className="flex justify-end gap-3 pt-4 border-t">
-                <Button type="button" variant="outline" onClick={(e) => submit(e, true)} disabled={isProcessing} className="w-full sm:w-auto cursor-pointer">
-                    {isPreviewing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Eye className="w-4 h-4 mr-2" />}
-                    Preview 1 Peserta (.docx)
-                </Button>
-                <Button type="button" onClick={(e) => submit(e, false)} disabled={isProcessing} className="w-full sm:w-auto cursor-pointer">
+            </form>
+            
+            <div className="border border-blue-200 rounded-lg p-6 bg-blue-50/30 text-center">
+                <Button 
+                    type="button" 
+                    size="lg"
+                    onClick={generateSertifikat} 
+                    disabled={isGenerating} 
+                    className="w-full sm:w-auto"
+                >
                     {isGenerating ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Download className="w-4 h-4 mr-2" />}
-                    Generate Sertifikat (ZIP)
+                    Generate Sertifikat IPNU (ZIP)
                 </Button>
             </div>
-        </form>
+        </div>
     );
 }

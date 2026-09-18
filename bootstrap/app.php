@@ -9,7 +9,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Symfony\Component\HttpFoundation\Response;
 use Inertia\Inertia;
-use Throwable;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
 
