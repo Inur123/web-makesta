@@ -4,16 +4,17 @@ import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Edit } from 'lucide-react';
 import { getIndeks } from '@/lib/helpers';
+import { Kegiatan, Peserta, Materi } from '@/types';
 
 interface Props {
     org: 'ipnu' | 'ippnu';
-    kegiatan: any;
-    peserta: any;
+    kegiatan: Kegiatan;
+    peserta: Peserta;
     nilaiMap: Record<string, number>;
 }
 
 function ShowLayout({ children }: { children: ReactNode }) {
-    const { org, kegiatan, peserta } = usePage<any>().props;
+    const { org, kegiatan, peserta } = usePage<{ org: string; kegiatan: Kegiatan; peserta: Peserta }>().props;
     return (
         <AppLayout breadcrumbs={[
             { title: 'Daftar Kegiatan', href: `/${org}/kegiatan` },
@@ -88,7 +89,7 @@ export default function Show({ org, kegiatan, peserta, nilaiMap }: Props) {
                             <p className="text-muted-foreground text-sm">Belum ada materi pada kegiatan ini.</p>
                         ) : (
                             <div className="space-y-3">
-                                {materiList.map((m: any) => {
+                                {materiList.map((m: Materi) => {
                                     const nilai = nilaiMap[m.id];
                                     const indeks = getIndeks(nilai);
                                     

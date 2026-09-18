@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\PesertaController::create
-* @see app/Http/Controllers/PesertaController.php:13
+* @see app/Http/Controllers/PesertaController.php:17
 * @route '/{org}/kegiatan/{kegiatan}/peserta/create'
 */
 export const create = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\PesertaController::create
-* @see app/Http/Controllers/PesertaController.php:13
+* @see app/Http/Controllers/PesertaController.php:17
 * @route '/{org}/kegiatan/{kegiatan}/peserta/create'
 */
 create.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -44,7 +44,7 @@ create.url = (args: { org: string | number, kegiatan: string | { id: string } } 
 
 /**
 * @see \App\Http\Controllers\PesertaController::create
-* @see app/Http/Controllers/PesertaController.php:13
+* @see app/Http/Controllers/PesertaController.php:17
 * @route '/{org}/kegiatan/{kegiatan}/peserta/create'
 */
 create.get = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -54,7 +54,7 @@ create.get = (args: { org: string | number, kegiatan: string | { id: string } } 
 
 /**
 * @see \App\Http\Controllers\PesertaController::create
-* @see app/Http/Controllers/PesertaController.php:13
+* @see app/Http/Controllers/PesertaController.php:17
 * @route '/{org}/kegiatan/{kegiatan}/peserta/create'
 */
 create.head = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -64,7 +64,7 @@ create.head = (args: { org: string | number, kegiatan: string | { id: string } }
 
 /**
 * @see \App\Http\Controllers\PesertaController::create
-* @see app/Http/Controllers/PesertaController.php:13
+* @see app/Http/Controllers/PesertaController.php:17
 * @route '/{org}/kegiatan/{kegiatan}/peserta/create'
 */
 const createForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -74,7 +74,7 @@ const createForm = (args: { org: string | number, kegiatan: string | { id: strin
 
 /**
 * @see \App\Http\Controllers\PesertaController::create
-* @see app/Http/Controllers/PesertaController.php:13
+* @see app/Http/Controllers/PesertaController.php:17
 * @route '/{org}/kegiatan/{kegiatan}/peserta/create'
 */
 createForm.get = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -84,7 +84,7 @@ createForm.get = (args: { org: string | number, kegiatan: string | { id: string 
 
 /**
 * @see \App\Http\Controllers\PesertaController::create
-* @see app/Http/Controllers/PesertaController.php:13
+* @see app/Http/Controllers/PesertaController.php:17
 * @route '/{org}/kegiatan/{kegiatan}/peserta/create'
 */
 createForm.head = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -101,7 +101,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\PesertaController::show
-* @see app/Http/Controllers/PesertaController.php:68
+* @see app/Http/Controllers/PesertaController.php:61
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}'
 */
 export const show = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\PesertaController::show
-* @see app/Http/Controllers/PesertaController.php:68
+* @see app/Http/Controllers/PesertaController.php:61
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}'
 */
 show.url = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -149,7 +149,7 @@ show.url = (args: { org: string | number, kegiatan: string | { id: string }, pes
 
 /**
 * @see \App\Http\Controllers\PesertaController::show
-* @see app/Http/Controllers/PesertaController.php:68
+* @see app/Http/Controllers/PesertaController.php:61
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}'
 */
 show.get = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -159,7 +159,7 @@ show.get = (args: { org: string | number, kegiatan: string | { id: string }, pes
 
 /**
 * @see \App\Http\Controllers\PesertaController::show
-* @see app/Http/Controllers/PesertaController.php:68
+* @see app/Http/Controllers/PesertaController.php:61
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}'
 */
 show.head = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -169,7 +169,7 @@ show.head = (args: { org: string | number, kegiatan: string | { id: string }, pe
 
 /**
 * @see \App\Http\Controllers\PesertaController::show
-* @see app/Http/Controllers/PesertaController.php:68
+* @see app/Http/Controllers/PesertaController.php:61
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}'
 */
 const showForm = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -179,7 +179,7 @@ const showForm = (args: { org: string | number, kegiatan: string | { id: string 
 
 /**
 * @see \App\Http\Controllers\PesertaController::show
-* @see app/Http/Controllers/PesertaController.php:68
+* @see app/Http/Controllers/PesertaController.php:61
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}'
 */
 showForm.get = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -189,7 +189,7 @@ showForm.get = (args: { org: string | number, kegiatan: string | { id: string },
 
 /**
 * @see \App\Http\Controllers\PesertaController::show
-* @see app/Http/Controllers/PesertaController.php:68
+* @see app/Http/Controllers/PesertaController.php:61
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}'
 */
 showForm.head = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -206,7 +206,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\PesertaController::store
-* @see app/Http/Controllers/PesertaController.php:25
+* @see app/Http/Controllers/PesertaController.php:29
 * @route '/{org}/kegiatan/{kegiatan}/peserta'
 */
 export const store = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -221,7 +221,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\PesertaController::store
-* @see app/Http/Controllers/PesertaController.php:25
+* @see app/Http/Controllers/PesertaController.php:29
 * @route '/{org}/kegiatan/{kegiatan}/peserta'
 */
 store.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -249,7 +249,7 @@ store.url = (args: { org: string | number, kegiatan: string | { id: string } } |
 
 /**
 * @see \App\Http\Controllers\PesertaController::store
-* @see app/Http/Controllers/PesertaController.php:25
+* @see app/Http/Controllers/PesertaController.php:29
 * @route '/{org}/kegiatan/{kegiatan}/peserta'
 */
 store.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -259,7 +259,7 @@ store.post = (args: { org: string | number, kegiatan: string | { id: string } } 
 
 /**
 * @see \App\Http\Controllers\PesertaController::store
-* @see app/Http/Controllers/PesertaController.php:25
+* @see app/Http/Controllers/PesertaController.php:29
 * @route '/{org}/kegiatan/{kegiatan}/peserta'
 */
 const storeForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -269,7 +269,7 @@ const storeForm = (args: { org: string | number, kegiatan: string | { id: string
 
 /**
 * @see \App\Http\Controllers\PesertaController::store
-* @see app/Http/Controllers/PesertaController.php:25
+* @see app/Http/Controllers/PesertaController.php:29
 * @route '/{org}/kegiatan/{kegiatan}/peserta'
 */
 storeForm.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -281,7 +281,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\PesertaController::edit
-* @see app/Http/Controllers/PesertaController.php:86
+* @see app/Http/Controllers/PesertaController.php:79
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}/edit'
 */
 export const edit = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -296,7 +296,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\PesertaController::edit
-* @see app/Http/Controllers/PesertaController.php:86
+* @see app/Http/Controllers/PesertaController.php:79
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}/edit'
 */
 edit.url = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -329,7 +329,7 @@ edit.url = (args: { org: string | number, kegiatan: string | { id: string }, pes
 
 /**
 * @see \App\Http\Controllers\PesertaController::edit
-* @see app/Http/Controllers/PesertaController.php:86
+* @see app/Http/Controllers/PesertaController.php:79
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}/edit'
 */
 edit.get = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -339,7 +339,7 @@ edit.get = (args: { org: string | number, kegiatan: string | { id: string }, pes
 
 /**
 * @see \App\Http\Controllers\PesertaController::edit
-* @see app/Http/Controllers/PesertaController.php:86
+* @see app/Http/Controllers/PesertaController.php:79
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}/edit'
 */
 edit.head = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -349,7 +349,7 @@ edit.head = (args: { org: string | number, kegiatan: string | { id: string }, pe
 
 /**
 * @see \App\Http\Controllers\PesertaController::edit
-* @see app/Http/Controllers/PesertaController.php:86
+* @see app/Http/Controllers/PesertaController.php:79
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}/edit'
 */
 const editForm = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -359,7 +359,7 @@ const editForm = (args: { org: string | number, kegiatan: string | { id: string 
 
 /**
 * @see \App\Http\Controllers\PesertaController::edit
-* @see app/Http/Controllers/PesertaController.php:86
+* @see app/Http/Controllers/PesertaController.php:79
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}/edit'
 */
 editForm.get = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -369,7 +369,7 @@ editForm.get = (args: { org: string | number, kegiatan: string | { id: string },
 
 /**
 * @see \App\Http\Controllers\PesertaController::edit
-* @see app/Http/Controllers/PesertaController.php:86
+* @see app/Http/Controllers/PesertaController.php:79
 * @route '/{org}/kegiatan/{kegiatan}/peserta/{peserta}/edit'
 */
 editForm.head = (args: { org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } } | [org: string | number, kegiatan: string | { id: string }, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -386,7 +386,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\PesertaController::update
-* @see app/Http/Controllers/PesertaController.php:104
+* @see app/Http/Controllers/PesertaController.php:97
 * @route '/{org}/peserta/{peserta}'
 */
 export const update = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -401,7 +401,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\PesertaController::update
-* @see app/Http/Controllers/PesertaController.php:104
+* @see app/Http/Controllers/PesertaController.php:97
 * @route '/{org}/peserta/{peserta}'
 */
 update.url = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -429,7 +429,7 @@ update.url = (args: { org: string | number, peserta: string | { id: string } } |
 
 /**
 * @see \App\Http\Controllers\PesertaController::update
-* @see app/Http/Controllers/PesertaController.php:104
+* @see app/Http/Controllers/PesertaController.php:97
 * @route '/{org}/peserta/{peserta}'
 */
 update.put = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -439,7 +439,7 @@ update.put = (args: { org: string | number, peserta: string | { id: string } } |
 
 /**
 * @see \App\Http\Controllers\PesertaController::update
-* @see app/Http/Controllers/PesertaController.php:104
+* @see app/Http/Controllers/PesertaController.php:97
 * @route '/{org}/peserta/{peserta}'
 */
 const updateForm = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -454,7 +454,7 @@ const updateForm = (args: { org: string | number, peserta: string | { id: string
 
 /**
 * @see \App\Http\Controllers\PesertaController::update
-* @see app/Http/Controllers/PesertaController.php:104
+* @see app/Http/Controllers/PesertaController.php:97
 * @route '/{org}/peserta/{peserta}'
 */
 updateForm.put = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -471,7 +471,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\PesertaController::destroy
-* @see app/Http/Controllers/PesertaController.php:148
+* @see app/Http/Controllers/PesertaController.php:130
 * @route '/{org}/peserta/{peserta}'
 */
 export const destroy = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -486,7 +486,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\PesertaController::destroy
-* @see app/Http/Controllers/PesertaController.php:148
+* @see app/Http/Controllers/PesertaController.php:130
 * @route '/{org}/peserta/{peserta}'
 */
 destroy.url = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -514,7 +514,7 @@ destroy.url = (args: { org: string | number, peserta: string | { id: string } } 
 
 /**
 * @see \App\Http\Controllers\PesertaController::destroy
-* @see app/Http/Controllers/PesertaController.php:148
+* @see app/Http/Controllers/PesertaController.php:130
 * @route '/{org}/peserta/{peserta}'
 */
 destroy.delete = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -524,7 +524,7 @@ destroy.delete = (args: { org: string | number, peserta: string | { id: string }
 
 /**
 * @see \App\Http\Controllers\PesertaController::destroy
-* @see app/Http/Controllers/PesertaController.php:148
+* @see app/Http/Controllers/PesertaController.php:130
 * @route '/{org}/peserta/{peserta}'
 */
 const destroyForm = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -539,7 +539,7 @@ const destroyForm = (args: { org: string | number, peserta: string | { id: strin
 
 /**
 * @see \App\Http\Controllers\PesertaController::destroy
-* @see app/Http/Controllers/PesertaController.php:148
+* @see app/Http/Controllers/PesertaController.php:130
 * @route '/{org}/peserta/{peserta}'
 */
 destroyForm.delete = (args: { org: string | number, peserta: string | { id: string } } | [org: string | number, peserta: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

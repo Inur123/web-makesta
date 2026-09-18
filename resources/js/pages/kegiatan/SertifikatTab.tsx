@@ -3,11 +3,13 @@ import { useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Download, Eye } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { Kegiatan } from '@/types';
 
-export default function SertifikatTab({ org, kegiatan }: any) {
+export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan: Kegiatan }) {
     const { data, setData, post, processing, errors, setError } = useForm({
         no_surat_awal: '',
         no_surat_akhir: '',
@@ -170,20 +172,20 @@ export default function SertifikatTab({ org, kegiatan }: any) {
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="header_depan">Teks Kop Depan (Bisa di-enter)</Label>
-                                <textarea 
+                                <Textarea 
                                     id="header_depan"
                                     required
-                                    className="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="min-h-[100px]"
                                     value={data.header_depan}
                                     onChange={e => setData('header_depan', e.target.value)}
                                 />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="header_belakang">Teks Kop Belakang (Bisa di-enter)</Label>
-                                <textarea 
+                                <Textarea 
                                     id="header_belakang"
                                     required
-                                    className="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="min-h-[100px]"
                                     value={data.header_belakang}
                                     onChange={e => setData('header_belakang', e.target.value)}
                                 />

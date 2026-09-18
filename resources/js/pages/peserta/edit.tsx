@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import InputError from '@/components/input-error';
 import { Loader2 } from 'lucide-react';
 import { getIndeks } from '@/lib/helpers';
+import { Kegiatan, Materi, Peserta } from '@/types';
 
 function EditLayout({ children }: { children: ReactNode }) {
     const { org, kegiatan } = usePage<{ org: string; kegiatan: { id: string; nama: string } }>().props;
@@ -26,21 +27,24 @@ function EditLayout({ children }: { children: ReactNode }) {
     );
 }
 
-export default function Edit({ org, kegiatan, peserta, nilaiMap }: any) {
+interface Props { org: 'ipnu' | 'ippnu'; kegiatan: Kegiatan; peserta: Peserta; nilaiMap: Record<string, number>; }
+
+export default function Edit({ org, kegiatan, peserta, nilaiMap }: Props) {
     const materiList = kegiatan.materi || [];
     
     const initialNilai = {} as Record<string, string>;
-    materiList.forEach((m: any) => {
+    materiList.forEach((m: Materi) => {
         initialNilai[m.id] = nilaiMap[m.id] !== undefined ? String(nilaiMap[m.id]) : '';
     });
 
     const { data, setData, put, processing, errors } = useForm({
-        nama: peserta.nama, 
-        ttl: peserta.ttl || '', 
-        alamat: peserta.alamat || '', 
-        no_hp: peserta.no_hp || '', 
+        nama: peserta.nama,
+        tempat_lahir: peserta.tempat_lahir || '',
+        tanggal_lahir: peserta.tanggal_lahir || '',
+        alamat: peserta.alamat || '',
+        no_hp: peserta.no_hp || '',
         sekolah: peserta.sekolah || '',
-        nilai: initialNilai
+        nilai: initialNilai,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -135,7 +139,7 @@ export default function Edit({ org, kegiatan, peserta, nilaiMap }: any) {
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                                {materiList.map((m: any) => {
+                                {materiList.map((m: Materi) => {
                                     const val = data.nilai[m.id] || '';
                                     const idx = getIndeks(val);
                                     return (

@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import InputError from '@/components/input-error';
 import { Loader2 } from 'lucide-react';
 import { getIndeks } from '@/lib/helpers';
+import { Kegiatan, Materi } from '@/types';
 
 function CreateLayout({ children }: { children: ReactNode }) {
     const { org, kegiatan } = usePage<{ org: string; kegiatan: { id: string; nama: string } }>().props;
@@ -26,7 +27,7 @@ function CreateLayout({ children }: { children: ReactNode }) {
     );
 }
 
-export default function Create({ org, kegiatan }: any) {
+export default function Create({ org, kegiatan }: { org: 'ipnu' | 'ippnu'; kegiatan: Kegiatan }) {
     const materiList = kegiatan.materi || [];
 
     const { data, setData, post, processing, errors } = useForm({
@@ -137,7 +138,7 @@ export default function Create({ org, kegiatan }: any) {
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                                {materiList.map((m: any) => {
+                                {materiList.map((m: Materi) => {
                                     const val = data.nilai[m.id] || '';
                                     const idx = getIndeks(val);
                                     return (

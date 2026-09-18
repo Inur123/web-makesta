@@ -7,10 +7,14 @@ use App\Models\Peserta;
 use App\Models\Nilai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StorePesertaRequest;
+use App\Http\Requests\UpdatePesertaRequest;
+use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 
 class PesertaController extends Controller
 {
-    public function create(string $org, Kegiatan $kegiatan)
+    public function create(string $org, Kegiatan $kegiatan): Response
     {
         $kegiatan->load(['materi' => function($q) {
             $q->orderBy('urutan');
@@ -22,19 +26,8 @@ class PesertaController extends Controller
         ]);
     }
 
-    public function store(Request $request, string $org, Kegiatan $kegiatan)
+    public function store(StorePesertaRequest $request, string $org, Kegiatan $kegiatan): RedirectResponse
     {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'tempat_lahir' => 'nullable|string|max:255',
-            'tanggal_lahir' => 'nullable|date',
-            'alamat' => 'nullable|string',
-            'no_hp' => 'nullable|string|max:50',
-            'sekolah' => 'nullable|string|max:255',
-            'nilai' => 'array',
-            'nilai.*' => 'nullable|integer|min:0|max:100',
-        ]);
-
         DB::transaction(function () use ($request, $kegiatan) {
             $peserta = $kegiatan->peserta()->create([
                 'nama' => $request->nama,
@@ -65,7 +58,7 @@ class PesertaController extends Controller
             ->with('success', 'Peserta dan nilai berhasil disimpan.');
     }
 
-        public function show(string $org, Kegiatan $kegiatan, Peserta $peserta)
+    public function show(string $org, Kegiatan $kegiatan, Peserta $peserta): Response
     {
         $kegiatan->load(['materi' => function($q) {
             $q->orderBy('urutan');
@@ -83,7 +76,7 @@ class PesertaController extends Controller
         ]);
     }
 
-    public function edit(string $org, Kegiatan $kegiatan, Peserta $peserta)
+    public function edit(string $org, Kegiatan $kegiatan, Peserta $peserta): Response
     {
         $kegiatan->load(['materi' => function($q) {
             $q->orderBy('urutan');
@@ -101,19 +94,8 @@ class PesertaController extends Controller
         ]);
     }
 
-    public function update(Request $request, string $org, Peserta $peserta)
+    public function update(UpdatePesertaRequest $request, string $org, Peserta $peserta): RedirectResponse
     {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'tempat_lahir' => 'nullable|string|max:255',
-            'tanggal_lahir' => 'nullable|date',
-            'alamat' => 'nullable|string',
-            'no_hp' => 'nullable|string|max:50',
-            'sekolah' => 'nullable|string|max:255',
-            'nilai' => 'array',
-            'nilai.*' => 'nullable|integer|min:0|max:100',
-        ]);
-
         $kegiatan = $peserta->kegiatan;
 
         DB::transaction(function () use ($request, $peserta) {
@@ -145,7 +127,7 @@ class PesertaController extends Controller
             ->with('success', 'Data peserta dan nilai berhasil diperbarui.');
     }
 
-    public function destroy(string $org, Peserta $peserta)
+    public function destroy(string $org, Peserta $peserta): RedirectResponse
     {
         $peserta->delete();
         return back()->with('success', 'Peserta berhasil dihapus.');

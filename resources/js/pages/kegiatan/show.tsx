@@ -15,8 +15,9 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Eye } from 'lucide-react';
 import SertifikatTab from './SertifikatTab';
+import { Kegiatan, Peserta, PaginatedData, Petugas, Materi } from '@/types';
 
-interface Props { org: 'ipnu' | 'ippnu'; kegiatan: any; pesertaPaginated: any; }
+interface Props { org: 'ipnu' | 'ippnu'; kegiatan: Kegiatan; pesertaPaginated: PaginatedData<Peserta>; }
 
 function ShowLayout({ children }: { children: ReactNode }) {
     const { org, kegiatan } = usePage<{ org: string; kegiatan: { id: string; nama: string } }>().props;
@@ -40,13 +41,13 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
             window.history.replaceState({}, '', newUrl);
         }
     };
-    const pj = kegiatan.petugas.filter((p: any) => p.peran === 'pj');
-    const instruktur = kegiatan.petugas.filter((p: any) => p.peran === 'instruktur');
-    const materiList = [...(kegiatan.materi || [])].sort((a: any, b: any) => a.urutan - b.urutan);
+    const pj = kegiatan.petugas?.filter((p: Petugas) => p.peran === 'pj') || [];
+    const instruktur = kegiatan.petugas?.filter((p: Petugas) => p.peran === 'instruktur') || [];
+    const materiList = [...(kegiatan.materi || [])].sort((a: Materi, b: Materi) => a.urutan - b.urutan);
     const pesertaList = pesertaPaginated?.data || [];
 
     const [isMateriDialogOpen, setIsMateriDialogOpen] = useState(false);
-    const [editingMateri, setEditingMateri] = useState<any>(null);
+    const [editingMateri, setEditingMateri] = useState<Materi | null>(null);
 
     const { data: materiData, setData: setMateriData, post: postMateri, put: putMateri,
         processing: processingMateri, errors: errorsMateri, reset: resetMateri } = useForm({ nama: '' });
@@ -105,7 +106,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
     };
 
     const openAddMateri = () => { setEditingMateri(null); resetMateri(); setIsMateriDialogOpen(true); };
-    const openEditMateri = (m: any) => { setEditingMateri(m); setMateriData('nama', m.nama); setIsMateriDialogOpen(true); };
+    const openEditMateri = (m: Materi) => { setEditingMateri(m); setMateriData('nama', m.nama); setIsMateriDialogOpen(true); };
 
     const submitMateri = (e: React.FormEvent) => {
         e.preventDefault();
@@ -181,7 +182,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                 <div>
                                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Penanggung Jawab</p>
                                     <div className="flex flex-wrap gap-1.5">
-                                        {pj.length > 0 ? pj.map((p: any) => (
+                                        {pj.length > 0 ? pj.map((p: Petugas) => (
                                             <Badge key={p.id} variant="secondary">{p.nama}</Badge>
                                         )) : <span className="text-sm text-muted-foreground">-</span>}
                                     </div>
@@ -189,7 +190,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                 <div>
                                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Instruktur</p>
                                     <div className="flex flex-wrap gap-1.5">
-                                        {instruktur.length > 0 ? instruktur.map((p: any) => (
+                                        {instruktur.length > 0 ? instruktur.map((p: Petugas) => (
                                             <Badge key={p.id} variant="secondary">{p.nama}</Badge>
                                         )) : <span className="text-sm text-muted-foreground">-</span>}
                                     </div>
@@ -269,7 +270,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                             </TableCell>
                                         </TableRow>
                                     ) : (
-                                        pesertaList.map((p: any, idx: number) => {
+                                        pesertaList.map((p: Peserta, idx: number) => {
                                             const itemNumber = (pesertaPaginated.from || 1) + idx;
                                             return (
                                                 <TableRow key={p.id} className="hover:bg-muted/20 cursor-pointer" onClick={() => router.visit(`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}`)}>
@@ -323,7 +324,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                 {pesertaPaginated.last_page > 1 && (
                                     <Pagination className="justify-end w-auto mx-0">
                                         <PaginationContent>
-                                            {pesertaPaginated.links.map((link: any, i: number) => {
+                                            {pesertaPaginated.links.map((link, i: number) => {
                                                 if (link.label.includes('Previous')) {
                                                     return (
                                                         <PaginationItem key={i}>
@@ -384,7 +385,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                             </TableCell>
                                         </TableRow>
                                     ) : (
-                                        materiList.map((m: any, index: number) => (
+                                        materiList.map((m: Materi, index: number) => (
                                             <TableRow key={m.id} className="hover:bg-muted/20">
                                                 <TableCell className="text-muted-foreground font-medium">{m.urutan}</TableCell>
                                                 <TableCell className="font-medium">{m.nama}</TableCell>

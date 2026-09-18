@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\MateriController::store
-* @see app/Http/Controllers/MateriController.php:11
+* @see app/Http/Controllers/MateriController.php:12
 * @route '/{org}/kegiatan/{kegiatan}/materi'
 */
 export const store = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\MateriController::store
-* @see app/Http/Controllers/MateriController.php:11
+* @see app/Http/Controllers/MateriController.php:12
 * @route '/{org}/kegiatan/{kegiatan}/materi'
 */
 store.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -44,7 +44,7 @@ store.url = (args: { org: string | number, kegiatan: string | { id: string } } |
 
 /**
 * @see \App\Http\Controllers\MateriController::store
-* @see app/Http/Controllers/MateriController.php:11
+* @see app/Http/Controllers/MateriController.php:12
 * @route '/{org}/kegiatan/{kegiatan}/materi'
 */
 store.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -54,7 +54,7 @@ store.post = (args: { org: string | number, kegiatan: string | { id: string } } 
 
 /**
 * @see \App\Http\Controllers\MateriController::store
-* @see app/Http/Controllers/MateriController.php:11
+* @see app/Http/Controllers/MateriController.php:12
 * @route '/{org}/kegiatan/{kegiatan}/materi'
 */
 const storeForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -64,7 +64,7 @@ const storeForm = (args: { org: string | number, kegiatan: string | { id: string
 
 /**
 * @see \App\Http\Controllers\MateriController::store
-* @see app/Http/Controllers/MateriController.php:11
+* @see app/Http/Controllers/MateriController.php:12
 * @route '/{org}/kegiatan/{kegiatan}/materi'
 */
 storeForm.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -76,7 +76,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\MateriController::update
-* @see app/Http/Controllers/MateriController.php:27
+* @see app/Http/Controllers/MateriController.php:28
 * @route '/{org}/materi/{materi}'
 */
 export const update = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -91,7 +91,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\MateriController::update
-* @see app/Http/Controllers/MateriController.php:27
+* @see app/Http/Controllers/MateriController.php:28
 * @route '/{org}/materi/{materi}'
 */
 update.url = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -119,7 +119,7 @@ update.url = (args: { org: string | number, materi: string | { id: string } } | 
 
 /**
 * @see \App\Http\Controllers\MateriController::update
-* @see app/Http/Controllers/MateriController.php:27
+* @see app/Http/Controllers/MateriController.php:28
 * @route '/{org}/materi/{materi}'
 */
 update.put = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -129,7 +129,7 @@ update.put = (args: { org: string | number, materi: string | { id: string } } | 
 
 /**
 * @see \App\Http\Controllers\MateriController::update
-* @see app/Http/Controllers/MateriController.php:27
+* @see app/Http/Controllers/MateriController.php:28
 * @route '/{org}/materi/{materi}'
 */
 const updateForm = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -144,7 +144,7 @@ const updateForm = (args: { org: string | number, materi: string | { id: string 
 
 /**
 * @see \App\Http\Controllers\MateriController::update
-* @see app/Http/Controllers/MateriController.php:27
+* @see app/Http/Controllers/MateriController.php:28
 * @route '/{org}/materi/{materi}'
 */
 updateForm.put = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -161,7 +161,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\MateriController::destroy
-* @see app/Http/Controllers/MateriController.php:40
+* @see app/Http/Controllers/MateriController.php:41
 * @route '/{org}/materi/{materi}'
 */
 export const destroy = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -176,7 +176,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\MateriController::destroy
-* @see app/Http/Controllers/MateriController.php:40
+* @see app/Http/Controllers/MateriController.php:41
 * @route '/{org}/materi/{materi}'
 */
 destroy.url = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -204,7 +204,7 @@ destroy.url = (args: { org: string | number, materi: string | { id: string } } |
 
 /**
 * @see \App\Http\Controllers\MateriController::destroy
-* @see app/Http/Controllers/MateriController.php:40
+* @see app/Http/Controllers/MateriController.php:41
 * @route '/{org}/materi/{materi}'
 */
 destroy.delete = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -214,7 +214,7 @@ destroy.delete = (args: { org: string | number, materi: string | { id: string } 
 
 /**
 * @see \App\Http\Controllers\MateriController::destroy
-* @see app/Http/Controllers/MateriController.php:40
+* @see app/Http/Controllers/MateriController.php:41
 * @route '/{org}/materi/{materi}'
 */
 const destroyForm = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -229,7 +229,7 @@ const destroyForm = (args: { org: string | number, materi: string | { id: string
 
 /**
 * @see \App\Http\Controllers\MateriController::destroy
-* @see app/Http/Controllers/MateriController.php:40
+* @see app/Http/Controllers/MateriController.php:41
 * @route '/{org}/materi/{materi}'
 */
 destroyForm.delete = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -246,7 +246,7 @@ destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\MateriController::up
-* @see app/Http/Controllers/MateriController.php:55
+* @see app/Http/Controllers/MateriController.php:56
 * @route '/{org}/materi/{materi}/up'
 */
 export const up = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -261,7 +261,7 @@ up.definition = {
 
 /**
 * @see \App\Http\Controllers\MateriController::up
-* @see app/Http/Controllers/MateriController.php:55
+* @see app/Http/Controllers/MateriController.php:56
 * @route '/{org}/materi/{materi}/up'
 */
 up.url = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -289,7 +289,7 @@ up.url = (args: { org: string | number, materi: string | { id: string } } | [org
 
 /**
 * @see \App\Http\Controllers\MateriController::up
-* @see app/Http/Controllers/MateriController.php:55
+* @see app/Http/Controllers/MateriController.php:56
 * @route '/{org}/materi/{materi}/up'
 */
 up.patch = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -299,7 +299,7 @@ up.patch = (args: { org: string | number, materi: string | { id: string } } | [o
 
 /**
 * @see \App\Http\Controllers\MateriController::up
-* @see app/Http/Controllers/MateriController.php:55
+* @see app/Http/Controllers/MateriController.php:56
 * @route '/{org}/materi/{materi}/up'
 */
 const upForm = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -314,7 +314,7 @@ const upForm = (args: { org: string | number, materi: string | { id: string } } 
 
 /**
 * @see \App\Http\Controllers\MateriController::up
-* @see app/Http/Controllers/MateriController.php:55
+* @see app/Http/Controllers/MateriController.php:56
 * @route '/{org}/materi/{materi}/up'
 */
 upForm.patch = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -331,7 +331,7 @@ up.form = upForm
 
 /**
 * @see \App\Http\Controllers\MateriController::down
-* @see app/Http/Controllers/MateriController.php:70
+* @see app/Http/Controllers/MateriController.php:71
 * @route '/{org}/materi/{materi}/down'
 */
 export const down = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -346,7 +346,7 @@ down.definition = {
 
 /**
 * @see \App\Http\Controllers\MateriController::down
-* @see app/Http/Controllers/MateriController.php:70
+* @see app/Http/Controllers/MateriController.php:71
 * @route '/{org}/materi/{materi}/down'
 */
 down.url = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -374,7 +374,7 @@ down.url = (args: { org: string | number, materi: string | { id: string } } | [o
 
 /**
 * @see \App\Http\Controllers\MateriController::down
-* @see app/Http/Controllers/MateriController.php:70
+* @see app/Http/Controllers/MateriController.php:71
 * @route '/{org}/materi/{materi}/down'
 */
 down.patch = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -384,7 +384,7 @@ down.patch = (args: { org: string | number, materi: string | { id: string } } | 
 
 /**
 * @see \App\Http\Controllers\MateriController::down
-* @see app/Http/Controllers/MateriController.php:70
+* @see app/Http/Controllers/MateriController.php:71
 * @route '/{org}/materi/{materi}/down'
 */
 const downForm = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -399,7 +399,7 @@ const downForm = (args: { org: string | number, materi: string | { id: string } 
 
 /**
 * @see \App\Http\Controllers\MateriController::down
-* @see app/Http/Controllers/MateriController.php:70
+* @see app/Http/Controllers/MateriController.php:71
 * @route '/{org}/materi/{materi}/down'
 */
 downForm.patch = (args: { org: string | number, materi: string | { id: string } } | [org: string | number, materi: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

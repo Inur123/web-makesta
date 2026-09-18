@@ -7,9 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import InputError from '@/components/input-error';
 import { Plus, Trash2, Loader2 } from 'lucide-react';
+import { Kegiatan } from '@/types';
 
-interface Petugas { id: string; peran: string; nama: string; }
-interface Kegiatan { id: string; nama: string; lokasi: string; tanggal_teks: string; catatan: string | null; petugas: Petugas[]; }
 interface Props { org: 'ipnu' | 'ippnu'; kegiatan: Kegiatan; }
 
 function EditLayout({ children }: { children: ReactNode }) {
@@ -27,8 +26,8 @@ export default function Edit({ org, kegiatan }: Props) {
     const { data, setData, put, processing, errors } = useForm({
         nama: kegiatan.nama, lokasi: kegiatan.lokasi, tanggal_teks: kegiatan.tanggal_teks,
         catatan: kegiatan.catatan || '',
-        pj: kegiatan.petugas.filter(p => p.peran === 'pj').map(p => p.nama),
-        instruktur: kegiatan.petugas.filter(p => p.peran === 'instruktur').map(p => p.nama),
+        pj: kegiatan.petugas?.filter(p => p.peran === 'pj').map(p => p.nama) || [],
+        instruktur: kegiatan.petugas?.filter(p => p.peran === 'instruktur').map(p => p.nama) || [],
     });
 
     const submit: FormEventHandler = (e) => { e.preventDefault(); put(`/${org}/kegiatan/${kegiatan.id}`); };

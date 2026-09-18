@@ -16,25 +16,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
-interface Kegiatan {
-    id: string; nama: string; lokasi: string;
-    tanggal_teks: string; selesai: boolean; peserta_count: number;
-}
-
-interface PaginatedData {
-    data: Kegiatan[];
-    links: { url: string | null; label: string; active: boolean }[];
-    current_page: number;
-    last_page: number;
-    from: number;
-    to: number;
-    total: number;
-}
+import { Kegiatan, PaginatedData } from '@/types';
 
 interface Props {
     org: 'ipnu' | 'ippnu';
-    kegiatans: PaginatedData;
+    kegiatans: PaginatedData<Kegiatan>;
     filters: { search: string | null; status: string | null };
 }
 

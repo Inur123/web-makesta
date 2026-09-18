@@ -5,24 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
+use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
-        // IPNU Stats
-        $ipnuKegiatan = Kegiatan::where('organisasi', 'ipnu')->count();
-        $ipnuPeserta = Peserta::whereHas('kegiatan', function($q) {
-            $q->where('organisasi', 'ipnu');
-        })->count();
-        $ipnuPending = Kegiatan::where('organisasi', 'ipnu')->where('selesai', false)->count();
+        // Optimize querying with conditional aggregation and GROUP BY
+        $kegiatanStats = Kegiatan::selectRaw('organisasi, COUNT(*) as total, SUM(CASE WHEN selesai = false THEN 1 ELSE 0 END) as pending')
+            ->groupBy('organisasi')
+            ->get()
+            ->keyBy('organisasi');
 
-        // IPPNU Stats
-        $ippnuKegiatan = Kegiatan::where('organisasi', 'ippnu')->count();
-        $ippnuPeserta = Peserta::whereHas('kegiatan', function($q) {
-            $q->where('organisasi', 'ippnu');
-        })->count();
-        $ippnuPending = Kegiatan::where('organisasi', 'ippnu')->where('selesai', false)->count();
+        $pesertaStats = Peserta::selectRaw('kegiatan.organisasi, COUNT(peserta.id) as total')
+            ->join('kegiatan', 'peserta.kegiatan_id', '=', 'kegiatan.id')
+            ->groupBy('kegiatan.organisasi')
+            ->get()
+            ->keyBy('organisasi');
+
+        $ipnuKegiatan = $kegiatanStats['ipnu']->total ?? 0;
+        $ipnuPending = $kegiatanStats['ipnu']->pending ?? 0;
+        $ipnuPeserta = $pesertaStats['ipnu']->total ?? 0;
+
+        $ippnuKegiatan = $kegiatanStats['ippnu']->total ?? 0;
+        $ippnuPending = $kegiatanStats['ippnu']->pending ?? 0;
+        $ippnuPeserta = $pesertaStats['ippnu']->total ?? 0;
 
         // 5 Kegiatan Terbaru
         $recentKegiatan = Kegiatan::withCount('peserta')
@@ -35,17 +43,17 @@ class DashboardController extends Controller
                 'ipnu' => [
                     'kegiatan' => $ipnuKegiatan,
                     'peserta' => $ipnuPeserta,
-                    'pending' => $ipnuPending,
+                    'pending' => (int) $ipnuPending,
                 ],
                 'ippnu' => [
                     'kegiatan' => $ippnuKegiatan,
                     'peserta' => $ippnuPeserta,
-                    'pending' => $ippnuPending,
+                    'pending' => (int) $ippnuPending,
                 ],
                 'total' => [
                     'kegiatan' => $ipnuKegiatan + $ippnuKegiatan,
                     'peserta' => $ipnuPeserta + $ippnuPeserta,
-                    'pending' => $ipnuPending + $ippnuPending,
+                    'pending' => (int) ($ipnuPending + $ippnuPending),
                 ]
             ],
             'recentKegiatan' => $recentKegiatan

@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use App\Models\Materi;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class MateriController extends Controller
 {
-    public function store(Request $request, $org, Kegiatan $kegiatan)
+    public function store(Request $request, $org, Kegiatan $kegiatan): RedirectResponse
     {
         $request->validate([
             'nama' => 'required|string|max:255',
@@ -24,7 +25,7 @@ class MateriController extends Controller
         return back()->with('success', 'Materi berhasil ditambahkan');
     }
 
-    public function update(Request $request, $org, Materi $materi)
+    public function update(Request $request, $org, Materi $materi): RedirectResponse
     {
         $request->validate([
             'nama' => 'required|string|max:255',
@@ -37,7 +38,7 @@ class MateriController extends Controller
         return back()->with('success', 'Materi berhasil diperbarui');
     }
 
-    public function destroy($org, Materi $materi)
+    public function destroy($org, Materi $materi): RedirectResponse
     {
         $kegiatanId = $materi->kegiatan_id;
         $deletedUrutan = $materi->urutan;
@@ -52,7 +53,7 @@ class MateriController extends Controller
         return back()->with('success', 'Materi berhasil dihapus');
     }
 
-    public function moveUp($org, Materi $materi)
+    public function moveUp($org, Materi $materi): RedirectResponse
     {
         if ($materi->urutan > 1) {
             $previousMateri = Materi::where('kegiatan_id', $materi->kegiatan_id)
@@ -67,7 +68,7 @@ class MateriController extends Controller
         return back();
     }
 
-    public function moveDown($org, Materi $materi)
+    public function moveDown($org, Materi $materi): RedirectResponse
     {
         $maxUrutan = Materi::where('kegiatan_id', $materi->kegiatan_id)->max('urutan');
 

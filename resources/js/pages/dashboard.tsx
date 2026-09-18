@@ -4,20 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Users, CalendarCheck, Clock, Layers, Activity } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
-interface StatsProps {
-    kegiatan: number;
-    peserta: number;
-    pending: number;
-}
+import { DashboardStats, Kegiatan } from '@/types';
 
 interface Props {
     stats: {
-        ipnu: StatsProps;
-        ippnu: StatsProps;
-        total: StatsProps;
+        ipnu: DashboardStats;
+        ippnu: DashboardStats;
+        total: DashboardStats;
     };
-    recentKegiatan: any[];
+    recentKegiatan: Kegiatan[];
 }
 
 export default function Dashboard({ stats, recentKegiatan }: Props) {
