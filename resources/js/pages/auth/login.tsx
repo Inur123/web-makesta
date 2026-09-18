@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/routes/login';
+import { Turnstile } from '@marsidev/react-turnstile';
+import { useAppearance } from '@/hooks/use-appearance';
 
 type Props = {
     status?: string;
@@ -15,6 +17,7 @@ type Props = {
 
 export default function Login({ status, canResetPassword }: Props) {
     const { errors } = usePage().props;
+    const { resolvedAppearance } = useAppearance();
 
     useEffect(() => {
         if (errors && Object.keys(errors).length > 0) {
@@ -58,6 +61,16 @@ export default function Login({ status, canResetPassword }: Props) {
                                     tabIndex={2}
                                     autoComplete="current-password"
                                     placeholder="Password"
+                                />
+                            </div>
+
+                            <div className="flex justify-center mt-2">
+                                <Turnstile
+                                    siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                                    options={{
+                                        theme: resolvedAppearance,
+                                        size: 'normal'
+                                    }}
                                 />
                             </div>
 

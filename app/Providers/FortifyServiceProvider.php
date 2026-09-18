@@ -62,6 +62,30 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureActions(): void
     {
+        Fortify::authenticateUsing(function (Request $request) {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+                'cf-turnstile-response' => ['required', function ($attribute, $value, $fail) {
+                    $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                        'secret' => env('TURNSTILE_SECRET_KEY'),
+                        'response' => $value,
+                        'remoteip' => request()->ip(),
+                    ]);
+                    if (!$response->json('success')) {
+                        $fail('Verifikasi keamanan (Turnstile) gagal. Silakan coba lagi.');
+                    }
+                }],
+            ], [
+                'cf-turnstile-response.required' => 'Harap selesaikan verifikasi keamanan.'
+            ]);
+            
+            $user = \App\Models\User::where('email', $request->email)->first();
+            if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+                return $user;
+            }
+        });
+
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         /* @chisel-registration */
         Fortify::createUsersUsing(CreateNewUser::class);

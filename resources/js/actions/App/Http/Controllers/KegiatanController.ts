@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\KegiatanController::index
-* @see app/Http/Controllers/KegiatanController.php:18
+* @see app/Http/Controllers/KegiatanController.php:19
 * @route '/{org}/kegiatan'
 */
 export const index = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::index
-* @see app/Http/Controllers/KegiatanController.php:18
+* @see app/Http/Controllers/KegiatanController.php:19
 * @route '/{org}/kegiatan'
 */
 index.url = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ index.url = (args: { org: string | number } | [org: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\KegiatanController::index
-* @see app/Http/Controllers/KegiatanController.php:18
+* @see app/Http/Controllers/KegiatanController.php:19
 * @route '/{org}/kegiatan'
 */
 index.get = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ index.get = (args: { org: string | number } | [org: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\KegiatanController::index
-* @see app/Http/Controllers/KegiatanController.php:18
+* @see app/Http/Controllers/KegiatanController.php:19
 * @route '/{org}/kegiatan'
 */
 index.head = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -63,7 +63,7 @@ index.head = (args: { org: string | number } | [org: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::index
-* @see app/Http/Controllers/KegiatanController.php:18
+* @see app/Http/Controllers/KegiatanController.php:19
 * @route '/{org}/kegiatan'
 */
 const indexForm = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -73,7 +73,7 @@ const indexForm = (args: { org: string | number } | [org: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\KegiatanController::index
-* @see app/Http/Controllers/KegiatanController.php:18
+* @see app/Http/Controllers/KegiatanController.php:19
 * @route '/{org}/kegiatan'
 */
 indexForm.get = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -83,7 +83,7 @@ indexForm.get = (args: { org: string | number } | [org: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\KegiatanController::index
-* @see app/Http/Controllers/KegiatanController.php:18
+* @see app/Http/Controllers/KegiatanController.php:19
 * @route '/{org}/kegiatan'
 */
 indexForm.head = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -100,7 +100,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::create
-* @see app/Http/Controllers/KegiatanController.php:52
+* @see app/Http/Controllers/KegiatanController.php:53
 * @route '/{org}/kegiatan/create'
 */
 export const create = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -115,7 +115,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::create
-* @see app/Http/Controllers/KegiatanController.php:52
+* @see app/Http/Controllers/KegiatanController.php:53
 * @route '/{org}/kegiatan/create'
 */
 create.url = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -142,7 +142,7 @@ create.url = (args: { org: string | number } | [org: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::create
-* @see app/Http/Controllers/KegiatanController.php:52
+* @see app/Http/Controllers/KegiatanController.php:53
 * @route '/{org}/kegiatan/create'
 */
 create.get = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -152,7 +152,7 @@ create.get = (args: { org: string | number } | [org: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::create
-* @see app/Http/Controllers/KegiatanController.php:52
+* @see app/Http/Controllers/KegiatanController.php:53
 * @route '/{org}/kegiatan/create'
 */
 create.head = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -162,7 +162,7 @@ create.head = (args: { org: string | number } | [org: string | number ] | string
 
 /**
 * @see \App\Http\Controllers\KegiatanController::create
-* @see app/Http/Controllers/KegiatanController.php:52
+* @see app/Http/Controllers/KegiatanController.php:53
 * @route '/{org}/kegiatan/create'
 */
 const createForm = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -172,7 +172,7 @@ const createForm = (args: { org: string | number } | [org: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\KegiatanController::create
-* @see app/Http/Controllers/KegiatanController.php:52
+* @see app/Http/Controllers/KegiatanController.php:53
 * @route '/{org}/kegiatan/create'
 */
 createForm.get = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -182,7 +182,7 @@ createForm.get = (args: { org: string | number } | [org: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\KegiatanController::create
-* @see app/Http/Controllers/KegiatanController.php:52
+* @see app/Http/Controllers/KegiatanController.php:53
 * @route '/{org}/kegiatan/create'
 */
 createForm.head = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -199,7 +199,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::store
-* @see app/Http/Controllers/KegiatanController.php:59
+* @see app/Http/Controllers/KegiatanController.php:60
 * @route '/{org}/kegiatan'
 */
 export const store = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -214,7 +214,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::store
-* @see app/Http/Controllers/KegiatanController.php:59
+* @see app/Http/Controllers/KegiatanController.php:60
 * @route '/{org}/kegiatan'
 */
 store.url = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -241,7 +241,7 @@ store.url = (args: { org: string | number } | [org: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\KegiatanController::store
-* @see app/Http/Controllers/KegiatanController.php:59
+* @see app/Http/Controllers/KegiatanController.php:60
 * @route '/{org}/kegiatan'
 */
 store.post = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -251,7 +251,7 @@ store.post = (args: { org: string | number } | [org: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::store
-* @see app/Http/Controllers/KegiatanController.php:59
+* @see app/Http/Controllers/KegiatanController.php:60
 * @route '/{org}/kegiatan'
 */
 const storeForm = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -261,7 +261,7 @@ const storeForm = (args: { org: string | number } | [org: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\KegiatanController::store
-* @see app/Http/Controllers/KegiatanController.php:59
+* @see app/Http/Controllers/KegiatanController.php:60
 * @route '/{org}/kegiatan'
 */
 storeForm.post = (args: { org: string | number } | [org: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -273,7 +273,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::show
-* @see app/Http/Controllers/KegiatanController.php:86
+* @see app/Http/Controllers/KegiatanController.php:87
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 export const show = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -288,7 +288,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::show
-* @see app/Http/Controllers/KegiatanController.php:86
+* @see app/Http/Controllers/KegiatanController.php:87
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 show.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -316,7 +316,7 @@ show.url = (args: { org: string | number, kegiatan: string | { id: string } } | 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::show
-* @see app/Http/Controllers/KegiatanController.php:86
+* @see app/Http/Controllers/KegiatanController.php:87
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 show.get = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -326,7 +326,7 @@ show.get = (args: { org: string | number, kegiatan: string | { id: string } } | 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::show
-* @see app/Http/Controllers/KegiatanController.php:86
+* @see app/Http/Controllers/KegiatanController.php:87
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 show.head = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -336,7 +336,7 @@ show.head = (args: { org: string | number, kegiatan: string | { id: string } } |
 
 /**
 * @see \App\Http\Controllers\KegiatanController::show
-* @see app/Http/Controllers/KegiatanController.php:86
+* @see app/Http/Controllers/KegiatanController.php:87
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 const showForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -346,7 +346,7 @@ const showForm = (args: { org: string | number, kegiatan: string | { id: string 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::show
-* @see app/Http/Controllers/KegiatanController.php:86
+* @see app/Http/Controllers/KegiatanController.php:87
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 showForm.get = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -356,7 +356,7 @@ showForm.get = (args: { org: string | number, kegiatan: string | { id: string } 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::show
-* @see app/Http/Controllers/KegiatanController.php:86
+* @see app/Http/Controllers/KegiatanController.php:87
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 showForm.head = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -373,7 +373,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::exportMethod
-* @see app/Http/Controllers/KegiatanController.php:153
+* @see app/Http/Controllers/KegiatanController.php:154
 * @route '/{org}/kegiatan/{kegiatan}/export'
 */
 export const exportMethod = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -388,7 +388,7 @@ exportMethod.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::exportMethod
-* @see app/Http/Controllers/KegiatanController.php:153
+* @see app/Http/Controllers/KegiatanController.php:154
 * @route '/{org}/kegiatan/{kegiatan}/export'
 */
 exportMethod.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -416,7 +416,7 @@ exportMethod.url = (args: { org: string | number, kegiatan: string | { id: strin
 
 /**
 * @see \App\Http\Controllers\KegiatanController::exportMethod
-* @see app/Http/Controllers/KegiatanController.php:153
+* @see app/Http/Controllers/KegiatanController.php:154
 * @route '/{org}/kegiatan/{kegiatan}/export'
 */
 exportMethod.get = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -426,7 +426,7 @@ exportMethod.get = (args: { org: string | number, kegiatan: string | { id: strin
 
 /**
 * @see \App\Http\Controllers\KegiatanController::exportMethod
-* @see app/Http/Controllers/KegiatanController.php:153
+* @see app/Http/Controllers/KegiatanController.php:154
 * @route '/{org}/kegiatan/{kegiatan}/export'
 */
 exportMethod.head = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -436,7 +436,7 @@ exportMethod.head = (args: { org: string | number, kegiatan: string | { id: stri
 
 /**
 * @see \App\Http\Controllers\KegiatanController::exportMethod
-* @see app/Http/Controllers/KegiatanController.php:153
+* @see app/Http/Controllers/KegiatanController.php:154
 * @route '/{org}/kegiatan/{kegiatan}/export'
 */
 const exportMethodForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -446,7 +446,7 @@ const exportMethodForm = (args: { org: string | number, kegiatan: string | { id:
 
 /**
 * @see \App\Http\Controllers\KegiatanController::exportMethod
-* @see app/Http/Controllers/KegiatanController.php:153
+* @see app/Http/Controllers/KegiatanController.php:154
 * @route '/{org}/kegiatan/{kegiatan}/export'
 */
 exportMethodForm.get = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -456,7 +456,7 @@ exportMethodForm.get = (args: { org: string | number, kegiatan: string | { id: s
 
 /**
 * @see \App\Http\Controllers\KegiatanController::exportMethod
-* @see app/Http/Controllers/KegiatanController.php:153
+* @see app/Http/Controllers/KegiatanController.php:154
 * @route '/{org}/kegiatan/{kegiatan}/export'
 */
 exportMethodForm.head = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -473,7 +473,7 @@ exportMethod.form = exportMethodForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:159
+* @see app/Http/Controllers/KegiatanController.php:160
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 export const generateSertifikat = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -488,7 +488,7 @@ generateSertifikat.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:159
+* @see app/Http/Controllers/KegiatanController.php:160
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikat.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -516,7 +516,7 @@ generateSertifikat.url = (args: { org: string | number, kegiatan: string | { id:
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:159
+* @see app/Http/Controllers/KegiatanController.php:160
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikat.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -526,7 +526,7 @@ generateSertifikat.post = (args: { org: string | number, kegiatan: string | { id
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:159
+* @see app/Http/Controllers/KegiatanController.php:160
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 const generateSertifikatForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -536,7 +536,7 @@ const generateSertifikatForm = (args: { org: string | number, kegiatan: string |
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:159
+* @see app/Http/Controllers/KegiatanController.php:160
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikatForm.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -548,7 +548,7 @@ generateSertifikat.form = generateSertifikatForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::edit
-* @see app/Http/Controllers/KegiatanController.php:101
+* @see app/Http/Controllers/KegiatanController.php:102
 * @route '/{org}/kegiatan/{kegiatan}/edit'
 */
 export const edit = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -563,7 +563,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::edit
-* @see app/Http/Controllers/KegiatanController.php:101
+* @see app/Http/Controllers/KegiatanController.php:102
 * @route '/{org}/kegiatan/{kegiatan}/edit'
 */
 edit.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -591,7 +591,7 @@ edit.url = (args: { org: string | number, kegiatan: string | { id: string } } | 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::edit
-* @see app/Http/Controllers/KegiatanController.php:101
+* @see app/Http/Controllers/KegiatanController.php:102
 * @route '/{org}/kegiatan/{kegiatan}/edit'
 */
 edit.get = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -601,7 +601,7 @@ edit.get = (args: { org: string | number, kegiatan: string | { id: string } } | 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::edit
-* @see app/Http/Controllers/KegiatanController.php:101
+* @see app/Http/Controllers/KegiatanController.php:102
 * @route '/{org}/kegiatan/{kegiatan}/edit'
 */
 edit.head = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -611,7 +611,7 @@ edit.head = (args: { org: string | number, kegiatan: string | { id: string } } |
 
 /**
 * @see \App\Http\Controllers\KegiatanController::edit
-* @see app/Http/Controllers/KegiatanController.php:101
+* @see app/Http/Controllers/KegiatanController.php:102
 * @route '/{org}/kegiatan/{kegiatan}/edit'
 */
 const editForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -621,7 +621,7 @@ const editForm = (args: { org: string | number, kegiatan: string | { id: string 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::edit
-* @see app/Http/Controllers/KegiatanController.php:101
+* @see app/Http/Controllers/KegiatanController.php:102
 * @route '/{org}/kegiatan/{kegiatan}/edit'
 */
 editForm.get = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -631,7 +631,7 @@ editForm.get = (args: { org: string | number, kegiatan: string | { id: string } 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::edit
-* @see app/Http/Controllers/KegiatanController.php:101
+* @see app/Http/Controllers/KegiatanController.php:102
 * @route '/{org}/kegiatan/{kegiatan}/edit'
 */
 editForm.head = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -648,7 +648,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::update
-* @see app/Http/Controllers/KegiatanController.php:111
+* @see app/Http/Controllers/KegiatanController.php:112
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 export const update = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -663,7 +663,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::update
-* @see app/Http/Controllers/KegiatanController.php:111
+* @see app/Http/Controllers/KegiatanController.php:112
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 update.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -691,7 +691,7 @@ update.url = (args: { org: string | number, kegiatan: string | { id: string } } 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::update
-* @see app/Http/Controllers/KegiatanController.php:111
+* @see app/Http/Controllers/KegiatanController.php:112
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 update.put = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -701,7 +701,7 @@ update.put = (args: { org: string | number, kegiatan: string | { id: string } } 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::update
-* @see app/Http/Controllers/KegiatanController.php:111
+* @see app/Http/Controllers/KegiatanController.php:112
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 const updateForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -716,7 +716,7 @@ const updateForm = (args: { org: string | number, kegiatan: string | { id: strin
 
 /**
 * @see \App\Http\Controllers\KegiatanController::update
-* @see app/Http/Controllers/KegiatanController.php:111
+* @see app/Http/Controllers/KegiatanController.php:112
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 updateForm.put = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -733,7 +733,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::destroy
-* @see app/Http/Controllers/KegiatanController.php:138
+* @see app/Http/Controllers/KegiatanController.php:139
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 export const destroy = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -748,7 +748,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::destroy
-* @see app/Http/Controllers/KegiatanController.php:138
+* @see app/Http/Controllers/KegiatanController.php:139
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 destroy.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -776,7 +776,7 @@ destroy.url = (args: { org: string | number, kegiatan: string | { id: string } }
 
 /**
 * @see \App\Http\Controllers\KegiatanController::destroy
-* @see app/Http/Controllers/KegiatanController.php:138
+* @see app/Http/Controllers/KegiatanController.php:139
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 destroy.delete = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -786,7 +786,7 @@ destroy.delete = (args: { org: string | number, kegiatan: string | { id: string 
 
 /**
 * @see \App\Http\Controllers\KegiatanController::destroy
-* @see app/Http/Controllers/KegiatanController.php:138
+* @see app/Http/Controllers/KegiatanController.php:139
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 const destroyForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -801,7 +801,7 @@ const destroyForm = (args: { org: string | number, kegiatan: string | { id: stri
 
 /**
 * @see \App\Http\Controllers\KegiatanController::destroy
-* @see app/Http/Controllers/KegiatanController.php:138
+* @see app/Http/Controllers/KegiatanController.php:139
 * @route '/{org}/kegiatan/{kegiatan}'
 */
 destroyForm.delete = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -818,7 +818,7 @@ destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::toggleStatus
-* @see app/Http/Controllers/KegiatanController.php:144
+* @see app/Http/Controllers/KegiatanController.php:145
 * @route '/{org}/kegiatan/{kegiatan}/status'
 */
 export const toggleStatus = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -833,7 +833,7 @@ toggleStatus.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::toggleStatus
-* @see app/Http/Controllers/KegiatanController.php:144
+* @see app/Http/Controllers/KegiatanController.php:145
 * @route '/{org}/kegiatan/{kegiatan}/status'
 */
 toggleStatus.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -861,7 +861,7 @@ toggleStatus.url = (args: { org: string | number, kegiatan: string | { id: strin
 
 /**
 * @see \App\Http\Controllers\KegiatanController::toggleStatus
-* @see app/Http/Controllers/KegiatanController.php:144
+* @see app/Http/Controllers/KegiatanController.php:145
 * @route '/{org}/kegiatan/{kegiatan}/status'
 */
 toggleStatus.patch = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -871,7 +871,7 @@ toggleStatus.patch = (args: { org: string | number, kegiatan: string | { id: str
 
 /**
 * @see \App\Http\Controllers\KegiatanController::toggleStatus
-* @see app/Http/Controllers/KegiatanController.php:144
+* @see app/Http/Controllers/KegiatanController.php:145
 * @route '/{org}/kegiatan/{kegiatan}/status'
 */
 const toggleStatusForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -886,7 +886,7 @@ const toggleStatusForm = (args: { org: string | number, kegiatan: string | { id:
 
 /**
 * @see \App\Http\Controllers\KegiatanController::toggleStatus
-* @see app/Http/Controllers/KegiatanController.php:144
+* @see app/Http/Controllers/KegiatanController.php:145
 * @route '/{org}/kegiatan/{kegiatan}/status'
 */
 toggleStatusForm.patch = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
