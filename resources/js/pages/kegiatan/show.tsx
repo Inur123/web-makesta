@@ -348,7 +348,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                                 }
                                                 return (
                                                     <PaginationItem key={i}>
-                                                        <PaginationLink href={link.url} isActive={link.active}>
+                                                        <PaginationLink href={link.url || '#'} isActive={link.active}>
                                                             {link.label}
                                                         </PaginationLink>
                                                     </PaginationItem>
