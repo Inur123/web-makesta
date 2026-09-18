@@ -6,6 +6,10 @@ use App\Http\Middleware\CheckOrganisasi;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpFoundation\Response;
+use Inertia\Inertia;
+use Throwable;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
 
@@ -32,16 +36,16 @@ return Application::configure(basePath: dirname(__DIR__))
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
 
-        $exceptions->render(function (\Illuminate\Http\Exceptions\ThrottleRequestsException $e, Request $request) {
+        $exceptions->render(function (ThrottleRequestsException $e, Request $request) {
             if (! $request->expectsJson()) {
                 return back()->with('error', 'Terlalu banyak permintaan. Silakan tunggu beberapa menit.');
             }
         });
 
-        $exceptions->respond(function (\Symfony\Component\HttpFoundation\Response $response, \Throwable $exception, Request $request) {
+        $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
             $status = $response->getStatusCode();
             if (in_array($status, [401, 403, 404, 419, 429, 500, 503])) {
-                return \Inertia\Inertia::render('error', ['status' => $status])
+                return Inertia::render('error', ['status' => $status])
                     ->toResponse($request)
                     ->setStatusCode($status);
             }

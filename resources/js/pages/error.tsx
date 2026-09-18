@@ -33,14 +33,14 @@ export default function ErrorPage({ status }: Props) {
         <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-4 relative overflow-hidden">
             <Head title={displayTitle} />
             
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden -z-10">
-                <span className="text-[10rem] sm:text-[15rem] md:text-[25rem] font-bold text-muted/30 leading-none tracking-tighter">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
+                <span className="text-[10rem] sm:text-[15rem] md:text-[25rem] font-bold text-muted/20 leading-none tracking-tighter">
                     {status}
                 </span>
             </div>
 
             {/* Content */}
-            <div className="text-center z-10 max-w-lg mx-auto">
+            <div className="text-center z-10 relative max-w-lg mx-auto">
                 <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4">
                     {status === 404 ? 'Ups! Halaman Tidak Ditemukan' : displayTitle}
                 </h1>
@@ -49,7 +49,7 @@ export default function ErrorPage({ status }: Props) {
                     {displayDescription}
                 </p>
 
-                <Button asChild size="lg" className="rounded-full px-8">
+                <Button asChild size="lg" className="h-14 px-10 text-base font-semibold cursor-pointer bg-[#03783e] hover:bg-[#025c2f] text-white rounded-full shadow-lg hover:shadow-[#03783e]/25 hover:-translate-y-1 transition-all duration-300">
                     <Link href="/">
                         Kembali ke Halaman Utama
                     </Link>
