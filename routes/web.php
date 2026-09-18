@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () { if (auth()->check()) { return redirect()->route('dashboard'); } return inertia('welcome'); })->name('home');
+Route::get('/', function () { if (\Illuminate\Support\Facades\Auth::check()) { return redirect()->route('dashboard'); } return inertia('welcome'); })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
