@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 
 interface Props {
@@ -30,17 +30,16 @@ export default function ErrorPage({ status }: Props) {
     const displayDescription = description[status] || 'Terjadi kesalahan sistem. Silakan hubungi administrator.';
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-4 relative overflow-hidden">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-4">
             <Head title={displayTitle} />
             
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
-                <span className="text-[10rem] sm:text-[15rem] md:text-[25rem] font-bold text-black/5 dark:text-white/5 leading-none tracking-tighter">
-                    {status}
-                </span>
-            </div>
+            <div className="text-center max-w-lg mx-auto">
+                <div className="mb-4">
+                    <span className="text-[7rem] sm:text-[9rem] font-extrabold text-black/10 dark:text-white/10 leading-none tracking-tighter">
+                        {status}
+                    </span>
+                </div>
 
-            {/* Content */}
-            <div className="text-center z-10 relative max-w-lg mx-auto">
                 <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4">
                     {status === 404 ? 'Ups! Halaman Tidak Ditemukan' : displayTitle}
                 </h1>
@@ -49,10 +48,12 @@ export default function ErrorPage({ status }: Props) {
                     {displayDescription}
                 </p>
 
-                <Button asChild size="lg" className="rounded-full px-8">
-                    <Link href="/">
-                        Kembali ke Halaman Utama
-                    </Link>
+                <Button 
+                    size="lg" 
+                    className="rounded-full px-8 cursor-pointer" 
+                    onClick={() => router.visit('/')}
+                >
+                    Kembali ke Halaman Utama
                 </Button>
             </div>
         </div>
