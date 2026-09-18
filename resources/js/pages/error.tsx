@@ -1,4 +1,4 @@
-import { Head, router } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 
 interface Props {
@@ -48,12 +48,10 @@ export default function ErrorPage({ status }: Props) {
                     {displayDescription}
                 </p>
 
-                <Button 
-                    size="lg" 
-                    className="rounded-full px-8 cursor-pointer" 
-                    onClick={() => router.visit('/')}
-                >
-                    Kembali ke Halaman Utama
+                <Button asChild size="lg" className="rounded-full px-8 cursor-pointer">
+                    <Link href="/" replace>
+                        Kembali ke Halaman Utama
+                    </Link>
                 </Button>
             </div>
         </div>
