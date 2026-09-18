@@ -19,7 +19,6 @@ type Props = {
 export default function Login({ status, canResetPassword }: Props) {
     const { errors } = usePage().props;
     const { resolvedAppearance } = useAppearance();
-    const [turnstileLoaded, setTurnstileLoaded] = useState(false);
 
     useEffect(() => {
         if (errors && Object.keys(errors).length > 0) {
@@ -67,25 +66,26 @@ export default function Login({ status, canResetPassword }: Props) {
                             </div>
 
                             <div className="flex justify-start mt-2">
-                                <div className="relative">
-                                    {!turnstileLoaded && (
-                                        <div className="absolute inset-0 z-10 flex items-center space-x-3 border bg-card rounded-md p-3 w-[300px] h-[65px]">
-                                            <Skeleton className="h-7 w-7 rounded-sm shrink-0" />
-                                            <div className="space-y-2 flex-1">
-                                                <Skeleton className="h-2 w-3/4" />
-                                                <Skeleton className="h-2 w-1/2" />
-                                            </div>
-                                            <Skeleton className="h-8 w-10 rounded-sm shrink-0" />
+                                <div className="relative w-[300px] h-[65px]">
+                                    {/* Skeleton placeholder behind the widget */}
+                                    <div className="absolute inset-0 z-0 flex items-center space-x-3 border bg-card rounded-md p-3 w-[300px] h-[65px]">
+                                        <Skeleton className="h-7 w-7 rounded-sm shrink-0" />
+                                        <div className="space-y-2 flex-1">
+                                            <Skeleton className="h-2 w-3/4" />
+                                            <Skeleton className="h-2 w-1/2" />
                                         </div>
-                                    )}
-                                    <Turnstile
-                                        siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-                                        onWidgetLoad={() => setTurnstileLoaded(true)}
-                                        options={{
-                                            theme: resolvedAppearance,
-                                            size: 'normal'
-                                        }}
-                                    />
+                                        <Skeleton className="h-8 w-10 rounded-sm shrink-0" />
+                                    </div>
+                                    
+                                    <div className="relative z-10">
+                                        <Turnstile
+                                            siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                                            options={{
+                                                theme: resolvedAppearance,
+                                                size: 'normal'
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
