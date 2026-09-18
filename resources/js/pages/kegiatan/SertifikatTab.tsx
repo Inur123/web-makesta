@@ -25,6 +25,22 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
         nia_ketua: '13.10.03.00002',
         nama_sekretaris: 'M. ZAINUR ROZIQIN',
         nia_sekretaris: '13.1.02.01000',
+        
+        // IPPNU specific
+        jabatan_kiri: 'Ketua PC IPPNU Kabupaten Magetan',
+        nama_kiri: 'IKA PUTRI YULIANA, S.E.',
+        nia_kiri: '3520.1907.0002',
+        
+        jabatan_tengah: 'Ketua PK IPPNU SMK Roudlotul Huda',
+        nama_tengah: 'MAYA ANUGRAH NURAINI',
+        nia_tengah: '3520.2407.0001',
+
+        jabatan_kanan: 'Wakil Ketua II Bidang Kaderisasi PC IPPNU Kabupaten Magetan',
+        nama_kanan: 'ALDA MAHARANI',
+        nia_kanan: '3520.2003.0020',
+        
+        nama_pelatih: 'NAMA PELATIH',
+        nia_pelatih: 'NIA PELATIH',
         header_depan: 'PIMPINAN CABANG\nIKATAN PELAJAR NAHDLATUL ULAMA\nKABUPATEN MAGETAN',
         header_belakang: 'PIMPINAN KOMISARIAT IKATAN PELAJAR NAHDLATUL ULAMA SMK ROUDLOTUL HUDA\nSMK ROUDLOTUL HUDA, DS. KEDUNGPANJI, KEC. LEMBEYAN, 19-20 JULI 2025',
     });
@@ -116,6 +132,8 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
 
                     <div className="space-y-4">
                         <h3 className="font-semibold text-lg border-b pb-2">3. Tanda Tangan</h3>
+                        
+                        {org === 'ipnu' ? (
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="nama_ketua">Nama Ketua</Label>
@@ -134,6 +152,48 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
                                 <Input id="nia_sekretaris" required value={data.nia_sekretaris} onChange={e => setData('nia_sekretaris', e.target.value)} />
                             </div>
                         </div>
+                        ) : (
+                        <div className="space-y-6">
+                            <div className="space-y-3 p-3 border rounded-md">
+                                <p className="font-medium text-sm text-muted-foreground">Tanda Tangan Kiri</p>
+                                <Input required placeholder="Jabatan" value={data.jabatan_kiri} onChange={e => setData('jabatan_kiri', e.target.value)} />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <Input required placeholder="Nama" value={data.nama_kiri} onChange={e => setData('nama_kiri', e.target.value)} />
+                                    <Input required placeholder="NIA" value={data.nia_kiri} onChange={e => setData('nia_kiri', e.target.value)} />
+                                </div>
+                            </div>
+                            <div className="space-y-3 p-3 border rounded-md">
+                                <p className="font-medium text-sm text-muted-foreground">Tanda Tangan Tengah</p>
+                                <Input required placeholder="Jabatan" value={data.jabatan_tengah} onChange={e => setData('jabatan_tengah', e.target.value)} />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <Input required placeholder="Nama" value={data.nama_tengah} onChange={e => setData('nama_tengah', e.target.value)} />
+                                    <Input required placeholder="NIA" value={data.nia_tengah} onChange={e => setData('nia_tengah', e.target.value)} />
+                                </div>
+                            </div>
+                            <div className="space-y-3 p-3 border rounded-md">
+                                <p className="font-medium text-sm text-muted-foreground">Tanda Tangan Kanan</p>
+                                <Input required placeholder="Jabatan" value={data.jabatan_kanan} onChange={e => setData('jabatan_kanan', e.target.value)} />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <Input required placeholder="Nama" value={data.nama_kanan} onChange={e => setData('nama_kanan', e.target.value)} />
+                                    <Input required placeholder="NIA" value={data.nia_kanan} onChange={e => setData('nia_kanan', e.target.value)} />
+                                </div>
+                            </div>
+                            <div className="space-y-3 p-3 border rounded-md">
+                                <p className="font-medium text-sm text-muted-foreground">Tanda Tangan Halaman Penilaian</p>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label>Nama Tim Pelatih</Label>
+                                        <Input required placeholder="Nama" value={data.nama_pelatih} onChange={e => setData('nama_pelatih', e.target.value)} />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>NIA Tim Pelatih</Label>
+                                        <Input required placeholder="NIA" value={data.nia_pelatih} onChange={e => setData('nia_pelatih', e.target.value)} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        )}
+
                     </div>
 
                 </div>

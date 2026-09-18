@@ -70,21 +70,37 @@ class SertifikatService
         $templateProcessor->setValue('tgl_h_hari', $data['tgl_h_hari']);
         $templateProcessor->setValue('tgl_h_bulan', $data['tgl_h_bulan']);
         $templateProcessor->setValue('tgl_h_tahun', $data['tgl_h_tahun']);
-        $templateProcessor->setValue('nama_ketua', $data['nama_ketua']);
+                $templateProcessor->setValue('nama_ketua', $data['nama_ketua'] ?? '');
         
-        $niaKetua = trim($data['nia_ketua']);
-        if (!preg_match('/^NIA[\.\s]*/i', $niaKetua)) {
+        $niaKetua = trim($data['nia_ketua'] ?? '');
+        if ($niaKetua && !preg_match('/^NIA[\.\s]*/i', $niaKetua)) {
             $niaKetua = 'NIA. ' . $niaKetua;
         }
         $templateProcessor->setValue('nia_ketua', $niaKetua);
         
-        $templateProcessor->setValue('nama_sekretaris', $data['nama_sekretaris']);
+        $templateProcessor->setValue('nama_sekretaris', $data['nama_sekretaris'] ?? '');
         
-        $niaSekretaris = trim($data['nia_sekretaris']);
-        if (!preg_match('/^NIA[\.\s]*/i', $niaSekretaris)) {
+        $niaSekretaris = trim($data['nia_sekretaris'] ?? '');
+        if ($niaSekretaris && !preg_match('/^NIA[\.\s]*/i', $niaSekretaris)) {
             $niaSekretaris = 'NIA. ' . $niaSekretaris;
         }
         $templateProcessor->setValue('nia_sekretaris', $niaSekretaris);
+
+        // IPPNU Signatures
+        $templateProcessor->setValue('jabatan_kiri', $data['jabatan_kiri'] ?? '');
+        $templateProcessor->setValue('nama_kiri', $data['nama_kiri'] ?? '');
+        $templateProcessor->setValue('nia_kiri', $data['nia_kiri'] ?? '');
+        
+        $templateProcessor->setValue('jabatan_tengah', $data['jabatan_tengah'] ?? '');
+        $templateProcessor->setValue('nama_tengah', $data['nama_tengah'] ?? '');
+        $templateProcessor->setValue('nia_tengah', $data['nia_tengah'] ?? '');
+        
+        $templateProcessor->setValue('jabatan_kanan', $data['jabatan_kanan'] ?? '');
+        $templateProcessor->setValue('nama_kanan', $data['nama_kanan'] ?? '');
+        $templateProcessor->setValue('nia_kanan', $data['nia_kanan'] ?? '');
+        
+        $templateProcessor->setValue('nama_pelatih', $data['nama_pelatih'] ?? '');
+        $templateProcessor->setValue('nia_pelatih', $data['nia_pelatih'] ?? '');
         
         $headerDepan = str_replace("\n", '</w:t><w:br/><w:t>', htmlspecialchars($data['header_depan']));
         $templateProcessor->setValue('header_depan', $headerDepan);
@@ -92,8 +108,12 @@ class SertifikatService
         $headerBelakang = str_replace("\n", '</w:t><w:br/><w:t>', htmlspecialchars($data['header_belakang']));
         $templateProcessor->setValue('header_belakang', $headerBelakang);
 
+                $totalNilai = $peserta->nilai->sum('nilai');
         $rataRata = $peserta->nilai->avg('nilai');
         $predikat = $rataRata !== null ? NilaiHelper::indeks(round($rataRata)) : '-';
+        
+        $templateProcessor->setValue('jumlah_nilai', $totalNilai > 0 ? $totalNilai : '-');
+        $templateProcessor->setValue('rata_rata_nilai', $rataRata !== null ? round($rataRata, 2) : '-');
         $templateProcessor->setValue('predikat', $predikat);
 
         $materis = $kegiatan->materi;
@@ -104,9 +124,11 @@ class SertifikatService
             foreach ($materis as $materi) {
                 $val = $nilaiMap[$materi->id] ?? null;
                 $indeks = $val !== null ? NilaiHelper::indeks($val) : '-';
+                $nilaiAngka = $val !== null ? $val : '-';
                 $templateProcessor->setValue('no#' . $i, $i);
                 $templateProcessor->setValue('materi#' . $i, htmlspecialchars($materi->nama));
                 $templateProcessor->setValue('indeks#' . $i, $indeks);
+                $templateProcessor->setValue('nilai#' . $i, $nilaiAngka);
                 $i++;
             }
         }
