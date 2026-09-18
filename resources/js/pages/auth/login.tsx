@@ -68,7 +68,7 @@ export default function Login({ status, canResetPassword }: Props) {
                             <div className="flex justify-start mt-2">
                                 <div className="relative w-[300px] h-[65px]">
                                     {/* Skeleton placeholder behind the widget */}
-                                    <div className="absolute inset-0 z-0 flex items-center space-x-3 border bg-card rounded-md p-3 w-[300px] h-[65px]">
+                                    <div className="absolute inset-0 z-0 flex items-center space-x-3 p-3 w-[300px] h-[65px]">
                                         <Skeleton className="h-7 w-7 rounded-sm shrink-0" />
                                         <div className="space-y-2 flex-1">
                                             <Skeleton className="h-2 w-3/4" />
