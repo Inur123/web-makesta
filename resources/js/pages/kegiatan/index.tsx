@@ -152,20 +152,15 @@ export default function Index({ org, kegiatans, filters }: Props) {
                 </div>
 
                 {/* Footer / Pagination */}
-                <div className="flex items-center justify-between mt-2">
-                    <p className="text-sm text-muted-foreground">
-                        {kegiatans.total > 0 ? (
-                            <>Menampilkan <strong>{kegiatans.from}</strong>-<strong>{kegiatans.to}</strong> dari <strong>{kegiatans.total}</strong> kegiatan</>
-                        ) : (
-                            '0 kegiatan ditemukan'
-                        )}
-                    </p>
-
+                <div className="flex justify-end mt-2 py-2">
                     {kegiatans.last_page > 1 && (
                         <Pagination className="justify-end w-auto mx-0">
                             <PaginationContent>
                                 {kegiatans.links.map((link, i) => {
-                                    if (link.label.includes('Previous')) {
+                                    const isFirst = i === 0;
+                                    const isLast = i === kegiatans.links.length - 1;
+                                    
+                                    if (isFirst) {
                                         return (
                                             <PaginationItem key={i}>
                                                 <PaginationPrevious 
@@ -175,7 +170,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
                                             </PaginationItem>
                                         );
                                     }
-                                    if (link.label.includes('Next')) {
+                                    if (isLast) {
                                         return (
                                             <PaginationItem key={i}>
                                                 <PaginationNext 
@@ -185,7 +180,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
                                             </PaginationItem>
                                         );
                                     }
-                                    if (link.label === '...') {
+                                    if (link.label.includes('...')) {
                                         return (
                                             <PaginationItem key={i}>
                                                 <PaginationEllipsis />

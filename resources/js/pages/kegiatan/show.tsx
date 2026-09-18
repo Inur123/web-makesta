@@ -316,47 +316,45 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                         </div>
                         
                         {/* Pagination Peserta */}
-                        {pesertaPaginated && pesertaPaginated.total > 0 && (
-                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2">
-                                <div className="text-sm text-muted-foreground">
-                                    Menampilkan {pesertaPaginated.from || 0}-{pesertaPaginated.to || 0} dari {pesertaPaginated.total} peserta
-                                </div>
-                                {pesertaPaginated.last_page > 1 && (
-                                    <Pagination className="justify-end w-auto mx-0">
-                                        <PaginationContent>
-                                            {pesertaPaginated.links.map((link, i: number) => {
-                                                if (link.label.includes('Previous')) {
-                                                    return (
-                                                        <PaginationItem key={i}>
-                                                            <PaginationPrevious href={link.url || '#'} className={!link.url ? 'pointer-events-none opacity-50' : ''} />
-                                                        </PaginationItem>
-                                                    );
-                                                }
-                                                if (link.label.includes('Next')) {
-                                                    return (
-                                                        <PaginationItem key={i}>
-                                                            <PaginationNext href={link.url || '#'} className={!link.url ? 'pointer-events-none opacity-50' : ''} />
-                                                        </PaginationItem>
-                                                    );
-                                                }
-                                                if (link.label === '...') {
-                                                    return (
-                                                        <PaginationItem key={i}>
-                                                            <PaginationEllipsis />
-                                                        </PaginationItem>
-                                                    );
-                                                }
+                        {pesertaPaginated && pesertaPaginated.last_page > 1 && (
+                            <div className="flex justify-end py-2">
+                                <Pagination className="justify-end w-auto mx-0">
+                                    <PaginationContent>
+                                        {pesertaPaginated.links.map((link, i: number) => {
+                                            const isFirst = i === 0;
+                                            const isLast = i === pesertaPaginated.links.length - 1;
+                                            
+                                            if (isFirst) {
                                                 return (
                                                     <PaginationItem key={i}>
-                                                        <PaginationLink href={link.url || '#'} isActive={link.active}>
-                                                            {link.label}
-                                                        </PaginationLink>
+                                                        <PaginationPrevious href={link.url || '#'} className={!link.url ? 'pointer-events-none opacity-50' : ''} />
                                                     </PaginationItem>
                                                 );
-                                            })}
-                                        </PaginationContent>
-                                    </Pagination>
-                                )}
+                                            }
+                                            if (isLast) {
+                                                return (
+                                                    <PaginationItem key={i}>
+                                                        <PaginationNext href={link.url || '#'} className={!link.url ? 'pointer-events-none opacity-50' : ''} />
+                                                    </PaginationItem>
+                                                );
+                                            }
+                                            if (link.label.includes('...')) {
+                                                return (
+                                                    <PaginationItem key={i}>
+                                                        <PaginationEllipsis />
+                                                    </PaginationItem>
+                                                );
+                                            }
+                                            return (
+                                                <PaginationItem key={i}>
+                                                    <PaginationLink href={link.url || '#'} isActive={link.active}>
+                                                        {link.label}
+                                                    </PaginationLink>
+                                                </PaginationItem>
+                                            );
+                                        })}
+                                    </PaginationContent>
+                                </Pagination>
                             </div>
                         )}
                     </TabsContent>
