@@ -80,7 +80,7 @@ export default function Login({ status, canResetPassword }: Props) {
                                     )}
                                     <Turnstile
                                         siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-                                        onLoad={() => setTurnstileLoaded(true)}
+                                        onWidgetLoad={() => setTurnstileLoaded(true)}
                                         options={{
                                             theme: resolvedAppearance,
                                             size: 'normal'
