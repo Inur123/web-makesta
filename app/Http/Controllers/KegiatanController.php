@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Exports\KegiatanExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreKegiatanRequest;
@@ -152,7 +153,7 @@ class KegiatanController extends Controller
 
     public function export(string $org, Kegiatan $kegiatan): BinaryFileResponse
     {
-        $filename = 'Data_Makesta_' . \Illuminate\Support\Str::slug($kegiatan->nama) . '_' . date('Ymd_His') . '.xlsx';
+        $filename = 'Data_Makesta_' . Str::slug($kegiatan->nama) . '_' . date('Ymd_His') . '.xlsx';
         return Excel::download(new KegiatanExport($kegiatan), $filename);
     }
 
