@@ -34,7 +34,7 @@ export default function ErrorPage({ status }: Props) {
             <Head title={displayTitle} />
             
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
-                <span className="text-[10rem] sm:text-[15rem] md:text-[25rem] font-bold text-muted/20 leading-none tracking-tighter">
+                <span className="text-[10rem] sm:text-[15rem] md:text-[25rem] font-bold text-black/5 dark:text-white/5 leading-none tracking-tighter">
                     {status}
                 </span>
             </div>
@@ -49,7 +49,7 @@ export default function ErrorPage({ status }: Props) {
                     {displayDescription}
                 </p>
 
-                <Button asChild size="lg" className="h-14 px-10 text-base font-semibold cursor-pointer bg-[#03783e] hover:bg-[#025c2f] text-white rounded-full shadow-lg hover:shadow-[#03783e]/25 hover:-translate-y-1 transition-all duration-300">
+                <Button asChild size="lg" className="rounded-full px-8">
                     <Link href="/">
                         Kembali ke Halaman Utama
                     </Link>
