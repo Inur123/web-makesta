@@ -276,7 +276,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                                 <TableRow key={p.id} className="hover:bg-muted/20 cursor-pointer" onClick={() => router.visit(`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}`)}>
                                                     <TableCell className="text-center text-muted-foreground">{itemNumber}</TableCell>
                                                     <TableCell className="font-semibold">{p.nama}</TableCell>
-                                                    <TableCell>{p.ttl || '-'}</TableCell>
+                                                    <TableCell>{p.tempat_lahir && p.tanggal_lahir ? `${p.tempat_lahir}, ${new Date(p.tanggal_lahir).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}` : p.tempat_lahir || '-'}</TableCell>
                                                     <TableCell>{p.alamat || '-'}</TableCell>
                                                     <TableCell>{p.no_hp || '-'}</TableCell>
                                                     <TableCell>{p.sekolah || '-'}</TableCell>
