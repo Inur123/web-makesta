@@ -5,7 +5,15 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 class UserSeeder extends Seeder {
     public function run(): void {
-        User::create(['name' => 'Admin IPNU', 'email' => 'ipnu@makesta.test', 'password' => Hash::make('password')]);
-        User::create(['name' => 'Admin IPPNU', 'email' => 'ippnu@makesta.test', 'password' => Hash::make('password')]);
+        User::factory()->create([
+            'name' => 'Admin IPNU', 
+            'email' => 'ipnu@makesta.test',
+            // password sudah diset default ke 'password' di UserFactory
+        ]);
+        
+        User::factory()->create([
+            'name' => 'Admin IPPNU', 
+            'email' => 'ippnu@makesta.test',
+        ]);
     }
 }
