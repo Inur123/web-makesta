@@ -1,11 +1,11 @@
-import type { ImgHTMLAttributes } from 'react';
+import { ImgHTMLAttributes } from 'react';
+import { asset } from '@/lib/utils';
 
 export default function AppLogoIcon(props: ImgHTMLAttributes<HTMLImageElement>) {
     return (
-        <img 
-            src="/images/logo-makesta.png" 
+        <img {...props} 
+            src={asset('images/logo-makesta.png')} 
             alt="Logo Makesta" 
-            {...props} 
         />
     );
 }

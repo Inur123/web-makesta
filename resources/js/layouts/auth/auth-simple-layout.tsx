@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { home } from '@/routes';
+import { asset } from '@/lib/utils';
 import type { AuthLayoutProps } from '@/types';
 
 export default function AuthSimpleLayout({
@@ -16,7 +17,7 @@ export default function AuthSimpleLayout({
                             href={home()}
                             className="flex flex-col items-center gap-2 font-medium"
                         >
-                            <img src="/images/logo-makesta-2.png" alt="Logo Makesta" className="h-16 md:h-20 w-auto mb-4 block dark:hidden" /><img src="/images/logo-putih.png" alt="Logo Makesta" className="h-16 md:h-20 w-auto mb-4 hidden dark:block" />
+                            <img src={asset('images/logo-makesta-2.png')} alt="Logo Makesta" className="h-16 md:h-20 w-auto mb-4 block dark:hidden" /><img src={asset('images/logo-putih.png')} alt="Logo Makesta" className="h-16 md:h-20 w-auto mb-4 hidden dark:block" />
                             <span className="sr-only">{title}</span>
                         </Link>
 

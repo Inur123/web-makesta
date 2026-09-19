@@ -30,9 +30,9 @@
             }
         </style>
 
-        <link rel="icon" href="/images/logo-makesta.png" type="image/png">
+        <link rel="icon" href="{{ asset('images/logo-makesta.png') }}" type="image/png">
         
-        <link rel="apple-touch-icon" href="/images/logo-makesta.png">
+        <link rel="apple-touch-icon" href="{{ asset('images/logo-makesta.png') }}">
 
         @fonts
 
