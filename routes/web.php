@@ -13,6 +13,14 @@ Route::get('/', function () {
     return inertia('welcome'); 
 })->name('home');
 
+// Rute khusus untuk melayani /makesta tanpa trailing slash
+Route::get('/makesta', function () { 
+    if (Auth::check()) { 
+        return redirect()->route('dashboard'); 
+    } 
+    return inertia('welcome'); 
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
