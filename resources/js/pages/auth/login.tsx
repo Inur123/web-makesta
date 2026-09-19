@@ -1,5 +1,5 @@
 import { Form, Head, usePage } from '@inertiajs/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import PasswordInput from '@/components/password-input';
 import { Button } from '@/components/ui/button';
@@ -17,10 +17,16 @@ type Props = {
     canResetPassword: boolean;
 };
 
-export default function Login({ status, canResetPassword }: Props) {
+export default function Login({ status }: Props) {
     const { errors } = usePage().props;
     const { resolvedAppearance } = useAppearance();
     const turnstileRef = useRef<TurnstileInstance>(undefined);
+    const [turnstileToken, setTurnstileToken] = useState('');
+
+    const resetTurnstile = () => {
+        setTurnstileToken('');
+        turnstileRef.current?.reset();
+    };
 
     useEffect(() => {
         if (errors && Object.keys(errors).length > 0) {
@@ -36,7 +42,7 @@ export default function Login({ status, canResetPassword }: Props) {
             <Form
                 {...appForm(store.form())}
                 resetOnSuccess={['password']}
-                onError={() => turnstileRef.current?.reset()}
+                onError={resetTurnstile}
                 className="flex flex-col gap-6"
             >
                 {({ processing }) => (
@@ -68,26 +74,42 @@ export default function Login({ status, canResetPassword }: Props) {
                                 />
                             </div>
 
-                            <div className="flex justify-start mt-2">
-                                <div className="relative w-[300px] h-[65px]">
+                            <div className="mt-2 flex justify-start">
+                                <div className="relative h-[65px] w-[300px]">
                                     {/* Skeleton placeholder behind the widget */}
-                                    <div className="absolute inset-0 z-0 flex items-center space-x-3 border bg-card rounded-[3px] p-3 w-[300px] h-[65px]">
-                                        <Skeleton className="h-7 w-7 rounded-sm shrink-0" />
-                                        <div className="space-y-2 flex-1">
+                                    <div className="bg-card absolute inset-0 z-0 flex h-[65px] w-[300px] items-center space-x-3 rounded-[3px] border p-3">
+                                        <Skeleton className="h-7 w-7 shrink-0 rounded-sm" />
+                                        <div className="flex-1 space-y-2">
                                             <Skeleton className="h-2 w-3/4" />
                                             <Skeleton className="h-2 w-1/2" />
                                         </div>
-                                        <Skeleton className="h-8 w-10 rounded-sm shrink-0" />
+                                        <Skeleton className="h-8 w-10 shrink-0 rounded-sm" />
                                     </div>
 
                                     <div className="relative z-10">
                                         <Turnstile
                                             ref={turnstileRef}
-                                            siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                                            siteKey={
+                                                import.meta.env
+                                                    .VITE_TURNSTILE_SITE_KEY
+                                            }
+                                            onSuccess={setTurnstileToken}
+                                            onExpire={() =>
+                                                setTurnstileToken('')
+                                            }
+                                            onError={() =>
+                                                setTurnstileToken('')
+                                            }
                                             options={{
                                                 theme: resolvedAppearance,
                                                 size: 'normal',
+                                                responseField: false,
                                             }}
+                                        />
+                                        <input
+                                            type="hidden"
+                                            name="cf-turnstile-response"
+                                            value={turnstileToken}
                                         />
                                     </div>
                                 </div>
@@ -97,7 +119,7 @@ export default function Login({ status, canResetPassword }: Props) {
                                 type="submit"
                                 className="mt-4 w-full cursor-pointer"
                                 tabIndex={4}
-                                disabled={processing}
+                                disabled={processing || turnstileToken === ''}
                                 data-test="login-button"
                             >
                                 {processing && <Spinner />}
