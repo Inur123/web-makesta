@@ -1,5 +1,5 @@
 import { Form, Head, usePage } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import PasswordInput from '@/components/password-input';
 import { Button } from '@/components/ui/button';
@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { store } from '@/routes/login';
-import { Turnstile } from '@marsidev/react-turnstile';
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import { useAppearance } from '@/hooks/use-appearance';
 import { appForm } from '@/lib/utils';
 
@@ -20,6 +20,7 @@ type Props = {
 export default function Login({ status, canResetPassword }: Props) {
     const { errors } = usePage().props;
     const { resolvedAppearance } = useAppearance();
+    const turnstileRef = useRef<TurnstileInstance>(undefined);
 
     useEffect(() => {
         if (errors && Object.keys(errors).length > 0) {
@@ -35,6 +36,7 @@ export default function Login({ status, canResetPassword }: Props) {
             <Form
                 {...appForm(store.form())}
                 resetOnSuccess={['password']}
+                onError={() => turnstileRef.current?.reset()}
                 className="flex flex-col gap-6"
             >
                 {({ processing }) => (
@@ -77,13 +79,14 @@ export default function Login({ status, canResetPassword }: Props) {
                                         </div>
                                         <Skeleton className="h-8 w-10 rounded-sm shrink-0" />
                                     </div>
-                                    
+
                                     <div className="relative z-10">
                                         <Turnstile
+                                            ref={turnstileRef}
                                             siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
                                             options={{
                                                 theme: resolvedAppearance,
-                                                size: 'normal'
+                                                size: 'normal',
                                             }}
                                         />
                                     </div>

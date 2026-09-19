@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Features;
 use Tests\TestCase;
@@ -11,6 +12,19 @@ use Tests\TestCase;
 class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Http::fake([
+            'challenges.cloudflare.com/turnstile/v0/siteverify' => Http::response([
+                'success' => true,
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+    }
 
     public function test_login_screen_can_be_rendered()
     {
@@ -26,6 +40,7 @@ class AuthenticationTest extends TestCase
         $response = $this->post(route('login.store'), [
             'email' => $user->email,
             'password' => 'password',
+            'cf-turnstile-response' => 'test-token',
         ]);
 
         $this->assertAuthenticated();
@@ -46,6 +61,7 @@ class AuthenticationTest extends TestCase
         $response = $this->post(route('login'), [
             'email' => $user->email,
             'password' => 'password',
+            'cf-turnstile-response' => 'test-token',
         ]);
 
         $response->assertRedirect(route('two-factor.login'));
@@ -60,6 +76,7 @@ class AuthenticationTest extends TestCase
         $this->post(route('login.store'), [
             'email' => $user->email,
             'password' => 'wrong-password',
+            'cf-turnstile-response' => 'test-token',
         ]);
 
         $this->assertGuest();
@@ -71,7 +88,7 @@ class AuthenticationTest extends TestCase
 
         $response = $this->actingAs($user)->post(route('logout'));
 
-        $response->assertRedirect(route('home'));
+        $response->assertRedirect(route('login'));
 
         $this->assertGuest();
     }
@@ -85,6 +102,7 @@ class AuthenticationTest extends TestCase
         $response = $this->post(route('login.store'), [
             'email' => $user->email,
             'password' => 'wrong-password',
+            'cf-turnstile-response' => 'test-token',
         ]);
 
         $response->assertTooManyRequests();

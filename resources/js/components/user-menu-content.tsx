@@ -52,6 +52,7 @@ export function UserMenuContent({ user }: Props) {
                     className="block w-full cursor-pointer"
                     href={toUrl(logout())}
                     as="button"
+                    method="post"
                     onClick={handleLogout}
                     data-test="logout-button"
                 >

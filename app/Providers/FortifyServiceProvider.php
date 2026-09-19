@@ -53,7 +53,7 @@ class FortifyServiceProvider extends ServiceProvider
             {
                 public function toResponse($request)
                 {
-                    return redirect('/')->with('success', 'Berhasil keluar dari sistem.');
+                    return redirect()->route('login')->with('success', 'Berhasil keluar dari sistem.');
                 }
             };
         });
@@ -83,8 +83,9 @@ class FortifyServiceProvider extends ServiceProvider
 
                         $allowedHostnames = config('services.turnstile.allowed_hostnames', []);
                         $hostname = $response->json('hostname');
-                        $hostnameIsAllowed = $allowedHostnames === []
-                            || in_array($hostname, $allowedHostnames, true);
+                        $hostnameIsAllowed = ! app()->isProduction()
+                            || ($allowedHostnames !== []
+                                && in_array($hostname, $allowedHostnames, true));
 
                         if ($response->successful() && $response->json('success') && $hostnameIsAllowed) {
                             return;
