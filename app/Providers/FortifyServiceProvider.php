@@ -2,21 +2,24 @@
 
 namespace App\Providers;
 
-use Laravel\Fortify\Contracts\LoginResponse;
-use Laravel\Fortify\Contracts\LogoutResponse;
-
+use App\Actions\Fortify\CreateNewUser;
+use App\Actions\Fortify\ResetUserPassword;
 /* @chisel-registration */
 
-use App\Actions\Fortify\CreateNewUser;
+use App\Models\User;
 /* @end-chisel-registration */
-use App\Actions\Fortify\ResetUserPassword;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Contracts\LogoutResponse;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 
@@ -36,7 +39,8 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->singleton(LoginResponse::class, function () {
-            return new class implements LoginResponse {
+            return new class implements LoginResponse
+            {
                 public function toResponse($request)
                 {
                     return redirect()->intended(config('fortify.home'))->with('success', 'Berhasil masuk ke sistem.');
@@ -45,7 +49,8 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(LogoutResponse::class, function () {
-            return new class implements LogoutResponse {
+            return new class implements LogoutResponse
+            {
                 public function toResponse($request)
                 {
                     return redirect('/')->with('success', 'Berhasil keluar dari sistem.');
@@ -67,21 +72,40 @@ class FortifyServiceProvider extends ServiceProvider
                 'email' => 'required|email',
                 'password' => 'required',
                 'cf-turnstile-response' => ['required', function ($attribute, $value, $fail) {
-                    $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-                        'secret' => env('TURNSTILE_SECRET_KEY'),
-                        'response' => $value,
-                        'remoteip' => request()->ip(),
-                    ]);
-                    if (!$response->json('success')) {
-                        $fail('Verifikasi keamanan (Turnstile) gagal. Silakan coba lagi.');
+                    try {
+                        $response = Http::asForm()
+                            ->timeout(10)
+                            ->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                                'secret' => config('services.turnstile.secret_key'),
+                                'response' => $value,
+                                'remoteip' => request()->ip(),
+                            ]);
+
+                        $allowedHostnames = config('services.turnstile.allowed_hostnames', []);
+                        $hostname = $response->json('hostname');
+                        $hostnameIsAllowed = $allowedHostnames === []
+                            || in_array($hostname, $allowedHostnames, true);
+
+                        if ($response->successful() && $response->json('success') && $hostnameIsAllowed) {
+                            return;
+                        }
+
+                        Log::warning('Turnstile verification failed.', [
+                            'error_codes' => $response->json('error-codes', []),
+                            'hostname' => $hostname,
+                        ]);
+                    } catch (\Throwable $exception) {
+                        report($exception);
                     }
+
+                    $fail('Verifikasi keamanan (Turnstile) gagal. Silakan coba lagi.');
                 }],
             ], [
-                'cf-turnstile-response.required' => 'Harap selesaikan verifikasi keamanan.'
+                'cf-turnstile-response.required' => 'Harap selesaikan verifikasi keamanan.',
             ]);
-            
-            $user = \App\Models\User::where('email', $request->email)->first();
-            if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+
+            $user = User::where('email', $request->email)->first();
+            if ($user && Hash::check($request->password, $user->password)) {
                 return $user;
             }
         });
