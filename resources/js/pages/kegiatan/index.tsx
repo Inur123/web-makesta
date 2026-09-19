@@ -44,10 +44,10 @@ export default function Index({ org, kegiatans, filters }: Props) {
     return (
         <>
             <Head title={`Kegiatan ${org.toUpperCase()}`} />
-            <div className="flex flex-col gap-5 p-6 h-full overflow-y-auto">
+            <div className="flex flex-col gap-5 p-4 sm:p-6 h-full overflow-y-auto">
 
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <h1 className="text-2xl font-bold tracking-tight">Daftar Kegiatan</h1>
                         <p className="text-muted-foreground text-sm mt-0.5">Kelola kegiatan MAKESTA {org.toUpperCase()}</p>
@@ -60,7 +60,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
                 </div>
 
                 {/* Filter bar */}
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input type="text" placeholder="Cari nama / lokasi kegiatan..."
@@ -68,7 +68,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
                             onChange={(e) => { setSearch(e.target.value); updateFilter(e.target.value, status); }} />
                     </div>
                     <Select value={status} onValueChange={(val) => { setStatus(val); updateFilter(search, val); }}>
-                        <SelectTrigger className="w-[170px] shrink-0">
+                        <SelectTrigger className="w-full sm:w-[170px] shrink-0">
                             <SelectValue placeholder="Semua Status" />
                         </SelectTrigger>
                         <SelectContent>
@@ -152,7 +152,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
                 </div>
 
                 {/* Footer / Pagination */}
-                <div className="flex justify-end mt-2 py-2">
+                <div className="flex justify-end mt-2 py-2 overflow-x-auto">
                     {kegiatans.last_page > 1 && (
                         <Pagination className="justify-end w-auto mx-0">
                             <PaginationContent>

@@ -6,9 +6,13 @@ use App\Models\Kegiatan;
 use App\Models\Materi;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class MateriController extends Controller
 {
+    // create and edit removed
+
     public function store(Request $request, $org, Kegiatan $kegiatan): RedirectResponse
     {
         $request->validate([

@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react';
+import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogFooter } from '@/components/ui/responsive-dialog';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
@@ -6,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Trash2, Pencil, CheckCircle, ArrowUp, ArrowDown, MapPin, CalendarDays, FileText, Plus, Loader2, Download } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
@@ -150,16 +151,16 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
     return (
         <>
             <Head title={kegiatan.nama} />
-            <div className="p-6 space-y-5">
+            <div className="p-4 sm:p-6 space-y-5">
                 {/* Info Card */}
-                <div className="rounded-xl border bg-card p-6">
+                <div className="rounded-xl border bg-card p-4 sm:p-6">
                     <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                         <div className="flex-1 min-w-0 space-y-3">
-                            <div className="flex flex-wrap items-center gap-3">
-                                <h1 className="text-xl font-bold">{kegiatan.nama}</h1>
-                                <Badge className={kegiatan.selesai
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                <h1 className="text-xl font-bold break-words">{kegiatan.nama}</h1>
+                                <Badge className={`w-fit ${kegiatan.selesai
                                     ? 'bg-green-100 text-green-700 border-green-200'
-                                    : 'bg-amber-100 text-amber-700 border-amber-200'} variant="outline">
+                                    : 'bg-amber-100 text-amber-700 border-amber-200'}`} variant="outline">
                                     {kegiatan.selesai ? '✓ Pendataan Selesai' : '● Proses Pendataan'}
                                 </Badge>
                             </div>
@@ -178,7 +179,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                 )}
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4 pt-1">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                                 <div>
                                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Penanggung Jawab</p>
                                     <div className="flex flex-wrap gap-1.5">
@@ -199,17 +200,17 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                         </div>
 
                         {/* Action buttons */}
-                        <div className="flex items-center gap-2 shrink-0 flex-wrap">
-                            <Button variant="outline" size="sm" className="cursor-pointer" asChild>
+                        <div className="grid grid-cols-2 gap-2 w-full sm:flex sm:flex-wrap sm:items-center sm:w-auto sm:shrink-0">
+                            <Button variant="outline" size="sm" className="w-full sm:w-auto cursor-pointer" asChild>
                                 <Link href={`/${org}/kegiatan`}>Kembali</Link>
                             </Button>
-                            <Button variant="outline" size="sm" className="cursor-pointer" asChild>
+                            <Button variant="outline" size="sm" className="w-full sm:w-auto cursor-pointer" asChild>
                                 <Link href={`/${org}/kegiatan/${kegiatan.id}/edit`}>
                                     <Pencil className="w-3.5 h-3.5 mr-1.5" />Edit
                                 </Link>
                             </Button>
                             <Button size="sm" variant={kegiatan.selesai ? 'secondary' : 'default'} 
-                                onClick={toggleStatus} disabled={processingStatus} className="cursor-pointer">
+                                onClick={toggleStatus} disabled={processingStatus} className="w-full sm:w-auto cursor-pointer">
                                 {processingStatus ? (
                                     <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
                                 ) : (
@@ -217,7 +218,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                 )}
                                 {kegiatan.selesai ? 'Buka Pendataan' : 'Tutup Pendataan'}
                             </Button>
-                            <Button size="sm" variant="destructive" onClick={deleteKegiatan} disabled={processingDelete} className="cursor-pointer">
+                            <Button size="sm" variant="destructive" onClick={deleteKegiatan} disabled={processingDelete} className="w-full sm:w-auto cursor-pointer">
                                 {processingDelete ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
                             </Button>
                         </div>
@@ -226,21 +227,23 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
 
                 {/* Tabs */}
                 <Tabs defaultValue={defaultTab} onValueChange={handleTabChange} className="w-full">
-                    <TabsList>
-                        <TabsTrigger value="peserta" className="cursor-pointer">Peserta & Nilai ({pesertaPaginated?.total || 0})</TabsTrigger>
-                        <TabsTrigger value="materi" className="cursor-pointer">Materi ({materiList.length})</TabsTrigger>
-                        <TabsTrigger value="sertifikat" className="cursor-pointer">Sertifikat</TabsTrigger>
-                    </TabsList>
+                    <div className="w-full overflow-x-auto pb-1">
+                        <TabsList className="w-max min-w-full">
+                            <TabsTrigger value="peserta" className="cursor-pointer">Peserta & Nilai ({pesertaPaginated?.total || 0})</TabsTrigger>
+                            <TabsTrigger value="materi" className="cursor-pointer">Materi ({materiList.length})</TabsTrigger>
+                            <TabsTrigger value="sertifikat" className="cursor-pointer">Sertifikat</TabsTrigger>
+                        </TabsList>
+                    </div>
 
                     <TabsContent value="peserta" className="mt-4 space-y-4">
-                        <div className="flex justify-end items-center">
-                            <div className="flex items-center gap-2">
-                                <Button size="sm" variant="outline" className="cursor-pointer border-green-600/30 text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/30" asChild>
+                        <div className="flex flex-col sm:flex-row sm:justify-end items-stretch sm:items-center gap-2">
+                            <div className="grid grid-cols-2 sm:flex gap-2">
+                                <Button size="sm" variant="outline" className="w-full sm:w-auto cursor-pointer border-green-600/30 text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/30" asChild>
                                     <a href={`/${org}/kegiatan/${kegiatan.id}/export`} >
                                         <Download className="w-3.5 h-3.5 mr-1.5" />Export Excel
                                     </a>
                                 </Button>
-                                <Button size="sm" className="cursor-pointer" asChild>
+                                <Button size="sm" className="w-full sm:w-auto cursor-pointer" asChild>
                                     <Link href={`/${org}/kegiatan/${kegiatan.id}/peserta/create`}>
                                         <Plus className="w-3.5 h-3.5 mr-1.5" />Tambah Peserta
                                     </Link>
@@ -361,9 +364,8 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                     </TabsContent>
 
                     <TabsContent value="materi" className="mt-4 space-y-4">
-                        <div className="flex justify-between items-center">
-                            <p className="text-sm text-muted-foreground">{materiList.length} materi terdaftar</p>
-                            <Button size="sm" onClick={openAddMateri} className="cursor-pointer">
+                        <div className="flex">
+                            <Button size="sm" onClick={openAddMateri} className="cursor-pointer w-full sm:w-auto sm:ml-auto">
                                 <Plus className="w-3.5 h-3.5 mr-1.5" />Tambah Materi
                             </Button>
                         </div>
@@ -419,7 +421,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                     </TabsContent>
                     
                     <TabsContent value="sertifikat" className="mt-4">
-                        <div className="rounded-xl border bg-card p-6 shadow-sm">
+                        <div className="rounded-xl border bg-card p-4 sm:p-6 shadow-sm">
                             <SertifikatTab org={org} kegiatan={kegiatan} />
                         </div>
                     </TabsContent>
@@ -427,11 +429,11 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
             </div>
 
             {/* Dialog Form Materi */}
-            <Dialog open={isMateriDialogOpen} onOpenChange={setIsMateriDialogOpen}>
-                <DialogContent className="max-w-md">
-                    <DialogHeader>
-                        <DialogTitle>{editingMateri ? 'Edit Materi' : 'Tambah Materi Baru'}</DialogTitle>
-                    </DialogHeader>
+            <ResponsiveDialog open={isMateriDialogOpen} onOpenChange={setIsMateriDialogOpen}>
+                <ResponsiveDialogContent className="max-w-md">
+                    <ResponsiveDialogHeader>
+                        <ResponsiveDialogTitle>{editingMateri ? 'Edit Materi' : 'Tambah Materi Baru'}</ResponsiveDialogTitle>
+                    </ResponsiveDialogHeader>
                     <form onSubmit={submitMateri} className="space-y-4 pt-2">
                         <div className="space-y-2">
                             <Label htmlFor="nama_materi">Nama Materi</Label>
@@ -439,16 +441,16 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                 placeholder="Contoh: Ke-NU-an, Ke-IPNU-an..." required autoFocus />
                             <InputError message={errorsMateri.nama} />
                         </div>
-                        <DialogFooter>
+                        <ResponsiveDialogFooter>
                             <Button type="button" variant="outline" className="cursor-pointer" onClick={() => setIsMateriDialogOpen(false)}>Batal</Button>
                             <Button type="submit" disabled={processingMateri} className="cursor-pointer">
                                 {processingMateri && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                                 {processingMateri ? 'Menyimpan...' : 'Simpan'}
                             </Button>
-                        </DialogFooter>
+                        </ResponsiveDialogFooter>
                     </form>
-                </DialogContent>
-            </Dialog>
+                </ResponsiveDialogContent>
+            </ResponsiveDialog>
 
             {/* Global Confirm Dialog Component */}
             <ConfirmDialog 

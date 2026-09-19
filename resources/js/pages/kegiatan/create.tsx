@@ -19,7 +19,7 @@ export default function Create({ org }: Props) {
     return (
         <>
             <Head title="Tambah Kegiatan" />
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
                 <KegiatanForm org={org} />
             </div>
         </>

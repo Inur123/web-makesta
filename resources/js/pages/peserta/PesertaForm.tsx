@@ -68,7 +68,7 @@ export default function PesertaForm({ org, kegiatan, peserta, nilaiMap }: Props)
 
     return (
         <form onSubmit={submit} className="space-y-6">
-            <div className="rounded-xl border bg-card p-6 space-y-5">
+            <div className="rounded-xl border bg-card p-4 sm:p-6 space-y-5">
                 <h2 className="text-lg font-semibold border-b pb-3">Data Diri Peserta</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -134,7 +134,7 @@ export default function PesertaForm({ org, kegiatan, peserta, nilaiMap }: Props)
                 </div>
             </div>
 
-            <div className="rounded-xl border bg-card p-6 space-y-5">
+            <div className="rounded-xl border bg-card p-4 sm:p-6 space-y-5">
                 <div className="flex justify-between items-end border-b pb-3">
                     <h2 className="text-lg font-semibold">Penilaian Materi</h2>
                     <p className="text-sm text-muted-foreground">{materiList.length} materi terdaftar</p>
@@ -173,17 +173,17 @@ export default function PesertaForm({ org, kegiatan, peserta, nilaiMap }: Props)
                 )}
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-2">
-                <Button type="button" variant="secondary" className="cursor-pointer" asChild>
+            <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 pt-2">
+                <Button type="button" variant="secondary" className="w-full sm:w-auto cursor-pointer" asChild>
                     <Link href={`/${org}/kegiatan/${kegiatan.id}`}>Kembali</Link>
                 </Button>
                 {!isEdit && (
-                    <Button type="button" variant="outline" className="cursor-pointer" onClick={() => { setData('simpan_lagi', true); setTimeout(() => document.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })), 100); }} disabled={processing}>
+                    <Button type="button" variant="outline" className="w-full sm:w-auto cursor-pointer" onClick={() => { setData('simpan_lagi', true); setTimeout(() => document.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })), 100); }} disabled={processing}>
                         {processing && data.simpan_lagi ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                         Simpan & Tambah Lagi
                     </Button>
                 )}
-                <Button type="submit" onClick={() => !isEdit && setData('simpan_lagi', false)} disabled={processing} className="px-6 cursor-pointer">
+                <Button type="submit" onClick={() => !isEdit && setData('simpan_lagi', false)} disabled={processing} className="w-full sm:w-auto px-6 cursor-pointer">
                     {processing && !data.simpan_lagi ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                     {processing && !data.simpan_lagi ? 'Menyimpan...' : (isEdit ? 'Simpan Perubahan' : 'Simpan')}
                 </Button>

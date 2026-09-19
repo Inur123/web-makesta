@@ -1,6 +1,6 @@
 export default function AppLogo() {
     return (
-        <div className="flex w-full items-center justify-center md:justify-start overflow-visible">
+        <div className="flex w-full items-center justify-start overflow-visible">
             {/* WIDE LOGOS */}
             <img src="/images/logo-makesta-2.png" alt="Logo Makesta" className="h-10 w-auto object-left object-contain block dark:hidden group-data-[collapsible=icon]:!hidden" />
             <img src="/images/logo-putih.png" alt="Logo Makesta" className="h-10 w-auto object-left object-contain hidden dark:block dark:group-data-[collapsible=icon]:!hidden" />

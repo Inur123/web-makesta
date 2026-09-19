@@ -47,7 +47,7 @@ export default function KegiatanForm({ org, kegiatan }: Props) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Left: Form Utama */}
                 <div className="lg:col-span-2">
-                    <div className="rounded-xl border bg-card p-6 space-y-5">
+                    <div className="rounded-xl border bg-card p-4 sm:p-6 space-y-5">
                         <h2 className="text-lg font-semibold border-b pb-3">Data Kegiatan</h2>
 
                         <div className="space-y-2">
@@ -83,7 +83,7 @@ export default function KegiatanForm({ org, kegiatan }: Props) {
 
                 {/* Right: PJ & Instruktur */}
                 <div className="space-y-6">
-                    <div className="rounded-xl border bg-card p-5 space-y-4">
+                    <div className="rounded-xl border bg-card p-4 sm:p-5 space-y-4">
                         <div className="flex items-center justify-between">
                             <h3 className="font-semibold">Penanggung Jawab</h3>
                             <Button type="button" variant="outline" size="sm" onClick={addPj}>
@@ -107,7 +107,7 @@ export default function KegiatanForm({ org, kegiatan }: Props) {
                         )}
                     </div>
 
-                    <div className="rounded-xl border bg-card p-5 space-y-4">
+                    <div className="rounded-xl border bg-card p-4 sm:p-5 space-y-4">
                         <div className="flex items-center justify-between">
                             <h3 className="font-semibold">Instruktur</h3>
                             <Button type="button" variant="outline" size="sm" onClick={addInstruktur}>
@@ -135,11 +135,11 @@ export default function KegiatanForm({ org, kegiatan }: Props) {
             </div>
 
             {/* Bottom actions */}
-            <div className="flex justify-end gap-3 pt-2 border-t">
-                <Button type="button" variant="secondary" size="default" asChild>
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-2">
+                <Button type="button" variant="secondary" size="default" className="w-full sm:w-auto" asChild>
                     <Link href={`/${org}/kegiatan${isEdit ? `/${kegiatan.id}` : ''}`}>Kembali</Link>
                 </Button>
-                <Button type="submit" disabled={processing} className="px-6">
+                <Button type="submit" disabled={processing} className="w-full sm:w-auto px-6">
                     {processing && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                     {processing ? 'Menyimpan...' : (isEdit ? 'Simpan Perubahan' : 'Simpan Kegiatan')}
                 </Button>

@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle } from '@/components/ui/responsive-dialog';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { ReactNode } from 'react';
@@ -25,15 +25,15 @@ export function ConfirmDialog({
     processing = false
 }: ConfirmDialogProps) {
     return (
-        <Dialog open={isOpen} onOpenChange={(open) => {
+        <ResponsiveDialog open={isOpen} onOpenChange={(open) => {
             if (!open && !processing) onClose();
         }}>
-            <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                    <DialogTitle>{title}</DialogTitle>
-                    <DialogDescription>{description}</DialogDescription>
-                </DialogHeader>
-                <DialogFooter className="mt-4">
+            <ResponsiveDialogContent className="sm:max-w-md">
+                <ResponsiveDialogHeader>
+                    <ResponsiveDialogTitle>{title}</ResponsiveDialogTitle>
+                    <ResponsiveDialogDescription>{description}</ResponsiveDialogDescription>
+                </ResponsiveDialogHeader>
+                <ResponsiveDialogFooter className="mt-4">
                     <Button 
                         type="button" 
                         variant="outline" 
@@ -53,8 +53,8 @@ export function ConfirmDialog({
                         {processing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                         {processing ? 'Memproses...' : actionText}
                     </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+                </ResponsiveDialogFooter>
+            </ResponsiveDialogContent>
+        </ResponsiveDialog>
     );
 }

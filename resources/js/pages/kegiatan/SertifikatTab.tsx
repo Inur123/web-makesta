@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Download, Eye, FileText, CheckCircle2, Save, Upload, X } from 'lucide-react';
-import { Attachment, AttachmentContent, AttachmentMedia, AttachmentTitle, AttachmentDescription, AttachmentActions, AttachmentAction } from '@/components/ui/attachment';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { Kegiatan } from '@/types';
@@ -89,29 +88,29 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
         return (
             <div className="space-y-8">
                 {/* Bagian 1: Pengaturan CRUD */}
-                <form onSubmit={simpanPengaturan} className="space-y-6 border border-gray-200 rounded-lg p-6 bg-white shadow-sm">
+                <form onSubmit={simpanPengaturan} className="space-y-6 border rounded-lg p-4 sm:p-6 bg-card shadow-sm">
                     <div className="mb-4">
-                        <h2 className="text-xl font-bold flex items-center gap-2">
-                            <Save className="w-5 h-5 text-green-600" />
+                        <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2 tracking-tight">
+                            <Save className="w-5 h-5 text-green-600 shrink-0" />
                             1. Simpan Pengaturan Sertifikat
                         </h2>
-                        <p className="text-gray-500 text-sm mt-1">Simpan pengaturan nomor dan template Word di bawah ini agar bisa digunakan berkali-kali untuk kegiatan ini.</p>
+                        <p className="text-muted-foreground text-sm mt-1">Simpan pengaturan nomor dan template Word di bawah ini agar bisa digunakan berkali-kali untuk kegiatan ini.</p>
                     </div>
 
-                    <div className="bg-blue-50/50 p-4 rounded-lg border border-blue-100 text-sm text-blue-800 space-y-3 mb-6">
+                    <div className="bg-blue-50/50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-100 dark:border-blue-900/50 text-sm text-blue-800 dark:text-blue-300 space-y-3 mb-6">
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                             <div>
-                                <p className="font-semibold text-blue-900">Panduan Template {org.toUpperCase()}</p>
+                                <p className="font-semibold text-blue-900 dark:text-blue-200">Panduan Template {org.toUpperCase()}</p>
                                 <ul className="list-disc pl-5 space-y-1 mt-2">
-                                    <li>Gunakan <strong>2 file Word terpisah</strong> (Depan dan Belakang).</li>
-                                    <li>Paling atas dokumen WAJIB ketik <strong>{"${sertifikat}"}</strong> dan paling bawah WAJIB ketik <strong>{"${/sertifikat}"}</strong>.</li>
+                                    <li>Gunakan <strong className="text-blue-950 dark:text-blue-100">2 file Word terpisah</strong> (Depan dan Belakang).</li>
+                                    <li>Paling atas dokumen WAJIB ketik <strong className="text-blue-950 dark:text-blue-100">{"${sertifikat}"}</strong> dan paling bawah WAJIB ketik <strong className="text-blue-950 dark:text-blue-100">{"${/sertifikat}"}</strong>.</li>
                                     <li>Gunakan Page Break (Ctrl+Enter) sebelum {"${/sertifikat}"} agar tiap peserta ganti halaman.</li>
                                 </ul>
                             </div>
                             <a 
                                 href={`/templates/template_${org}.zip`} 
                                 download 
-                                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors shrink-0"
+                                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors shrink-0 w-full sm:w-auto"
                             >
                                 <Download className="w-4 h-4" />
                                 Download Template {org.toUpperCase()}
@@ -121,7 +120,7 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
                     
                     <div className="space-y-4">
                         <h3 className="font-semibold text-lg border-b pb-2">Format Nomor Surat</h3>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="no_surat_awal">Mulai dari No. Urut Berapa?</Label>
                                 <Input id="no_surat_awal" type="text" required value={data.no_surat_awal} onChange={e => setData('no_surat_awal', e.target.value.replace(/\D/g, ''))} inputMode="numeric" placeholder="Contoh: 1" />
@@ -138,81 +137,87 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
                     <div className="space-y-4">
                         <h3 className="font-semibold text-lg border-b pb-2">Upload Template Sertifikat (.docx)</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Template Depan */}
                             <div className="space-y-3">
-                                <Label>Template Depan {hasTemplateDepan && <span className="text-green-600 font-normal ml-2 flex inline-flex items-center"><CheckCircle2 className="w-3 h-3 mr-1"/> Tersimpan</span>}</Label>
-                                <Input type="file" accept=".docx" className="hidden" ref={fileDepanRef} onChange={e => setData('template_depan', e.target.files?.[0] || null)} />
-                                
+                                <Label>Template Depan {hasTemplateDepan && <span className="text-green-600 font-normal ml-2 inline-flex items-center"><CheckCircle2 className="w-3 h-3 mr-1"/> Tersimpan</span>}</Label>
+                                <input type="file" accept=".docx" className="hidden" ref={fileDepanRef} onChange={e => setData('template_depan', e.target.files?.[0] || null)} />
+
                                 {data.template_depan ? (
-                                    <Attachment state="done">
-                                        <AttachmentMedia variant="icon"><FileText className="text-blue-500" /></AttachmentMedia>
-                                        <AttachmentContent>
-                                            <AttachmentTitle>{data.template_depan.name}</AttachmentTitle>
-                                            <AttachmentDescription>Siap disimpan</AttachmentDescription>
-                                        </AttachmentContent>
-                                        <AttachmentActions>
-                                            <AttachmentAction variant="ghost" type="button" onClick={() => setData('template_depan', null)}><X className="w-4 h-4" /></AttachmentAction>
-                                        </AttachmentActions>
-                                    </Attachment>
+                                    <div className="flex items-center gap-3 rounded-xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-950/20 px-4 py-3 overflow-hidden">
+                                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/50">
+                                            <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="truncate text-sm font-medium">{data.template_depan.name}</p>
+                                            <p className="text-xs text-muted-foreground">Siap disimpan</p>
+                                        </div>
+                                        <Button variant="ghost" size="icon" type="button" className="shrink-0" onClick={() => { setData('template_depan', null); if (fileDepanRef.current) fileDepanRef.current.value = ''; }}>
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
                                 ) : hasTemplateDepan ? (
-                                    <Attachment state="idle">
-                                        <AttachmentMedia variant="icon"><CheckCircle2 className="text-green-500" /></AttachmentMedia>
-                                        <AttachmentContent>
-                                            <AttachmentTitle>template_depan.docx</AttachmentTitle>
-                                            <AttachmentDescription>Tersimpan di server</AttachmentDescription>
-                                        </AttachmentContent>
-                                        <AttachmentActions>
-                                            <AttachmentAction variant="outline" type="button" onClick={() => fileDepanRef.current?.click()}>
-                                                <Upload className="w-4 h-4 mr-1" /> Ganti
-                                            </AttachmentAction>
-                                        </AttachmentActions>
-                                    </Attachment>
+                                    <div className="flex items-center gap-3 rounded-xl border border-dashed px-4 py-3 overflow-hidden">
+                                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30">
+                                            <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-500" />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="truncate text-sm font-medium">template_depan.docx</p>
+                                            <p className="text-xs text-muted-foreground">Tersimpan di server</p>
+                                        </div>
+                                        <Button variant="outline" size="sm" type="button" className="shrink-0" onClick={() => fileDepanRef.current?.click()}>
+                                            <Upload className="mr-1.5 h-3.5 w-3.5" /> Ganti
+                                        </Button>
+                                    </div>
                                 ) : (
-                                    <Button variant="outline" type="button" className="w-full h-14 border-dashed bg-gray-50 hover:bg-gray-100" onClick={() => fileDepanRef.current?.click()}>
-                                        <Upload className="mr-2 h-4 w-4" />
+                                    <button type="button" className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed py-4 text-sm text-muted-foreground hover:border-primary hover:text-primary transition-colors overflow-hidden" onClick={() => fileDepanRef.current?.click()}>
+                                        <Upload className="h-4 w-4" />
                                         Pilih File Template Depan (.docx)
-                                    </Button>
+                                    </button>
                                 )}
                                 {errors.template_depan && <p className="text-sm text-red-500">{errors.template_depan}</p>}
                             </div>
 
+                            {/* Template Belakang */}
                             <div className="space-y-3">
-                                <Label>Template Belakang {hasTemplateBelakang && <span className="text-green-600 font-normal ml-2 flex inline-flex items-center"><CheckCircle2 className="w-3 h-3 mr-1"/> Tersimpan</span>}</Label>
-                                <Input type="file" accept=".docx" className="hidden" ref={fileBelakangRef} onChange={e => setData('template_belakang', e.target.files?.[0] || null)} />
-                                
+                                <Label>Template Belakang {hasTemplateBelakang && <span className="text-green-600 dark:text-green-500 font-normal ml-2 inline-flex items-center"><CheckCircle2 className="w-3 h-3 mr-1"/> Tersimpan</span>}</Label>
+                                <input type="file" accept=".docx" className="hidden" ref={fileBelakangRef} onChange={e => setData('template_belakang', e.target.files?.[0] || null)} />
+
                                 {data.template_belakang ? (
-                                    <Attachment state="done">
-                                        <AttachmentMedia variant="icon"><FileText className="text-blue-500" /></AttachmentMedia>
-                                        <AttachmentContent>
-                                            <AttachmentTitle>{data.template_belakang.name}</AttachmentTitle>
-                                            <AttachmentDescription>Siap disimpan</AttachmentDescription>
-                                        </AttachmentContent>
-                                        <AttachmentActions>
-                                            <AttachmentAction variant="ghost" type="button" onClick={() => setData('template_belakang', null)}><X className="w-4 h-4" /></AttachmentAction>
-                                        </AttachmentActions>
-                                    </Attachment>
+                                    <div className="flex items-center gap-3 rounded-xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-950/20 px-4 py-3 overflow-hidden">
+                                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/50">
+                                            <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="truncate text-sm font-medium">{data.template_belakang.name}</p>
+                                            <p className="text-xs text-muted-foreground">Siap disimpan</p>
+                                        </div>
+                                        <Button variant="ghost" size="icon" type="button" className="shrink-0" onClick={() => { setData('template_belakang', null); if (fileBelakangRef.current) fileBelakangRef.current.value = ''; }}>
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
                                 ) : hasTemplateBelakang ? (
-                                    <Attachment state="idle">
-                                        <AttachmentMedia variant="icon"><CheckCircle2 className="text-green-500" /></AttachmentMedia>
-                                        <AttachmentContent>
-                                            <AttachmentTitle>template_belakang.docx</AttachmentTitle>
-                                            <AttachmentDescription>Tersimpan di server</AttachmentDescription>
-                                        </AttachmentContent>
-                                        <AttachmentActions>
-                                            <AttachmentAction variant="outline" type="button" onClick={() => fileBelakangRef.current?.click()}>
-                                                <Upload className="w-4 h-4 mr-1" /> Ganti
-                                            </AttachmentAction>
-                                        </AttachmentActions>
-                                    </Attachment>
+                                    <div className="flex items-center gap-3 rounded-xl border border-dashed px-4 py-3 overflow-hidden">
+                                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30">
+                                            <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-500" />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="truncate text-sm font-medium">template_belakang.docx</p>
+                                            <p className="text-xs text-muted-foreground">Tersimpan di server</p>
+                                        </div>
+                                        <Button variant="outline" size="sm" type="button" className="shrink-0" onClick={() => fileBelakangRef.current?.click()}>
+                                            <Upload className="mr-1.5 h-3.5 w-3.5" /> Ganti
+                                        </Button>
+                                    </div>
                                 ) : (
-                                    <Button variant="outline" type="button" className="w-full h-14 border-dashed bg-gray-50 hover:bg-gray-100" onClick={() => fileBelakangRef.current?.click()}>
-                                        <Upload className="mr-2 h-4 w-4" />
+                                    <button type="button" className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed py-4 text-sm text-muted-foreground hover:border-primary hover:text-primary transition-colors overflow-hidden" onClick={() => fileBelakangRef.current?.click()}>
+                                        <Upload className="h-4 w-4" />
                                         Pilih File Template Belakang (.docx)
-                                    </Button>
+                                    </button>
                                 )}
                                 {errors.template_belakang && <p className="text-sm text-red-500">{errors.template_belakang}</p>}
                             </div>
                         </div>
-                        <p className="text-xs text-gray-500 mt-2">Biarkan seperti semula jika tidak ingin mengubah template yang sudah tersimpan sebelumnya.</p>
+                        <p className="text-xs text-muted-foreground">Biarkan seperti semula jika tidak ingin mengubah template yang sudah tersimpan sebelumnya.</p>
                     </div>
 
                     <div className="flex justify-end pt-4 border-t">
@@ -224,12 +229,12 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
                 </form>
 
                 {/* Bagian 2: Tombol Generate */}
-                <div className="border border-blue-200 rounded-lg p-6 bg-blue-50/30 shadow-sm text-center space-y-4">
-                    <h2 className="text-xl font-bold flex items-center justify-center gap-2 text-blue-900">
-                        <Download className="w-5 h-5" />
+                <div className="border border-blue-200 dark:border-blue-900/50 rounded-lg p-4 sm:p-6 bg-blue-50/30 dark:bg-blue-950/20 shadow-sm text-center space-y-4">
+                    <h2 className="text-lg sm:text-xl font-bold flex items-center justify-center gap-2 text-blue-900 dark:text-blue-200 tracking-tight">
+                        <Download className="w-5 h-5 shrink-0" />
                         2. Cetak Sertifikat
                     </h2>
-                    <p className="text-gray-600 text-sm max-w-lg mx-auto">
+                    <p className="text-muted-foreground text-sm max-w-lg mx-auto">
                         Jika pengaturan di atas sudah disimpan, Anda bisa langsung mencetak sertifikat kapan saja.
                     </p>
                     <Button 

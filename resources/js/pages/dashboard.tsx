@@ -35,7 +35,7 @@ export default function Dashboard({ stats, recentKegiatan }: Props) {
     return (
         <>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-6 p-6">
+            <div className="flex h-full flex-1 flex-col gap-6 p-4 sm:p-6">
                 
                 {/* Header Title */}
                 <div>
@@ -44,7 +44,7 @@ export default function Dashboard({ stats, recentKegiatan }: Props) {
                 </div>
 
                 {/* Top Stats Grid - 4 Columns */}
-                <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                     <StatCard 
                         title="Total Kegiatan" 
                         value={stats.total.kegiatan} 
@@ -72,7 +72,7 @@ export default function Dashboard({ stats, recentKegiatan }: Props) {
                 </div>
 
                 {/* Bottom Section - 2 Columns (Table takes more space) */}
-                <div className="grid gap-6 md:grid-cols-3">
+                <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
                     
                     {/* Left: Recent Activities Table */}
                     <Card className="md:col-span-2 shadow-sm">
@@ -85,10 +85,10 @@ export default function Dashboard({ stats, recentKegiatan }: Props) {
                             <Table>
                                 <TableHeader className="bg-muted/30">
                                     <TableRow>
-                                        <TableHead className="pl-6">Kegiatan</TableHead>
+                                        <TableHead className="pl-4 sm:pl-6">Kegiatan</TableHead>
                                         <TableHead>Tanggal</TableHead>
                                         <TableHead className="text-center">Peserta</TableHead>
-                                        <TableHead className="pr-6 text-right">Status</TableHead>
+                                        <TableHead className="pr-4 sm:pr-6 text-right">Status</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -101,7 +101,7 @@ export default function Dashboard({ stats, recentKegiatan }: Props) {
                                     ) : (
                                         recentKegiatan.map((k) => (
                                             <TableRow key={k.id} className="hover:bg-muted/10">
-                                                <TableCell className="pl-6">
+                                                <TableCell className="pl-4 sm:pl-6">
                                                     <div className="flex flex-col gap-1">
                                                         <Link href={`/${k.organisasi}/kegiatan/${k.id}`} className="font-medium hover:underline hover:text-green-600 transition-colors">
                                                             {k.nama}
@@ -113,7 +113,7 @@ export default function Dashboard({ stats, recentKegiatan }: Props) {
                                                 </TableCell>
                                                 <TableCell className="text-sm text-muted-foreground">{k.tanggal_teks}</TableCell>
                                                 <TableCell className="text-center font-medium">{k.peserta_count}</TableCell>
-                                                <TableCell className="pr-6 text-right">
+                                                <TableCell className="pr-4 sm:pr-6 text-right">
                                                     {k.selesai ? (
                                                         <Badge variant="outline" className="text-green-600 border-green-600 bg-green-50">Selesai</Badge>
                                                     ) : (

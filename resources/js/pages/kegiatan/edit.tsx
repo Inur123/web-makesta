@@ -21,7 +21,7 @@ export default function Edit({ org, kegiatan }: Props) {
     return (
         <>
             <Head title="Edit Kegiatan" />
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
                 <KegiatanForm org={org} kegiatan={kegiatan} />
             </div>
         </>
