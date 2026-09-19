@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import AppLogoIcon from '@/components/app-logo-icon';
 import { Moon, Sun } from 'lucide-react';
 import { useAppearance } from '@/hooks/use-appearance';
+import { asset } from '@/lib/utils';
 
 export default function Welcome() {
     const { appearance, updateAppearance } = useAppearance();
@@ -21,7 +22,7 @@ export default function Welcome() {
                 {/* Navbar */}
                 <header className="w-full flex items-center justify-between px-6 md:px-12 py-6 relative z-10">
                     <div className="flex items-center">
-                        <img src="/images/logo-makesta-2.png" alt="Logo Makesta" className="h-10 md:h-12 w-auto opacity-90 hover:opacity-100 transition-opacity block dark:hidden" /><img src="/images/logo-putih.png" alt="Logo Makesta" className="h-10 md:h-12 w-auto opacity-90 hover:opacity-100 transition-opacity hidden dark:block" />
+                        <img src={asset('images/logo-makesta-2.png')} alt="Logo Makesta" className="h-10 md:h-12 w-auto opacity-90 hover:opacity-100 transition-opacity block dark:hidden" /><img src={asset('images/logo-putih.png')} alt="Logo Makesta" className="h-10 md:h-12 w-auto opacity-90 hover:opacity-100 transition-opacity hidden dark:block" />
                     </div>
                     <div className="flex items-center gap-2">
                         <Button

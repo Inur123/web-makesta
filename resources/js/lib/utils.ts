@@ -10,3 +10,10 @@ export function cn(...inputs: ClassValue[]) {
 export function toUrl(url: NonNullable<InertiaLinkProps['href']>): string {
     return typeof url === 'string' ? url : url.url;
 }
+
+export function asset(path: string): string {
+    // Otomatis deteksi apakah sedang di VPS (/makesta) atau di Local (/)
+    const isMakesta = window.location.pathname.startsWith('/makesta');
+    const cleanPath = path.startsWith('/') ? path : '/' + path;
+    return isMakesta ? `/makesta${cleanPath}` : cleanPath;
+}
