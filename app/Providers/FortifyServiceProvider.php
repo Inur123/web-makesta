@@ -71,7 +71,11 @@ class FortifyServiceProvider extends ServiceProvider
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required',
-                'cf-turnstile-response' => ['required', function ($attribute, $value, $fail) {
+                'cf-turnstile-response' => ['required', function ($attribute, $value, $fail) use ($request) {
+                    if ($request->attributes->get('turnstile_verified') === true) {
+                        return;
+                    }
+
                     try {
                         $response = Http::asForm()
                             ->timeout(10)
@@ -88,6 +92,8 @@ class FortifyServiceProvider extends ServiceProvider
                                 && in_array($hostname, $allowedHostnames, true));
 
                         if ($response->successful() && $response->json('success') && $hostnameIsAllowed) {
+                            $request->attributes->set('turnstile_verified', true);
+
                             return;
                         }
 
