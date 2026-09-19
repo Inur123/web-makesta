@@ -11,6 +11,7 @@ import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
+import { toUrl } from '@/lib/utils';
 
 type Props = {
     user: User;
@@ -36,7 +37,7 @@ export function UserMenuContent({ user }: Props) {
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full cursor-pointer"
-                        href={edit()}
+                        href={toUrl(edit())}
                         prefetch
                         onClick={cleanup}
                     >
@@ -49,7 +50,7 @@ export function UserMenuContent({ user }: Props) {
             <DropdownMenuItem asChild>
                 <Link
                     className="block w-full cursor-pointer"
-                    href={logout()}
+                    href={toUrl(logout())}
                     as="button"
                     onClick={handleLogout}
                     data-test="logout-button"

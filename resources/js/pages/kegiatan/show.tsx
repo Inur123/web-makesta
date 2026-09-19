@@ -17,6 +17,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { MoreHorizontal, Eye } from 'lucide-react';
 import SertifikatTab from './SertifikatTab';
 import { Kegiatan, Peserta, PaginatedData, Petugas, Materi } from '@/types';
+import { appUrl } from '@/lib/utils';
 
 interface Props { org: 'ipnu' | 'ippnu'; kegiatan: Kegiatan; pesertaPaginated: PaginatedData<Peserta>; }
 
@@ -24,8 +25,8 @@ function ShowLayout({ children }: { children: ReactNode }) {
     const { org, kegiatan } = usePage<{ org: string; kegiatan: { id: string; nama: string } }>().props;
     return (
         <AppLayout breadcrumbs={[
-            { title: 'Daftar Kegiatan', href: `/${org}/kegiatan` },
-            { title: kegiatan?.nama || 'Detail', href: `/${org}/kegiatan/${kegiatan?.id}` }
+            { title: 'Daftar Kegiatan', href: appUrl(`/${org}/kegiatan`) },
+            { title: kegiatan?.nama || 'Detail', href: appUrl(`/${org}/kegiatan/${kegiatan?.id}`) }
         ]}>{children}</AppLayout>
     );
 }
@@ -82,7 +83,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
             title: 'Ubah Status Pendataan',
             description: 'Yakin ingin mengubah status pendataan ini?',
             onConfirm: () => {
-                router.patch(`/${org}/kegiatan/${kegiatan.id}/status`, {}, {
+                router.patch(appUrl(`/${org}/kegiatan/${kegiatan.id}/status`), {}, {
                     onStart: () => setProcessingStatus(true),
                     onFinish: () => { setProcessingStatus(false); closeConfirm(); },
                 });
@@ -98,7 +99,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
             actionText: 'Hapus',
             isDestructive: true,
             onConfirm: () => {
-                router.delete(`/${org}/kegiatan/${kegiatan.id}`, {
+                router.delete(appUrl(`/${org}/kegiatan/${kegiatan.id}`), {
                     onStart: () => setProcessingDelete(true),
                     onFinish: () => { setProcessingDelete(false); closeConfirm(); },
                 });
@@ -112,8 +113,8 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
     const submitMateri = (e: React.FormEvent) => {
         e.preventDefault();
         const opts = { onSuccess: () => { setIsMateriDialogOpen(false); resetMateri(); } };
-        if (editingMateri) putMateri(`/${org}/materi/${editingMateri.id}`, opts);
-        else postMateri(`/${org}/kegiatan/${kegiatan.id}/materi`, opts);
+        if (editingMateri) putMateri(appUrl(`/${org}/materi/${editingMateri.id}`), opts);
+        else postMateri(appUrl(`/${org}/kegiatan/${kegiatan.id}/materi`), opts);
     };
 
     const deleteMateri = (id: string) => {
@@ -124,7 +125,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
             actionText: 'Hapus',
             isDestructive: true,
             onConfirm: () => {
-                router.delete(`/${org}/materi/${id}`, {
+                router.delete(appUrl(`/${org}/materi/${id}`), {
                     onStart: () => setDeletingMateriId(id),
                     onFinish: () => { setDeletingMateriId(null); closeConfirm(); },
                 });
@@ -140,7 +141,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
             actionText: 'Hapus',
             isDestructive: true,
             onConfirm: () => {
-                router.delete(`/${org}/peserta/${id}`, {
+                router.delete(appUrl(`/${org}/peserta/${id}`), {
                     onStart: () => setDeletingPesertaId(id),
                     onFinish: () => { setDeletingPesertaId(null); closeConfirm(); },
                 });
@@ -202,10 +203,10 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                         {/* Action buttons */}
                         <div className="grid grid-cols-2 gap-2 w-full sm:flex sm:flex-wrap sm:items-center sm:w-auto sm:shrink-0">
                             <Button variant="outline" size="sm" className="w-full sm:w-auto cursor-pointer" asChild>
-                                <Link href={`/${org}/kegiatan`}>Kembali</Link>
+                                <Link href={appUrl(`/${org}/kegiatan`)}>Kembali</Link>
                             </Button>
                             <Button variant="outline" size="sm" className="w-full sm:w-auto cursor-pointer" asChild>
-                                <Link href={`/${org}/kegiatan/${kegiatan.id}/edit`}>
+                                <Link href={appUrl(`/${org}/kegiatan/${kegiatan.id}/edit`)}>
                                     <Pencil className="w-3.5 h-3.5 mr-1.5" />Edit
                                 </Link>
                             </Button>
@@ -239,12 +240,12 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                         <div className="flex flex-col sm:flex-row sm:justify-end items-stretch sm:items-center gap-2">
                             <div className="grid grid-cols-2 sm:flex gap-2">
                                 <Button size="sm" variant="outline" className="w-full sm:w-auto cursor-pointer border-green-600/30 text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/30" asChild>
-                                    <a href={`/${org}/kegiatan/${kegiatan.id}/export`} >
+                                    <a href={appUrl(`/${org}/kegiatan/${kegiatan.id}/export`)}>
                                         <Download className="w-3.5 h-3.5 mr-1.5" />Export Excel
                                     </a>
                                 </Button>
                                 <Button size="sm" className="w-full sm:w-auto cursor-pointer" asChild>
-                                    <Link href={`/${org}/kegiatan/${kegiatan.id}/peserta/create`}>
+                                    <Link href={appUrl(`/${org}/kegiatan/${kegiatan.id}/peserta/create`)}>
                                         <Plus className="w-3.5 h-3.5 mr-1.5" />Tambah Peserta
                                     </Link>
                                 </Button>
@@ -275,7 +276,7 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                         pesertaList.map((p: Peserta, idx: number) => {
                                             const itemNumber = (pesertaPaginated.from || 1) + idx;
                                             return (
-                                                <TableRow key={p.id} className="hover:bg-muted/20 cursor-pointer" onClick={() => router.visit(`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}`)}>
+                                                <TableRow key={p.id} className="hover:bg-muted/20 cursor-pointer" onClick={() => router.visit(appUrl(`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}`))}>
                                                     <TableCell className="text-center text-muted-foreground">{itemNumber}</TableCell>
                                                     <TableCell className="font-semibold whitespace-nowrap">{p.nama}</TableCell>
                                                     <TableCell className="max-w-[180px] truncate" title={p.tempat_lahir && p.tanggal_lahir ? `${p.tempat_lahir}, ${new Date(p.tanggal_lahir).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}` : p.tempat_lahir || '-'}>
@@ -293,12 +294,12 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                                             </DropdownMenuTrigger>
                                                             <DropdownMenuContent align="end">
                                                                 <DropdownMenuItem asChild>
-                                                                    <Link href={`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}`} className="cursor-pointer w-full flex items-center">
+                                                                    <Link href={appUrl(`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}`)} className="cursor-pointer w-full flex items-center">
                                                                         <Eye className="w-4 h-4 mr-2" /> Detail
                                                                     </Link>
                                                                 </DropdownMenuItem>
                                                                 <DropdownMenuItem asChild>
-                                                                    <Link href={`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}/edit`} className="cursor-pointer w-full flex items-center">
+                                                                    <Link href={appUrl(`/${org}/kegiatan/${kegiatan.id}/peserta/${p.id}/edit`)} className="cursor-pointer w-full flex items-center">
                                                                         <Pencil className="w-4 h-4 mr-2" /> Edit Data & Nilai
                                                                     </Link>
                                                                 </DropdownMenuItem>
@@ -394,12 +395,12 @@ export default function Show({ org, kegiatan, pesertaPaginated }: Props) {
                                                     <div className="flex justify-end gap-1">
                                                         <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" title="Naik"
                                                             disabled={index === 0}
-                                                            onClick={() => router.patch(`/${org}/materi/${m.id}/up`)}>
+                                                            onClick={() => router.patch(appUrl(`/${org}/materi/${m.id}/up`))}>
                                                             <ArrowUp className="w-3.5 h-3.5" />
                                                         </Button>
                                                         <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" title="Turun"
                                                             disabled={index === materiList.length - 1}
-                                                            onClick={() => router.patch(`/${org}/materi/${m.id}/down`)}>
+                                                            onClick={() => router.patch(appUrl(`/${org}/materi/${m.id}/down`))}>
                                                             <ArrowDown className="w-3.5 h-3.5" />
                                                         </Button>
                                                         <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" onClick={() => openEditMateri(m)}>

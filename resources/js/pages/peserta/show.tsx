@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Edit } from 'lucide-react';
 import { getIndeks } from '@/lib/helpers';
 import { Kegiatan, Peserta, Materi } from '@/types';
+import { appUrl } from '@/lib/utils';
 
 interface Props {
     org: 'ipnu' | 'ippnu';
@@ -17,9 +18,9 @@ function ShowLayout({ children }: { children: ReactNode }) {
     const { org, kegiatan, peserta } = usePage<{ org: string; kegiatan: Kegiatan; peserta: Peserta }>().props;
     return (
         <AppLayout breadcrumbs={[
-            { title: 'Daftar Kegiatan', href: `/${org}/kegiatan` },
-            { title: kegiatan?.nama || 'Kegiatan', href: `/${org}/kegiatan/${kegiatan?.id}` },
-            { title: peserta?.nama || 'Detail Peserta', href: `/${org}/kegiatan/${kegiatan?.id}/peserta/${peserta?.id}` }
+            { title: 'Daftar Kegiatan', href: appUrl(`/${org}/kegiatan`) },
+            { title: kegiatan?.nama || 'Kegiatan', href: appUrl(`/${org}/kegiatan/${kegiatan?.id}`) },
+            { title: peserta?.nama || 'Detail Peserta', href: appUrl(`/${org}/kegiatan/${kegiatan?.id}/peserta/${peserta?.id}`) }
         ]}>{children}</AppLayout>
     );
 }
@@ -36,12 +37,12 @@ export default function Show({ org, kegiatan, peserta, nilaiMap }: Props) {
                     <h2 className="text-xl font-bold tracking-tight">Detail Peserta</h2>
                     <div className="grid grid-cols-2 sm:flex gap-2">
                         <Button variant="outline" className="w-full sm:w-auto cursor-pointer" asChild>
-                            <Link href={`/${org}/kegiatan/${kegiatan.id}`}>
+                            <Link href={appUrl(`/${org}/kegiatan/${kegiatan.id}`)}>
                                 <ArrowLeft className="w-4 h-4 mr-2" /> Kembali
                             </Link>
                         </Button>
                         <Button className="w-full sm:w-auto cursor-pointer" asChild>
-                            <Link href={`/${org}/kegiatan/${kegiatan.id}/peserta/${peserta.id}/edit`}>
+                            <Link href={appUrl(`/${org}/kegiatan/${kegiatan.id}/peserta/${peserta.id}/edit`)}>
                                 <Edit className="w-4 h-4 mr-2" /> Edit Data & Nilai
                             </Link>
                         </Button>

@@ -85,6 +85,13 @@ Rilis ini mencakup seluruh fitur inti: manajemen kegiatan, pendataan peserta, pe
 
 Ekstensi PHP `zip` diperlukan untuk menghasilkan arsip ZIP sertifikat.
 
+## Deployment
+
+Panduan deployment pada URL
+`https://kaderisasi.pelajarnumagetan.or.id/makesta` tersedia di
+[`DEPLOYMENT.md`](DEPLOYMENT.md), termasuk contoh `.env` produksi dan
+konfigurasi Nginx untuk base path `/makesta`.
+
 ---
 
 ## 📄 Lisensi

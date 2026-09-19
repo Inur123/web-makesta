@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import KegiatanForm from './KegiatanForm';
+import { appUrl } from '@/lib/utils';
 
 interface Props { org: 'ipnu' | 'ippnu'; }
 
@@ -9,7 +10,7 @@ function CreateLayout({ children }: { children: ReactNode }) {
     const { org } = usePage<{ org: string }>().props;
     return (
         <AppLayout breadcrumbs={[
-            { title: 'Daftar Kegiatan', href: `/${org}/kegiatan` },
+            { title: 'Daftar Kegiatan', href: appUrl(`/${org}/kegiatan`) },
             { title: 'Tambah Kegiatan', href: '#' }
         ]}>{children}</AppLayout>
     );

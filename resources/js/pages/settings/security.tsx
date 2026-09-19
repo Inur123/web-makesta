@@ -7,6 +7,7 @@ import PasswordInput from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { edit } from '@/routes/security';
+import { appForm } from '@/lib/utils';
 
 type Props = {
     passwordRules: string;
@@ -30,7 +31,7 @@ export default function Security(props: Props) {
                 />
 
                 <Form
-                    {...SecurityController.update.form()}
+                    {...appForm(SecurityController.update.form())}
                     options={{
                         preserveScroll: true,
                     }}

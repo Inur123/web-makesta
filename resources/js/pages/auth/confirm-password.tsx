@@ -11,6 +11,7 @@ import {
     store as confirmStore,
 } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyConfirmationController';
 import PasskeyVerify from '@/components/passkey-verify';
+import { appForm, appRoute } from '@/lib/utils';
 /* @end-chisel-passkeys */
 
 export default function ConfirmPassword() {
@@ -21,8 +22,8 @@ export default function ConfirmPassword() {
             {/* @chisel-passkeys */}
             <PasskeyVerify
                 routes={{
-                    options: confirmOptions(),
-                    submit: confirmStore(),
+                    options: appRoute(confirmOptions()),
+                    submit: appRoute(confirmStore()),
                 }}
                 label="Confirm with passkey"
                 loadingLabel="Confirming..."
@@ -30,7 +31,7 @@ export default function ConfirmPassword() {
             />
             {/* @end-chisel-passkeys */}
 
-            <Form {...store.form()} resetOnSuccess={['password']}>
+            <Form {...appForm(store.form())} resetOnSuccess={['password']}>
                 {({ processing, errors }) => (
                     <div className="space-y-6">
                         <div className="grid gap-2">

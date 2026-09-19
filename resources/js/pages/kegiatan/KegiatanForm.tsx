@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import InputError from '@/components/input-error';
 import { Plus, Trash2, Loader2 } from 'lucide-react';
 import { Kegiatan } from '@/types';
+import { appUrl } from '@/lib/utils';
 
 interface Props {
     org: 'ipnu' | 'ippnu';
@@ -28,9 +29,9 @@ export default function KegiatanForm({ org, kegiatan }: Props) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         if (isEdit) {
-            put(`/${org}/kegiatan/${kegiatan.id}`);
+            put(appUrl(`/${org}/kegiatan/${kegiatan.id}`));
         } else {
-            post(`/${org}/kegiatan`);
+            post(appUrl(`/${org}/kegiatan`));
         }
     };
 
@@ -137,7 +138,7 @@ export default function KegiatanForm({ org, kegiatan }: Props) {
             {/* Bottom actions */}
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-2">
                 <Button type="button" variant="secondary" size="default" className="w-full sm:w-auto" asChild>
-                    <Link href={`/${org}/kegiatan${isEdit ? `/${kegiatan.id}` : ''}`}>Kembali</Link>
+                    <Link href={appUrl(`/${org}/kegiatan${isEdit ? `/${kegiatan.id}` : ''}`)}>Kembali</Link>
                 </Button>
                 <Button type="submit" disabled={processing} className="w-full sm:w-auto px-6">
                     {processing && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}

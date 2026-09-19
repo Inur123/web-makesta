@@ -101,7 +101,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                             {mainNavItems.map((item) => (
                                                 <Link
                                                     key={item.title}
-                                                    href={item.href}
+                                                    href={toUrl(item.href)}
                                                     className="flex items-center space-x-2 font-medium"
                                                 >
                                                     {item.icon && (
@@ -135,7 +135,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     </div>
 
                     <Link
-                        href={dashboard()}
+                        href={toUrl(dashboard())}
                         prefetch
                         className="flex items-center space-x-2"
                     >
@@ -152,7 +152,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                         className="relative flex h-full items-center"
                                     >
                                         <Link
-                                            href={item.href}
+                                            href={toUrl(item.href)}
                                             className={cn(
                                                 navigationMenuTriggerStyle(),
                                                 whenCurrentUrl(

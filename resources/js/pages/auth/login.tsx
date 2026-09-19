@@ -10,6 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { store } from '@/routes/login';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { useAppearance } from '@/hooks/use-appearance';
+import { appForm } from '@/lib/utils';
 
 type Props = {
     status?: string;
@@ -32,7 +33,7 @@ export default function Login({ status, canResetPassword }: Props) {
             <Head title="Masuk" />
 
             <Form
-                {...store.form()}
+                {...appForm(store.form())}
                 resetOnSuccess={['password']}
                 className="flex flex-col gap-6"
             >

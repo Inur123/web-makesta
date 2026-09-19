@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
+import { appUrl } from '@/lib/utils';
 
 interface Props {
     status: number;
@@ -49,7 +50,7 @@ export default function ErrorPage({ status }: Props) {
                 </p>
 
                 <Button asChild size="lg" className="rounded-full px-8 cursor-pointer">
-                    <Link href="/" replace>
+                    <Link href={appUrl('/')} replace>
                         Kembali ke Halaman Utama
                     </Link>
                 </Button>

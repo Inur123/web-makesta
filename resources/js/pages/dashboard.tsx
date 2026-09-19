@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Users, CalendarCheck, Clock, Layers, Activity } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DashboardStats, Kegiatan } from '@/types';
+import { appUrl } from '@/lib/utils';
 
 interface Props {
     stats: {
@@ -103,7 +104,7 @@ export default function Dashboard({ stats, recentKegiatan }: Props) {
                                             <TableRow key={k.id} className="hover:bg-muted/10">
                                                 <TableCell className="pl-4 sm:pl-6">
                                                     <div className="flex flex-col gap-1">
-                                                        <Link href={`/${k.organisasi}/kegiatan/${k.id}`} className="font-medium hover:underline hover:text-green-600 transition-colors">
+                                                        <Link href={appUrl(`/${k.organisasi}/kegiatan/${k.id}`)} className="font-medium hover:underline hover:text-green-600 transition-colors">
                                                             {k.nama}
                                                         </Link>
                                                         <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">

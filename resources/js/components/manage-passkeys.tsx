@@ -5,6 +5,7 @@ import Heading from '@/components/heading';
 import PasskeyItem from '@/components/passkey-item';
 import PasskeyRegistration from '@/components/passkey-register';
 import type { Passkey } from '@/types/auth';
+import { appUrl } from '@/lib/utils';
 
 export type Props = {
     canManagePasskeys?: boolean;
@@ -29,7 +30,7 @@ export default function ManagePasskeys(props: Props) {
     const passkeys = props.passkeys ?? [];
 
     const handleDelete = (id: number, onError: () => void) => {
-        router.delete(destroy.url(id), {
+        router.delete(appUrl(destroy.url(id)), {
             preserveScroll: true,
             onError,
         });

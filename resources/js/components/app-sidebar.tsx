@@ -7,15 +7,16 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
+import { appUrl } from '@/lib/utils';
 
 const mainNavItems: NavItem[] = [
-    { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid }
+    { title: 'Dashboard', href: appUrl('/dashboard'), icon: LayoutGrid }
 ];
 const ipnuNavItems: NavItem[] = [
-    { title: 'Kegiatan', href: '/ipnu/kegiatan', icon: FolderGit2 }
+    { title: 'Kegiatan', href: appUrl('/ipnu/kegiatan'), icon: FolderGit2 }
 ];
 const ippnuNavItems: NavItem[] = [
-    { title: 'Kegiatan', href: '/ippnu/kegiatan', icon: FolderGit2 }
+    { title: 'Kegiatan', href: appUrl('/ippnu/kegiatan'), icon: FolderGit2 }
 ];
 
 export function AppSidebar() {
@@ -25,7 +26,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild className="h-auto py-2 hover:bg-transparent active:bg-transparent focus:bg-transparent data-[active=true]:bg-transparent">
-                            <Link href="/dashboard" prefetch><AppLogo /></Link>
+                            <Link href={appUrl('/dashboard')} prefetch><AppLogo /></Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>

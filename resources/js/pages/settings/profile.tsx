@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { edit } from '@/routes/profile';
 import type { Auth } from '@/types';
+import { appForm } from '@/lib/utils';
 
 type PageProps = {
     auth: Auth;
@@ -29,7 +30,7 @@ export default function Profile() {
                 />
 
                 <Form
-                    {...ProfileController.update.form()}
+                    {...appForm(ProfileController.update.form())}
                     options={{
                         preserveScroll: true,
                     }}

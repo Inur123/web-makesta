@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { toUrl } from '@/lib/utils';
 
 export function Breadcrumbs({
     breadcrumbs,
@@ -39,7 +40,7 @@ export function Breadcrumbs({
                                     </BreadcrumbPage>
                                 ) : (
                                     <BreadcrumbLink asChild>
-                                        <Link href={item.href}>
+                                        <Link href={toUrl(item.href)}>
                                             {item.title}
                                         </Link>
                                     </BreadcrumbLink>

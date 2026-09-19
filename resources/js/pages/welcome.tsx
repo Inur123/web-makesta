@@ -60,7 +60,7 @@ export default function Welcome() {
                     {/* CTA Button */}
                     <div className="mt-10">
                         <Button asChild size="lg" className="h-14 px-10 text-base font-semibold cursor-pointer bg-[#03783e] hover:bg-[#025c2f] text-white rounded-full shadow-lg hover:shadow-[#03783e]/25 hover:-translate-y-1 transition-all duration-300">
-                            <Link href="/login">Masuk ke Sistem</Link>
+                            <Link href={asset('login')}>Masuk ke Sistem</Link>
                         </Button>
                     </div>
 

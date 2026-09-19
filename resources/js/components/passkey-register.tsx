@@ -4,6 +4,11 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    index as registrationOptions,
+    store as registrationStore,
+} from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController';
+import { appUrl } from '@/lib/utils';
 
 type Props = {
     onSuccess: () => void;
@@ -34,6 +39,10 @@ export default function PasskeyRegistration({ onSuccess }: Props) {
 
     const [showForm, setShowForm] = useState(false);
     const { register, isLoading, error, isSupported } = usePasskeyRegister({
+        routes: {
+            options: appUrl(registrationOptions.url()),
+            submit: appUrl(registrationStore.url()),
+        },
         onSuccess: () => {
             setName('');
             setShowForm(false);

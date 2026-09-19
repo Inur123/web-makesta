@@ -5,7 +5,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { CalendarIcon, Loader2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { appUrl, cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -46,9 +46,9 @@ export default function PesertaForm({ org, kegiatan, peserta, nilaiMap }: Props)
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         if (isEdit) {
-            put(`/${org}/peserta/${peserta.id}`);
+            put(appUrl(`/${org}/peserta/${peserta.id}`));
         } else {
-            post(`/${org}/kegiatan/${kegiatan.id}/peserta`, {
+            post(appUrl(`/${org}/kegiatan/${kegiatan.id}/peserta`), {
                 onSuccess: () => {
                     if (data.simpan_lagi) {
                         setData({
@@ -175,7 +175,7 @@ export default function PesertaForm({ org, kegiatan, peserta, nilaiMap }: Props)
 
             <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 pt-2">
                 <Button type="button" variant="secondary" className="w-full sm:w-auto cursor-pointer" asChild>
-                    <Link href={`/${org}/kegiatan/${kegiatan.id}`}>Kembali</Link>
+                    <Link href={appUrl(`/${org}/kegiatan/${kegiatan.id}`)}>Kembali</Link>
                 </Button>
                 {!isEdit && (
                     <Button type="button" variant="outline" className="w-full sm:w-auto cursor-pointer" onClick={() => { setData('simpan_lagi', true); setTimeout(() => document.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })), 100); }} disabled={processing}>

@@ -7,6 +7,7 @@ import TwoFactorSetupModal from '@/components/two-factor-setup-modal';
 import { Button } from '@/components/ui/button';
 import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
 import { disable, enable } from '@/routes/two-factor';
+import { appForm } from '@/lib/utils';
 
 export type Props = {
     canManageTwoFactor?: boolean;
@@ -60,7 +61,7 @@ export default function ManageTwoFactor(props: Props) {
                     </p>
 
                     <div className="relative inline">
-                        <Form {...disable.form()}>
+                        <Form {...appForm(disable.form())}>
                             {({ processing }) => (
                                 <Button
                                     variant="destructive"
@@ -96,7 +97,7 @@ export default function ManageTwoFactor(props: Props) {
                             </Button>
                         ) : (
                             <Form
-                                {...enable.form()}
+                                {...appForm(enable.form())}
                                 onSuccess={() => setShowSetupModal(true)}
                             >
                                 {({ processing }) => (

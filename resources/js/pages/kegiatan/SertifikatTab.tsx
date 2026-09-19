@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Download, Eye, FileText, CheckCircle2, Save, Upload, X } from 'lucide-react';
 import axios from 'axios';
+import { appUrl } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Kegiatan } from '@/types';
 
@@ -44,7 +45,7 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
 
     const simpanPengaturan = (e: React.FormEvent) => {
         e.preventDefault();
-        post(`/${org}/kegiatan/${kegiatan.id}/sertifikat/simpan`, {
+        post(appUrl(`/${org}/kegiatan/${kegiatan.id}/sertifikat/simpan`), {
             preserveScroll: true,
             // Flash message ditangani otomatis oleh use-flash-toast
         });
@@ -53,7 +54,7 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
     const generateSertifikat = async () => {
         setIsGenerating(true);
         try {
-            const response = await axios.post(`/${org}/kegiatan/${kegiatan.id}/sertifikat`, {}, {
+            const response = await axios.post(appUrl(`/${org}/kegiatan/${kegiatan.id}/sertifikat`), {}, {
                 responseType: 'blob'
             });
 
@@ -108,7 +109,7 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
                                 </ul>
                             </div>
                             <a 
-                                href={`/templates/template_${org}.zip`} 
+                                href={appUrl(`/templates/template_${org}.zip`)}
                                 download 
                                 className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors shrink-0 w-full sm:w-auto"
                             >

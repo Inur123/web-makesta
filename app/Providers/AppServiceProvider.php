@@ -26,7 +26,11 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDefaults();
 
         if (app()->environment('production')) {
-            \Illuminate\Support\Facades\URL::forceRootUrl(env('APP_URL'));
+            \Illuminate\Support\Facades\URL::useOrigin(config('app.url'));
+
+            if (parse_url(config('app.url'), PHP_URL_SCHEME) === 'https') {
+                \Illuminate\Support\Facades\URL::forceHttps();
+            }
         }
     }
 

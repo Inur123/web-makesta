@@ -17,6 +17,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Kegiatan, PaginatedData } from '@/types';
+import { appUrl } from '@/lib/utils';
 
 interface Props {
     org: 'ipnu' | 'ippnu';
@@ -27,7 +28,7 @@ interface Props {
 function KegiatanIndexLayout({ children }: { children: ReactNode }) {
     const { org } = usePage<{ org: string }>().props;
     return (
-        <AppLayout breadcrumbs={[{ title: 'Daftar Kegiatan', href: `/${org}/kegiatan` }]}>
+        <AppLayout breadcrumbs={[{ title: 'Daftar Kegiatan', href: appUrl(`/${org}/kegiatan`) }]}>
             {children}
         </AppLayout>
     );
@@ -38,7 +39,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
     const [status, setStatus] = useState(filters.status || 'semua');
 
     const updateFilter = (newSearch: string, newStatus: string) => {
-        router.get(`/${org}/kegiatan`, { search: newSearch, status: newStatus }, { preserveState: true, replace: true });
+        router.get(appUrl(`/${org}/kegiatan`), { search: newSearch, status: newStatus }, { preserveState: true, replace: true });
     };
 
     return (
@@ -53,7 +54,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
                         <p className="text-muted-foreground text-sm mt-0.5">Kelola kegiatan MAKESTA {org.toUpperCase()}</p>
                     </div>
                     <Button asChild>
-                        <Link href={`/${org}/kegiatan/create`}>
+                        <Link href={appUrl(`/${org}/kegiatan/create`)}>
                             <Plus className="w-4 h-4 mr-2" />Tambah Kegiatan
                         </Link>
                     </Button>
@@ -107,7 +108,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
                             ) : (
                                 kegiatans.data.map((k, index) => (
                                     <TableRow key={k.id} className="hover:bg-muted/20 cursor-pointer"
-                                        onClick={() => router.visit(`/${org}/kegiatan/${k.id}`)}>
+                                        onClick={() => router.visit(appUrl(`/${org}/kegiatan/${k.id}`))}>
                                         <TableCell className="text-center text-muted-foreground">
                                             {(kegiatans.from || 1) + index}
                                         </TableCell>
@@ -139,7 +140,7 @@ export default function Index({ org, kegiatans, filters }: Props) {
                                             <Button variant="ghost" size="icon" asChild
                                                 className="text-muted-foreground hover:text-foreground"
                                                 onClick={e => e.stopPropagation()}>
-                                                <Link href={`/${org}/kegiatan/${k.id}`}>
+                                                <Link href={appUrl(`/${org}/kegiatan/${k.id}`)}>
                                                     <Eye className="w-4 h-4" />
                                                 </Link>
                                             </Button>
