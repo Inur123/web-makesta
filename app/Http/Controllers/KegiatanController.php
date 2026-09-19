@@ -227,23 +227,18 @@ class KegiatanController extends Controller
         }
 
         try {
-            if ($org === 'ippnu') {
-                if (empty($pengaturan['template_depan']) || empty($pengaturan['template_belakang'])) {
-                    return back()->with('error', 'Template Depan dan Belakang belum diupload. Silakan upload dan simpan pengaturan terlebih dahulu.');
-                }
-                
-                $pathDepan = \Storage::disk('local')->path($pengaturan['template_depan']);
-                $pathBelakang = \Storage::disk('local')->path($pengaturan['template_belakang']);
+            if (empty($pengaturan['template_depan']) || empty($pengaturan['template_belakang'])) {
+                return back()->with('error', 'Template Depan dan Belakang belum diupload. Silakan upload dan simpan pengaturan terlebih dahulu.');
+            }
+            
+            $pathDepan = \Storage::disk('local')->path($pengaturan['template_depan']);
+            $pathBelakang = \Storage::disk('local')->path($pengaturan['template_belakang']);
 
-                if (!\Storage::disk('local')->exists($pengaturan['template_depan']) || !\Storage::disk('local')->exists($pengaturan['template_belakang'])) {
-                    return back()->with('error', 'File template hilang dari server. Silakan upload ulang.');
-                }
-
-                return $service->generateBulkIppnu($pengaturan, $kegiatan, $pathDepan, $pathBelakang, $isPreview);
+            if (!\Storage::disk('local')->exists($pengaturan['template_depan']) || !\Storage::disk('local')->exists($pengaturan['template_belakang'])) {
+                return back()->with('error', 'File template hilang dari server. Silakan upload ulang.');
             }
 
-            $filePath = $service->generate($pengaturan, $org, $kegiatan, $isPreview);
-            return response()->download($filePath)->deleteFileAfterSend(true);
+            return $service->generateBulkIppnu($pengaturan, $kegiatan, $pathDepan, $pathBelakang, $isPreview);
         } catch (\Exception $e) {
             \Log::error('Sertifikat Error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
             return back()->with('error', $e->getMessage());

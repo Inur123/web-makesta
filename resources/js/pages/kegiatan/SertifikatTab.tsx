@@ -83,7 +83,7 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
     const hasTemplateDepan = !!pengaturan.template_depan;
     const hasTemplateBelakang = !!pengaturan.template_belakang;
 
-    if (org === 'ippnu') {
+    if (true) {
         return (
             <div className="space-y-8">
                 {/* Bagian 1: Pengaturan CRUD */}
@@ -171,102 +171,5 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
                 </div>
             </div>
         );
-    }
-
-    // IPNU FORM (Omitted for brevity, using simple structure but keeping the dual-mode)
-    return (
-        <div className="space-y-8">
-            <form onSubmit={simpanPengaturan} className="space-y-6 border border-gray-200 rounded-lg p-6 bg-white shadow-sm">
-                <div className="mb-4 border-b pb-4 flex justify-between items-center">
-                    <div>
-                        <h2 className="text-xl font-bold flex items-center gap-2">
-                            <Save className="w-5 h-5 text-green-600" />
-                            1. Simpan Pengaturan IPNU
-                        </h2>
-                        <p className="text-gray-500 text-sm mt-1">Simpan data surat dan penandatangan.</p>
-                    </div>
-                    <Button type="submit" disabled={processing} className="bg-green-600 hover:bg-green-700">
-                        {processing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-                        Simpan Data
-                    </Button>
-                </div>
-                {/* IPNU Fields */}
-                <div className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="no_surat_awal">Mulai dari No. Urut Berapa?</Label>
-                            <Input id="no_surat_awal" type="text" required value={data.no_surat_awal} onChange={e => setData('no_surat_awal', e.target.value.replace(/\D/g, ''))} inputMode="numeric" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="format_nomor">Format Akhiran Nomor Surat</Label>
-                            <Input id="format_nomor" required value={data.format_nomor} onChange={e => setData('format_nomor', e.target.value)} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="tempat">Tempat Dicetak</Label>
-                            <Input id="tempat" required value={data.tempat} onChange={e => setData('tempat', e.target.value)} />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <Label>Tanggal Masehi</Label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    <Input required value={data.tgl_m_hari} onChange={e => setData('tgl_m_hari', e.target.value)} placeholder="Tgl" />
-                                    <Input required value={data.tgl_m_bulan} onChange={e => setData('tgl_m_bulan', e.target.value)} placeholder="Bulan" />
-                                    <Input required value={data.tgl_m_tahun} onChange={e => setData('tgl_m_tahun', e.target.value)} placeholder="Tahun" />
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <Label>Tanggal Hijriah</Label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    <Input required value={data.tgl_h_hari} onChange={e => setData('tgl_h_hari', e.target.value)} placeholder="Tgl" />
-                                    <Input required value={data.tgl_h_bulan} onChange={e => setData('tgl_h_bulan', e.target.value)} placeholder="Bulan" />
-                                    <Input required value={data.tgl_h_tahun} onChange={e => setData('tgl_h_tahun', e.target.value)} placeholder="Tahun" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <Label>Nama Ketua</Label>
-                                <Input required value={data.nama_ketua} onChange={e => setData('nama_ketua', e.target.value)} />
-                            </div>
-                            <div className="space-y-2">
-                                <Label>NIA Ketua</Label>
-                                <Input required value={data.nia_ketua} onChange={e => setData('nia_ketua', e.target.value)} />
-                            </div>
-                            <div className="space-y-2">
-                                <Label>Nama Sekretaris</Label>
-                                <Input required value={data.nama_sekretaris} onChange={e => setData('nama_sekretaris', e.target.value)} />
-                            </div>
-                            <div className="space-y-2">
-                                <Label>NIA Sekretaris</Label>
-                                <Input required value={data.nia_sekretaris} onChange={e => setData('nia_sekretaris', e.target.value)} />
-                            </div>
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Kop Depan</Label>
-                            <Textarea required className="min-h-[100px]" value={data.header_depan} onChange={e => setData('header_depan', e.target.value)} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Kop Belakang</Label>
-                            <Textarea required className="min-h-[100px]" value={data.header_belakang} onChange={e => setData('header_belakang', e.target.value)} />
-                        </div>
-                    </div>
-                </div>
-            </form>
-            
-            <div className="border border-blue-200 rounded-lg p-6 bg-blue-50/30 text-center">
-                <Button 
-                    type="button" 
-                    size="lg"
-                    onClick={generateSertifikat} 
-                    disabled={isGenerating} 
-                    className="w-full sm:w-auto"
-                >
-                    {isGenerating ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Download className="w-4 h-4 mr-2" />}
-                    Generate Sertifikat IPNU (ZIP)
-                </Button>
-            </div>
-        </div>
-    );
+    
 }
