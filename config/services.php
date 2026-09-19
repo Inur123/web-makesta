@@ -37,6 +37,10 @@ return [
 
     'turnstile' => [
         'secret_key' => env('TURNSTILE_SECRET_KEY'),
+        'siteverify_enabled' => env(
+            'TURNSTILE_SITEVERIFY_ENABLED',
+            env('APP_ENV', 'production') !== 'local',
+        ),
         'allowed_hostnames' => array_values(array_filter(array_map(
             'trim',
             explode(',', (string) env('TURNSTILE_ALLOWED_HOSTNAMES', '')),

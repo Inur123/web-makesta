@@ -76,6 +76,15 @@ class FortifyServiceProvider extends ServiceProvider
                         return;
                     }
 
+                    // Local development may be offline or unable to resolve Cloudflare.
+                    // The browser must still provide a token, but server-side Siteverify
+                    // remains mandatory in testing and every non-local environment.
+                    if (! config('services.turnstile.siteverify_enabled', true)) {
+                        $request->attributes->set('turnstile_verified', true);
+
+                        return;
+                    }
+
                     try {
                         $response = Http::asForm()
                             ->timeout(10)

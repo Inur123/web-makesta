@@ -48,6 +48,24 @@ class AuthenticationTest extends TestCase
         Http::assertSentCount(1);
     }
 
+    public function test_local_login_does_not_require_cloudflare_siteverify_connection()
+    {
+        config()->set('services.turnstile.siteverify_enabled', false);
+
+        $user = User::factory()->create();
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+            'cf-turnstile-response' => 'local-widget-token',
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect(route('dashboard', absolute: false));
+        $this->assertAuthenticated();
+        Http::assertNothingSent();
+    }
+
     public function test_users_with_two_factor_enabled_are_redirected_to_two_factor_challenge()
     {
         $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());
