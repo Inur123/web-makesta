@@ -1,21 +1,9 @@
-# ======================================================================
-# KONFIGURASI NGINX UNTUK SUBFOLDER /makesta (TANPA TRAILING SLASH)
-# ======================================================================
-#
-# Dokumentasi:
-# Konfigurasi ini digunakan untuk me-mount project Laravel Makesta 
-# ke dalam subfolder (/makesta) pada domain utama tanpa memaksa 
-# penggunaan garis miring (/) di akhir URL.
-#
-# Penempatan: /etc/nginx/sites-available/kaderisasi.pelajarnumagetan.or.id
-# ======================================================================
-
 server {
+    listen 443 ssl;
     server_name kaderisasi.pelajarnumagetan.or.id;
 
-    # 1. Root untuk Halaman Utama / Landing Page (Luar Makesta)
     root /var/www/kaderisasi;
-    index index.php index.html;
+    index index.html index.php;
 
     client_max_body_size 50M;
 
@@ -23,65 +11,59 @@ server {
     fastcgi_buffers 4 256k;
     fastcgi_busy_buffers_size 256k;
 
-    # Akses root domain (/)
     location / {
         try_files $uri $uri/ =404;
     }
 
-    # === FIX: URL Tanpa Slash (/makesta) ===
-    # Jangan di-redirect 301, langsung teruskan ke Laravel secara diam-diam.
-    # Ini memenuhi syarat agar URL tetap bersih tanpa garis miring di akhir.
     location = /makesta {
-        rewrite ^ /makesta/index.php?$query_string last;
+        include fastcgi_params;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+
+        fastcgi_param SCRIPT_FILENAME /var/www/web-makesta/public/index.php;
+        fastcgi_param DOCUMENT_ROOT /var/www/web-makesta/public;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_param PHP_SELF /index.php;
+        fastcgi_param REQUEST_URI /$is_args$args;
     }
 
-    # 2. Akses Aplikasi Makesta (/makesta/...)
-    location ^~ /makesta {
-        # Menggunakan alias agar Nginx membaca dari folder public project
-        alias /var/www/web-makesta/public;
-        
-        try_files $uri @makesta;
-
-        location ~ \.php$ {
-            include snippets/fastcgi-php.conf;
-            fastcgi_param SCRIPT_FILENAME $request_filename;
-            
-            # Sangat Penting: Memberitahu framework bahwa base path-nya adalah /makesta
-            fastcgi_param SCRIPT_NAME /makesta/index.php;
-            
-            fastcgi_pass unix:/run/php/php8.3-fpm.sock;
-        }
+    location = /makesta/ {
+        return 301 /makesta$is_args$args;
     }
 
-    # Handler fallback untuk routing Laravel
-    location @makesta {
-        rewrite ^ /makesta/index.php?$query_string last;
+    location /makesta/ {
+        rewrite ^/makesta/(.*)$ /$1 break;
+        root /var/www/web-makesta/public;
+        try_files $uri @makesta_front_controller;
     }
 
-    # Blokir akses file tersembunyi (keamanan)
-    location ~ /\.ht {
+    location @makesta_front_controller {
+        include fastcgi_params;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+
+        fastcgi_param SCRIPT_FILENAME /var/www/web-makesta/public/index.php;
+        fastcgi_param DOCUMENT_ROOT /var/www/web-makesta/public;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_param PHP_SELF /index.php;
+        fastcgi_param REQUEST_URI $uri$is_args$args;
+    }
+
+    location ~ ^/makesta/.*\.php(?:/|$) {
+        return 404;
+    }
+
+    location ~ /\.(?!well-known).* {
         deny all;
     }
 
-    # ==========================================
-    # KONFIGURASI SSL CERTBOT (CONTOH)
-    # ==========================================
-    listen 443 ssl; 
-    # ssl_certificate /etc/letsencrypt/live/kaderisasi.pelajarnumagetan.or.id/fullchain.pem; 
-    # ssl_certificate_key /etc/letsencrypt/live/kaderisasi.pelajarnumagetan.or.id/privkey.pem; 
-    # include /etc/letsencrypt/options-ssl-nginx.conf; 
-    # ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; 
+    ssl_certificate /etc/letsencrypt/live/kaderisasi.pelajarnumagetan.or.id/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/kaderisasi.pelajarnumagetan.or.id/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 }
 
-# ==========================================
-# REDIRECT OTOMATIS HTTP (80) KE HTTPS (443)
-# ==========================================
 server {
-    if ($host = kaderisasi.pelajarnumagetan.or.id) {
-        return 301 https://$host$request_uri;
-    } 
-
     listen 80;
     server_name kaderisasi.pelajarnumagetan.or.id;
-    return 404; 
+
+    return 301 https://$host$request_uri;
 }

@@ -7,8 +7,9 @@ https://kaderisasi.pelajarnumagetan.or.id/makesta
 ```
 
 Laravel tetap mendefinisikan route internal seperti `/login` dan
-`/dashboard`. Nginx memasang aplikasi pada base path `/makesta` melalui nilai
-`SCRIPT_NAME`. Jangan menambahkan prefix `makesta` lagi ke semua route PHP.
+`/dashboard`. Nginx membuang prefix `/makesta` pada request internal ke
+Laravel, sedangkan resolver URL Inertia mempertahankan prefix tersebut di
+browser. Jangan menambahkan prefix `makesta` lagi ke semua route PHP.
 
 ## 1. Kebutuhan server
 
@@ -58,8 +59,9 @@ sudo systemctl reload nginx
 ```
 
 Konfigurasi tersebut mempertahankan request browser `/makesta/...`, tetapi
-membuat Laravel membaca `/makesta` sebagai base URL. Dengan begitu route
-internal tidak perlu diduplikasi.
+membuat router Laravel membaca `/...`. Resolver URL Inertia kemudian
+menambahkan kembali base path untuk history browser. Dengan begitu route
+internal tidak perlu diduplikasi dan URL browser tidak kehilangan `/makesta`.
 
 ## 4. Instalasi dan build
 

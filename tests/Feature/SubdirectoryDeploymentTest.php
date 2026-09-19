@@ -2,8 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\HandleInertiaRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
-use Symfony\Component\HttpFoundation\Request;
 use Tests\TestCase;
 
 class SubdirectoryDeploymentTest extends TestCase
@@ -44,17 +45,17 @@ class SubdirectoryDeploymentTest extends TestCase
         ])->assertSee('<meta name="app-base-path" content="/makesta">', false);
     }
 
-    public function test_nginx_script_name_makes_laravel_see_the_subdirectory_as_its_base_url(): void
+    public function test_inertia_keeps_the_subdirectory_in_the_browser_url(): void
     {
-        $request = Request::create(
-            'https://kaderisasi.pelajarnumagetan.or.id/makesta/dashboard',
-            server: [
-                'SCRIPT_NAME' => '/makesta/index.php',
-                'SCRIPT_FILENAME' => public_path('index.php'),
-            ],
-        );
+        config()->set('app.url', 'https://kaderisasi.pelajarnumagetan.or.id/makesta');
 
-        $this->assertSame('/makesta', $request->getBaseUrl());
-        $this->assertSame('/dashboard', $request->getPathInfo());
+        $resolver = app(HandleInertiaRequests::class)->urlResolver();
+
+        $this->assertSame('/makesta', $resolver(Request::create('/')));
+        $this->assertSame('/makesta/login', $resolver(Request::create('/login')));
+        $this->assertSame('/makesta/login?next=%2Fdashboard', $resolver(
+            Request::create('/login?next=%2Fdashboard'),
+        ));
+        $this->assertSame('/makesta/login', $resolver(Request::create('/makesta/login')));
     }
 }
