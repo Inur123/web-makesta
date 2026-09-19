@@ -43,9 +43,7 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
         e.preventDefault();
         post(`/${org}/kegiatan/${kegiatan.id}/sertifikat/simpan`, {
             preserveScroll: true,
-            onSuccess: () => {
-                toast.success('Pengaturan sertifikat berhasil disimpan!');
-            }
+            // Flash message ditangani otomatis oleh use-flash-toast
         });
     };
 
