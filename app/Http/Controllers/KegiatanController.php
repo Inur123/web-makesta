@@ -159,62 +159,40 @@ class KegiatanController extends Controller
 
     public function simpanPengaturanSertifikat(Request $request, string $org, Kegiatan $kegiatan): RedirectResponse
     {
-        $rules = [];
-        if ($org === 'ippnu') {
-            $rules = [
-                'no_surat_awal' => 'required|integer',
-                'no_surat_akhir' => 'nullable|integer',
-                'format_nomor' => 'required|string',
-                'template_depan' => 'nullable|file|mimes:docx',
-                'template_belakang' => 'nullable|file|mimes:docx',
-            ];
-        } else {
-            $rules = [
-                'no_surat_awal' => 'required|integer',
-                'no_surat_akhir' => 'nullable|integer',
-                'format_nomor' => 'required|string',
-                'tempat' => 'required|string',
-                'tgl_m_hari' => 'required|string',
-                'tgl_m_bulan' => 'required|string',
-                'tgl_m_tahun' => 'required|string',
-                'tgl_h_hari' => 'required|string',
-                'tgl_h_bulan' => 'required|string',
-                'tgl_h_tahun' => 'required|string',
-                'nama_ketua' => 'nullable|string',
-                'nia_ketua' => 'nullable|string',
-                'nama_sekretaris' => 'nullable|string',
-                'nia_sekretaris' => 'nullable|string',
-                'header_depan' => 'required|string',
-                'header_belakang' => 'required|string',
-            ];
-        }
-
+        $rules = [
+            'no_surat_awal' => 'required|integer',
+            'no_surat_akhir' => 'nullable|integer',
+            'format_nomor' => 'required|string',
+            'template_depan' => 'nullable|file|mimes:docx',
+            'template_belakang' => 'nullable|file|mimes:docx',
+        ];
+        
         $data = $request->validate($rules);
         $pengaturan = $kegiatan->pengaturan_sertifikat ?? [];
 
-        if ($org === 'ippnu') {
-            if ($request->hasFile('template_depan')) {
-                if (isset($pengaturan['template_depan']) && \Storage::disk('local')->exists($pengaturan['template_depan'])) {
-                    \Storage::disk('local')->delete($pengaturan['template_depan']);
-                }
-                $data['template_depan'] = $request->file('template_depan')->storeAs('templates/arsip_ippnu/' . $kegiatan->id, 'template_depan_' . time() . '.docx');
-            } else {
-                $data['template_depan'] = $pengaturan['template_depan'] ?? null;
+        if ($request->hasFile('template_depan')) {
+            if (isset($pengaturan['template_depan']) && \Storage::disk('local')->exists($pengaturan['template_depan'])) {
+                \Storage::disk('local')->delete($pengaturan['template_depan']);
             }
-
-            if ($request->hasFile('template_belakang')) {
-                if (isset($pengaturan['template_belakang']) && \Storage::disk('local')->exists($pengaturan['template_belakang'])) {
-                    \Storage::disk('local')->delete($pengaturan['template_belakang']);
-                }
-                $data['template_belakang'] = $request->file('template_belakang')->storeAs('templates/arsip_ippnu/' . $kegiatan->id, 'template_belakang_' . time() . '.docx');
-            } else {
-                $data['template_belakang'] = $pengaturan['template_belakang'] ?? null;
-            }
+            $data['template_depan'] = $request->file('template_depan')->storeAs('templates/arsip_' . $org . '/' . $kegiatan->id, 'template_depan_' . time() . '.docx');
+        } else {
+            $data['template_depan'] = $pengaturan['template_depan'] ?? null;
         }
 
-        $kegiatan->update(['pengaturan_sertifikat' => array_merge($pengaturan, $data)]);
+        if ($request->hasFile('template_belakang')) {
+            if (isset($pengaturan['template_belakang']) && \Storage::disk('local')->exists($pengaturan['template_belakang'])) {
+                \Storage::disk('local')->delete($pengaturan['template_belakang']);
+            }
+            $data['template_belakang'] = $request->file('template_belakang')->storeAs('templates/arsip_' . $org . '/' . $kegiatan->id, 'template_belakang_' . time() . '.docx');
+        } else {
+            $data['template_belakang'] = $pengaturan['template_belakang'] ?? null;
+        }
 
-        return back()->with('success', 'Pengaturan sertifikat berhasil disimpan');
+        $kegiatan->update([
+            'pengaturan_sertifikat' => $data
+        ]);
+
+        return back()->with('success', 'Pengaturan sertifikat berhasil disimpan!');
     }
 
     public function generateSertifikat(Request $request, string $org, Kegiatan $kegiatan, SertifikatService $service): BinaryFileResponse|RedirectResponse

@@ -473,7 +473,7 @@ exportMethod.form = exportMethodForm
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:220
+* @see app/Http/Controllers/KegiatanController.php:198
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 export const generateSertifikat = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -488,7 +488,7 @@ generateSertifikat.definition = {
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:220
+* @see app/Http/Controllers/KegiatanController.php:198
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikat.url = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -516,7 +516,7 @@ generateSertifikat.url = (args: { org: string | number, kegiatan: string | { id:
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:220
+* @see app/Http/Controllers/KegiatanController.php:198
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikat.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -526,7 +526,7 @@ generateSertifikat.post = (args: { org: string | number, kegiatan: string | { id
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:220
+* @see app/Http/Controllers/KegiatanController.php:198
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 const generateSertifikatForm = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -536,7 +536,7 @@ const generateSertifikatForm = (args: { org: string | number, kegiatan: string |
 
 /**
 * @see \App\Http\Controllers\KegiatanController::generateSertifikat
-* @see app/Http/Controllers/KegiatanController.php:220
+* @see app/Http/Controllers/KegiatanController.php:198
 * @route '/{org}/kegiatan/{kegiatan}/sertifikat'
 */
 generateSertifikatForm.post = (args: { org: string | number, kegiatan: string | { id: string } } | [org: string | number, kegiatan: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

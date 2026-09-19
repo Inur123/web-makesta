@@ -172,4 +172,4 @@ export default function SertifikatTab({ org, kegiatan }: { org: string; kegiatan
             </div>
         );
     
-}
+}}
